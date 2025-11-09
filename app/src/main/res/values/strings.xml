@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">astrabank</string>
+    <string name="app_name">EndtermMOA</string>
+    <string name="underlined_text"><u>Sign in</u></string>
 </resources>

@@ -10,9 +10,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Astrabank">
+        android:theme="@style/Theme.EndtermMOA">
         <activity
-            android:name=".MainActivity"
+            android:name=".FaceAuthenticationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreatePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SentOTPCodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InputNewPhoneNumberActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoadingPageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
