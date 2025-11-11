@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EndtermMOA">
         <activity
+            android:name=".SelectRecipientActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoggedInActivity"
             android:exported="false" />
         <activity
