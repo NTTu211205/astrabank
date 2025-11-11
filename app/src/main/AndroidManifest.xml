@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EndtermMOA">
         <activity
+            android:name=".LoggedInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomePageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecreatePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".FaceAuthenticationActivity"
             android:exported="false" />
         <activity

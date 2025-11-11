@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_copy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:text="Copy"
+        android:textSize="14sp"
+        android:textColor="@android:color/holo_blue_dark" />
+
+    <TextView
+        android:id="@+id/tv_account_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@id/tv_copy"
+        android:layout_marginEnd="8dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        tools:text="Account 86686886688668" />
+
+    <TextView
+        android:id="@+id/tv_transaction_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_account_title"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        tools:text="Money Transaction: - 145,000" />
+
+    <TextView
+        android:id="@+id/tv_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_transaction_amount"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        tools:text="Balance: 170,000" />
+
+    <TextView
+        android:id="@+id/tv_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@id/tv_description"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp"
+        tools:text="19:25" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_balance"
+        android:layout_toStartOf="@id/tv_timestamp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp"
+        tools:text="GD THE TREN INTERNET SO THE 478097...3777" />
+
+</RelativeLayout>
