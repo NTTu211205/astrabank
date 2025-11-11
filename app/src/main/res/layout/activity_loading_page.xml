@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,11 +13,10 @@
         android:id="@+id/logo_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="360dp"
-        android:gravity="center_horizontal">
+        android:layout_marginTop="311dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/logo_image"
@@ -33,7 +31,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inknut_antiqua_black"
@@ -42,7 +39,6 @@
                 android:textSize="35sp" />
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inknut_antiqua_black"
@@ -52,9 +48,9 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
             android:fontFamily="@font/inknut_antiqua_black"
             android:text="BE INSPIRED"
             android:textColor="#000000"
@@ -62,48 +58,43 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="174dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="122dp"
-        android:layout_marginTop="616dp"
-        android:layout_marginEnd="111dp"
-        android:layout_marginBottom="56dp"
-        android:backgroundTint="@color/black"
-        android:text="Sign up now"
-        app:cornerRadius="20dp" />
+        android:layout_marginTop="547dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="587dp"
-        android:layout_marginEnd="73dp"
-        android:layout_marginBottom="114dp"
-        android:fontFamily="@font/inknut_antiqua_black"
-        android:text="You do not have an account?" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/inknut_antiqua_black"
+            android:text="You do not have an account?"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/tvSignIn"
-        android:layout_width="74dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="182dp"
-        android:layout_marginTop="678dp"
-        android:layout_marginEnd="154dp"
-        android:layout_marginBottom="23dp"
-        android:fontFamily="@font/inknut_antiqua_black"
-        android:text="@string/underlined_text" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignUp"
+            android:layout_width="172dp"
+            android:layout_height="64dp"
+            android:background="@drawable/numpad_button_black"
+            android:text="Sign up now"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inknut_antiqua_black"
+            android:text="Sign in?"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
 </RelativeLayout>
