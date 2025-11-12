@@ -66,7 +66,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
         android:textColor="@android:color/darker_gray"
-        android:textSize="14sp"
-        tools:text="GD THE TREN INTERNET SO THE 478097...3777" />
+        android:textSize="13sp"
+        android:textAllCaps="true"
+        tools:text="Internet card transaction number 4798..7388" />
 
 </RelativeLayout>
