@@ -226,10 +226,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/items_list_save_recipient"
+                    tools:listitem="@layout/items_list_history_payment"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

@@ -24,7 +24,7 @@ public class LoadingPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_logged_in);
+        setContentView(R.layout.activity_select_bill_payment);
         img_toggle_visibility = findViewById(R.id.img_toggle_visibility);
         iv_move_money = findViewById(R.id.iv_move_money);
         tv_balance_masked = findViewById(R.id.tv_balance_masked);

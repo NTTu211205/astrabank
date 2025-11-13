@@ -22,5 +22,8 @@ public class TransferOptionsBottomSheet extends BottomSheetDialogFragment {
         view.findViewById(R.id.ll_to_other_person).setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), SelectRecipientActivity.class));
         });
+        view.findViewById(R.id.ll_bill_payment).setOnClickListener(v ->{
+            startActivity(new Intent(getActivity(), SelectBillPaymentActivity.class));
+        });
     }
 }
