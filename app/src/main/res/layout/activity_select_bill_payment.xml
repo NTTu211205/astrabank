@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:background="#e3e3e3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".SelectBillPaymentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_back" />
+
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="62dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/numpad_button_default">
+
+            <TextView
+                android:layout_width="188dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="110dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="94dp"
+                android:text="Invoice Management"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="110dp"
+                android:layout_marginTop="27dp"
+                android:layout_marginEnd="98dp"
+                android:alpha="0.5"
+                android:text="bill payment, saved bills"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/img_close"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="347dp"
+                android:layout_marginEnd="11dp"
+                android:src="@drawable/ic_forward" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/numpad_button_default"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+            <TextView
+                android:id="@+id/tv_title_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pay new bills"
+                android:paddingTop="10dp"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="24dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_row_1"
+                android:layout_width="322dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tv_mobile_top_up"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_mobile_top_up"
+                    android:drawablePadding="8dp"
+                    android:gravity="center"
+                    android:text="Mobile Top-up" />
+
+                <TextView
+                    android:id="@+id/tv_electric"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_electric"
+                    android:drawablePadding="8dp"
+                    android:gravity="center"
+                    android:text="Electricity" />
+
+                <TextView
+                    android:id="@+id/tv_water"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_water"
+                    android:drawablePadding="8dp"
+                    android:gravity="center"
+                    android:text="Water" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_row_2"
+                android:layout_width="322dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tv_mobile_charge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_call"
+                    android:text="Postpaid Mobile Charges"
+                    android:gravity="center"
+                    android:drawablePadding="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_item_internet"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_internet"
+                    android:text="Internet"
+                    android:gravity="center"
+                    android:drawablePadding="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_mobile_data"
+                    android:text="Mobile Data "
+                    android:gravity="center"
+                    android:drawablePadding="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_row_3"
+                android:layout_width="322dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tv_bus_ticket"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_bus_ticket"
+                    android:text="Bus Tickets"
+                    android:gravity="center"
+                    android:drawablePadding="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_tuition"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_tuition"
+                    android:text="Tuition"
+                    android:gravity="center"
+                    android:drawablePadding="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_airline_tickets"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_air_ticket"
+                    android:text="Airline Tickets"
+                    android:gravity="center"
+                    android:drawablePadding="8dp" />
+            </LinearLayout>
+            <View
+                android:layout_width="377dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="20dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payment History"
+                    android:paddingStart="20dp"
+                    android:textStyle="bold"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recipients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/items_list_history_payment"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
