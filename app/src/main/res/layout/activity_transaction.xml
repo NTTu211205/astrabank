@@ -71,7 +71,7 @@
                         android:id="@+id/tv_recipient_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1021823932"
+                        android:text="86686886688668"
                         android:textColor="#0000FF"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -148,7 +148,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:layout_toEndOf="@id/iv_account_2_icon"
-                        android:text="Tài Khoản Thanh Toán (•• 8668)"
+                        android:text="Payment Account (•• 8668)"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
 
@@ -174,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="Tổng số dư"
+                        android:text="Balance"
                         android:textColor="@android:color/darker_gray"
                         android:textSize="14sp" />
 
@@ -207,7 +207,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/ll_action_buttons"
-            android:background="transparent"
             android:orientation="vertical">
 
             <LinearLayout

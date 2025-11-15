@@ -22,12 +22,27 @@
             android:layout_marginTop="0dp"
             android:padding="10dp"
             android:src="@drawable/ic_back" />
+
         <RelativeLayout
             android:id="@+id/toolbar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/numpad_button_default"
-            android:layout_marginBottom="20dp">
+            android:layout_height="62dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/numpad_button_default">
+
+            <TextView
+                android:layout_width="188dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="110dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="94dp"
+                android:text="Invoice Management"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -36,22 +51,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="110dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="123dp"
-                android:text="Invoice Management"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="174dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="115dp"
                 android:layout_marginTop="27dp"
-                android:layout_marginEnd="122dp"
+                android:layout_marginEnd="98dp"
                 android:alpha="0.5"
                 android:text="bill payment, saved bills"
                 android:textColor="@android:color/black"
@@ -59,13 +60,13 @@
 
             <ImageView
                 android:id="@+id/img_close"
-                android:layout_width="wrap_content"
+                android:layout_width="34dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="355dp"
-                android:padding="16dp"
+                android:layout_marginStart="347dp"
+                android:layout_marginEnd="11dp"
                 android:src="@drawable/ic_forward" />
         </RelativeLayout>
         <LinearLayout
@@ -73,7 +74,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/numpad_button_default"
-            android:layout_margin="10dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
             <TextView
                 android:id="@+id/tv_title_transaction"
                 android:layout_width="wrap_content"
@@ -127,7 +129,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_row_1"
+                android:id="@+id/ll_row_2"
                 android:layout_width="322dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -167,7 +169,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_row_1"
+                android:id="@+id/ll_row_3"
                 android:layout_width="322dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

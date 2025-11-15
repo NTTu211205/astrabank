@@ -51,7 +51,7 @@
             android:textSize="14sp"
             android:maxLines="1"
             android:ellipsize="end"
-            tools:text="1021 8239 32, Ngân hàng TMCP Ngo..." />
+            tools:text="1021 8239 32, Vietcombank..." />
 
     </LinearLayout>
 
