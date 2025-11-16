@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EndtermMOA">
+        <activity
+            android:name=".OwnOTPActivity"
+            android:exported="false" />
         <activity
             android:name=".TransactionActivity"
             android:exported="false" />
@@ -45,7 +50,7 @@
             android:name=".SentOTPCodeActivity"
             android:exported="false" />
         <activity
-            android:name=".InputNewPhoneNumberActivity"
+            android:name=".InputPhoneNumberActivity"
             android:exported="true" />
         <activity
             android:name=".LoadingPageActivity"

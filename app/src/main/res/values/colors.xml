@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="otp_underline_color">#CCCCCC</color>
+    <color name="otp_active_underline_color">#0052CC</color>
 </resources>
