@@ -21,7 +21,6 @@
         app:itemTextColor="@android:color/black"
         app:itemIconTint="#555555"/>
 
-    <!-- FOOTER (luôn nằm dưới cùng) -->
     <LinearLayout
         android:id="@+id/footer_root"
         android:layout_width="match_parent"
