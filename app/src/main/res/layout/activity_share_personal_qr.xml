@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet_my_qr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bottom_sheet_background"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <RelativeLayout
+        android:id="@+id/rl_my_qr_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/btn_close_my_qr"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_close"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_alignParentStart="true"
+            app:tint="@android:color/black" />
+
+        <ImageButton
+            android:id="@+id/btn_edit_my_qr"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_edit"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_alignParentEnd="true"
+            app:tint="@android:color/black" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_my_qr_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quét mã để chuyển tiền đến"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#555"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_my_qr_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TRAN CAO PHONG"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_my_qr_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8668 6886 6886 68"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#333"
+        android:textSize="16sp"
+        android:drawablePadding="8dp"
+        android:layout_marginBottom="16dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_my_qr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal"
+            android:background="@android:color/white">
+
+
+            <ImageView
+                android:id="@+id/iv_my_qr_code"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:src="@drawable/place_holder_qrcode"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:id="@+id/ll_add_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="24dp">
+
+        <ImageView
+            android:id="@+id/iv_add_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_input_add"
+            app:tint="#0052CC"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_add_amount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bổ sung số tiền"
+            android:textColor="#0052CC"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

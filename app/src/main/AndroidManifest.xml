@@ -17,6 +17,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EndtermMOA">
         <activity
+            android:name=".SharePersonalQRActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScanQRActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DiscoverProductsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountAndCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".OwnOTPActivity"
             android:exported="false" />
         <activity
