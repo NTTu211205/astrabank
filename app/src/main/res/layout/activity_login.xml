@@ -9,13 +9,13 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:context=".InputNewPhoneNumberActivity">
+
     <LinearLayout
         android:id="@+id/logo_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal">
@@ -61,6 +61,7 @@
             android:textSize="14sp" />
 
     </LinearLayout>
+
     <EditText
         android:id="@+id/et_phone_number"
         android:layout_width="317dp"
@@ -71,15 +72,12 @@
         android:layout_marginEnd="40dp"
         android:autofillHints="phone"
         android:background="@drawable/edittext_border"
-        android:cursorVisible="false"
-        android:focusable="false"
         android:focusableInTouchMode="false"
         android:hint="Phone number"
         android:inputType="phone"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:textSize="20sp" />
-
 
     <TextView
         android:id="@+id/tv_login"
@@ -104,9 +102,8 @@
         android:layout_marginTop="73dp"
         android:layout_marginEnd="40dp"
         android:autofillHints="phone"
+        android:visibility="gone"
         android:background="@drawable/edittext_border"
-        android:cursorVisible="false"
-        android:focusable="false"
         android:focusableInTouchMode="false"
         android:hint="Password"
         android:inputType="phone"
@@ -115,28 +112,46 @@
         android:textSize="20sp"
         tools:ignore="TextFields" />
 
-    <TextView
-        android:id="@+id/tv_forgetPass"
-        android:layout_width="129dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="239dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="7dp"
-        android:fontFamily="@font/inknut_antiqua_black"
-        android:text="Forgot pass?" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_forgetPass"-->
+<!--        android:layout_width="129dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginStart="239dp"-->
+<!--        android:layout_marginTop="400dp"-->
+<!--        android:layout_marginEnd="7dp"-->
+<!--        android:fontFamily="@font/inknut_antiqua_black"-->
+<!--        android:text="Forgot pass?" />-->
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="112dp"
+        android:id="@+id/btnLogin"
+        android:layout_width="120dp"
         android:layout_height="61dp"
-        android:layout_below="@+id/et_password"
+        android:layout_below="@+id/et_phone_number"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="139dp"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="157dp"
         android:background="@drawable/numpad_button_default"
         android:text="Login" />
+
+
 </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

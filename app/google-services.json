@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514875648395",
+    "project_id": "astrabank-8195e",
+    "storage_bucket": "astrabank-8195e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514875648395:android:089e1945ebcee1a9e7a78e",
+        "android_client_info": {
+          "package_name": "com.example.astrabank"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYjKqK8Y2_SnXNeK5OeLSbmocJQdUS508"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

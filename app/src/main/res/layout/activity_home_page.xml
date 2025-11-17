@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#F4F0D4"
     android:fillViewport="true"
-    tools:context=".LoadingPageActivity">
+    tools:context=".HomePageActivity">
 
     <RelativeLayout
         android:id="@+id/main"
