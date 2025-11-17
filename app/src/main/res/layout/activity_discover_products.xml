@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DiscoverProductsActivity">
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="16dp"
+        app:tint="@android:color/black"
+        android:contentDescription="Quay lại" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:id="@+id/tv_featured_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Featured"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_featured_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New products, discounts and more for you"
+                android:textColor="#555555"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp" />
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_featured"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/ll_featured_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_sinh_loi"
+                        android:layout_width="300dp"
+                        android:layout_height="160dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="#F5E7C8"
+                        android:layout_marginEnd="16dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/auto_earning"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:id="@+id/btn_kham_pha"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="0dp"
+                                android:background="@drawable/round_button_light"
+                                android:paddingStart="16dp"
+                                android:paddingTop="8dp"
+                                android:paddingEnd="16dp"
+                                android:paddingBottom="8dp"
+                                android:text="Explore"
+                                android:textColor="#333" />
+
+                            <TextView
+                                android:id="@+id/tv_desc"
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginEnd="90dp"
+                                android:layout_marginBottom="0dp"
+                                android:text="Self-optimizing money,\nmaking more profit every day"
+                                android:textColor="#333333" />
+
+                            <TextView
+                                android:id="@+id/tv_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Auto Earning"
+                                android:textColor="@android:color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_placeholder_2"
+                        android:layout_width="300dp"
+                        android:layout_height="160dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="#D6EAF8">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Another products"
+                            android:layout_gravity="center"
+                            android:textSize="18sp"
+                            android:textColor="@android:color/black"/>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:id="@+id/ll_dots_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp">
+
+                <View
+                    android:id="@+id/dot_1"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/dot_active"/>
+
+                <View
+                    android:id="@+id/dot_2"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/dot_inactive"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_all_products_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All products"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_grid_row_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_chi_tieu"
+                    style="@style/ProductGridCard">
+
+                    <LinearLayout style="@style/ProductGridContent">
+                        <ImageView
+                            style="@style/ProductGridIcon"
+                            android:src="@android:drawable/ic_menu_myplaces" />
+                        <TextView
+                            style="@style/ProductGridTitle"
+                            android:text="Spending" />
+                        <TextView
+                            style="@style/ProductGridDescription"
+                            android:text="Credit card, installment payment" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_saving"
+                    style="@style/ProductGridCard">
+
+                    <LinearLayout style="@style/ProductGridContent">
+                        <ImageView
+                            style="@style/ProductGridIcon"
+                            android:src="@android:drawable/ic_menu_save" />
+                        <TextView
+                            style="@style/ProductGridTitle"
+                            android:text="Saving" />
+                        <TextView
+                            style="@style/ProductGridDescription"
+                            android:text="Savings, certificates of deposit" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_grid_row_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_invest"
+                    style="@style/ProductGridCard">
+
+                    <LinearLayout style="@style/ProductGridContent">
+                        <ImageView
+                            style="@style/ProductGridIcon"
+                            android:src="@android:drawable/ic_menu_compass" />
+                        <TextView
+                            style="@style/ProductGridTitle"
+                            android:text="Investment" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_insurance"
+                    style="@style/ProductGridCard">
+
+                    <LinearLayout style="@style/ProductGridContent">
+                        <ImageView
+                            style="@style/ProductGridIcon"
+                            android:src="@android:drawable/ic_lock_lock" />
+                        <TextView
+                            style="@style/ProductGridTitle"
+                            android:text="Insurance" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
