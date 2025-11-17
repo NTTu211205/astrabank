@@ -3,6 +3,7 @@ package com.example.astrabank;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton; // <-- Thêm import
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,22 +11,30 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat; // <-- Thêm import
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout; // <-- Thêm import
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class LoggedInActivity extends AppCompatActivity {
     LinearLayout ll_middle;
     private boolean visible = true;
-    ImageView iv_move_money, img_toggle_visibility;
+    ImageView iv_move_money, img_toggle_visibility, ivHeadClose;
     LinearLayout ll_move_money;
     TextView tv_balance_masked;
+    NavigationView navigationView;
+    View navHeader, navFooter;
+    AppCompatButton btSignOut;
 
     // --- Biến mới cho Menu (Side View) ---
     private DrawerLayout drawerLayout;
     private ImageButton ivMenuToggle; // Nút menu bo tròn
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,27 @@ public class LoggedInActivity extends AppCompatActivity {
         img_toggle_visibility = findViewById(R.id.img_toggle_visibility);
         iv_move_money = findViewById(R.id.iv_move_money);
         tv_balance_masked = findViewById(R.id.tv_balance_masked);
+        navigationView = findViewById(R.id.nav_view);
+        navHeader = navigationView.getHeaderView(0);
+//        navFooter = navigationView.findViewById(R.id.footer_root);
+        ivHeadClose = navHeader.findViewById(R.id.iv_header_close);
+//        btSignOut = navFooter.findViewById(R.id.btn_dang_xuat);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        ivHeadClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+//        btSignOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                signOut();
+//            }
+//        });
 
         iv_move_money.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +113,17 @@ public class LoggedInActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void signOut() {
+        mAuth.signOut();
+        changeScreen(LoadingPageActivity.class);
+    }
+
+    private void changeScreen(Class<?> newScreen) {
+        Intent intent = new Intent(this, newScreen);
+        startActivity(intent);
+        finish();
     }
 
     // --- Code cũ của bạn (Giữ nguyên) ---
