@@ -33,7 +33,7 @@ public class LoadingPageActivity extends AppCompatActivity {
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeScreen(InputNewPhoneNumberActivity.class);
+                changeScreen(InputPhoneNumberActivity.class);
             }
         });
 
