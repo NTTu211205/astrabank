@@ -42,7 +42,6 @@ public class LoggedInActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_logged_in); // Tải file XML (đã chứa DrawerLayout)
 
-        // --- Code cũ của bạn (Giữ nguyên) ---
         img_toggle_visibility = findViewById(R.id.img_toggle_visibility);
         iv_move_money = findViewById(R.id.iv_move_money);
         tv_balance_masked = findViewById(R.id.tv_balance_masked);
