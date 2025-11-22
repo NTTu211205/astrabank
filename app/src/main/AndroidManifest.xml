@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EndtermMOA">
-
+        <activity
+            android:name=".InputPersonalInformationActivity"
+            android:exported="false" />
         <activity
             android:name=".SharePersonalQRActivity"
             android:exported="false" />
@@ -75,4 +77,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
