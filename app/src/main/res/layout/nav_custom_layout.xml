@@ -5,9 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- HEADER -->
-    <include
-        layout="@layout/nav_header_logged_in" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@android:color/black">
+
+        <ImageView
+            android:id="@+id/iv_header_logo"
+            android:layout_width="95dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/logo" />
+
+        <ImageView
+            android:id="@+id/iv_header_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:layout_gravity="end"
+            android:layout_marginTop="-30dp"/>
+
+        <TextView
+            android:id="@+id/tv_header_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello,\nTRAN CAO PHONG"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_header_member_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Membership Information >"
+            android:textColor="#006FFF"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
 
     <!-- MENU LIST -->
     <com.google.android.material.navigation.NavigationView
@@ -22,13 +60,103 @@
         app:itemIconTint="#555555"/>
 
     <LinearLayout
-        android:id="@+id/footer_root"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="30dp">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <include
-            layout="@layout/nav_footer_logged_in" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_ho_tro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#D35454"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    app:tint="@android:color/darker_gray"
+                    android:background="@drawable/footer_avatar_background"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/iv_avatar"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_chuyen_vien"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Support Specialist"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_chuyen_vien_ten"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tran Cao Phong"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_phone"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@android:drawable/ic_menu_call"
+                    app:tint="#D35454"
+                    android:background="@drawable/footer_phone_background"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Log out"
+                android:textColor="@android:color/white"
+                android:background="@drawable/footer_button_black"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/tv_ho_tro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Support"
+                android:textColor="#0052CC"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="8dp" />
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

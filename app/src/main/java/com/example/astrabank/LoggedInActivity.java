@@ -49,8 +49,7 @@ public class LoggedInActivity extends AppCompatActivity {
         navHeader = navigationView.getHeaderView(0);
 //        navFooter = navigationView.findViewById(R.id.footer_root);
         ivHeadClose = navHeader.findViewById(R.id.iv_header_close);
-//        btSignOut = navFooter.findViewById(R.id.btn_dang_xuat);
-
+        btSignOut = navHeader.findViewById(R.id.btn_logout);
         mAuth = FirebaseAuth.getInstance();
 
         ivHeadClose.setOnClickListener(new View.OnClickListener() {
@@ -60,12 +59,12 @@ public class LoggedInActivity extends AppCompatActivity {
             }
         });
 
-//        btSignOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                signOut();
-//            }
-//        });
+        btSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
 
         iv_move_money.setOnClickListener(new View.OnClickListener() {
             @Override

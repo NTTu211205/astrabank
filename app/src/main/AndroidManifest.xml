@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EndtermMOA">
         <activity
+            android:name=".TransactionToNewPersonActivity"
+            android:exported="false" />
+        <activity
             android:name=".InputPersonalInformationActivity"
             android:exported="false" />
         <activity

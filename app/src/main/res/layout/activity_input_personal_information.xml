@@ -73,7 +73,7 @@
                     android:inputType="date"
                     android:focusable="false"
                     android:clickable="true"
-                    android:drawableEnd="@drawable/ic_calendar_24"/>
+                    android:drawableEnd="@drawable/ic_menu_compass"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
