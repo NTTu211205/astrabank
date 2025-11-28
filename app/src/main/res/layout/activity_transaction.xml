@@ -106,7 +106,36 @@
                     android:textStyle="bold"
                     android:textColorHint="#9E9E9E" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_content_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
 
+                <TextView
+                    android:id="@+id/tv_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Content"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:layout_marginEnd="12dp" />
+
+                <EditText
+                    android:id="@+id/et_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Default: ... Transfer"
+                    android:inputType="numberDecimal"
+                    android:background="@null"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColorHint="#9E9E9E" />
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
