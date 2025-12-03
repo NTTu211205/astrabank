@@ -16,11 +16,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.astrabank.utils.LoginManager;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +33,7 @@ public class SentOTPCodeActivity extends AppCompatActivity {
     EditText etPhoneNumber;
 
     private FirebaseAuth mAuth;
+    FirebaseFirestore db;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String mVerificationId;
     private static final String TAG = "PhoneAuthActivity";
@@ -103,23 +107,6 @@ public class SentOTPCodeActivity extends AppCompatActivity {
                 Toast.makeText(SentOTPCodeActivity.this, "Đã gửi mã, vui lòng kiểm tra tin nhắn.", Toast.LENGTH_SHORT).show();
             }
         };
-    }
-
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "signInWithCredential:success");
-                        Toast.makeText(this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
-
-                        // Chuyển sang màn hình chính
-                         changeScreen(LoginActivity.class);
-
-                    } else {
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
-                        Toast.makeText(this, "Xác thực thất bại: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
     }
 
     public void click(View v) {
@@ -234,5 +221,35 @@ public class SentOTPCodeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, newScreen);
         startActivity(intent);
         finish();
+    }
+
+    private void changeScreen(Class<?> newScreen, String message) {
+        Intent intent = new Intent(this, newScreen);
+        intent.putExtra("message", message);
+        startActivity(intent);
+        finish();
+    }
+
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = task.getResult().getUser();
+
+                        if (user != null) {
+//                            LoginManager.getInstance().setFirebaseUser(user);
+
+                            Log.d(TAG, "signInWithCredential:success");
+                            Toast.makeText(this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
+
+                            // Nhập thông tin người dùng
+                            changeScreen(InputPersonalInformationActivity.class, user.getUid());
+                        }
+
+                    } else {
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        Toast.makeText(this, "Xác thực thất bại: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

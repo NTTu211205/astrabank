@@ -15,11 +15,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.astrabank.models.User;
+import com.example.astrabank.utils.LoginManager;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,9 +36,12 @@ public class LoginActivity extends AppCompatActivity {
     Button btLogin;
     int number = 0;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String mVerificationId;
     private static final String TAG = "PhoneAuthActivity";
+    private static final String SIGN_IN_TAG = "PhoneAuthActivity:SIGN_IN";
+    private static final String GET_USER_INFORMATION_TAG = "PhoneAuthActivity:GET_USER_INFORMATION";
 
 
     @Override
@@ -48,17 +59,20 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         createCallBackFunction();
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (number == 0) {
+                    Log.d(SIGN_IN_TAG, "REQUEST OTP");
                     String phone = etPhoneNumber.getText().toString();
                     phone = "+84" + phone.substring(1, phone.length());
                     sendOTP(phone);
                 }
                 else {
+                    Log.d(SIGN_IN_TAG, "SIGN IN PROGRESS");
                     String otp = etPassword.getText().toString();
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otp);
                     signInWithPhoneAuthCredential(credential);
@@ -88,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                 mVerificationId = verificationId;
                 number = 1;
                 etPassword.setVisibility(View.VISIBLE);
+                etPassword.requestFocus();
                 Toast.makeText(LoginActivity.this, "Đã gửi mã, vui lòng kiểm tra tin nhắn.", Toast.LENGTH_SHORT).show();
             }
         };
@@ -104,22 +119,56 @@ public class LoginActivity extends AppCompatActivity {
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
-
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        Log.d(SIGN_IN_TAG, "PROGRESSING VALIDATING");
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        FirebaseUser user = task.getResult().getUser();
                         Log.d(TAG, "signInWithCredential:success");
                         Toast.makeText(this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
 
-                        // Chuyển sang màn hình chính
-                        changeScreen(LoggedInActivity.class);
-
+                        // get user information
+                        getUserInformation(user.getUid());
                     } else {
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
                         Toast.makeText(this, "Xác thực thất bại: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(SIGN_IN_TAG, "Internet disconection");
+                        e.printStackTrace();
+                        Toast.makeText(LoginActivity.this, "Không có kết nối internet, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                    }
                 });
+    }
+
+    private void getUserInformation(String uid) {
+        DocumentReference docRef = db.collection("users").document(uid);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    User user = documentSnapshot.toObject(User.class);
+
+                    LoginManager.getInstance().setUser(user);
+                    changeScreen(LoggedInActivity.class);
+                }
+                else {
+                    Log.d(GET_USER_INFORMATION_TAG, "User not exist, cannot load data");
+                    Toast.makeText(LoginActivity.this, "Người dùng không tồn tại", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(GET_USER_INFORMATION_TAG, "Load data error");
+                Toast.makeText(LoginActivity.this, "Lỗi tải dữ liệu, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
 
     private void changeScreen(Class<?> newScreen) {

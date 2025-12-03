@@ -226,7 +226,8 @@
                 android:background="@drawable/numpad_button_green"
                 android:padding="12dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_checkmark" />
+                android:src="@drawable/ic_checkmark"/>
+
         </LinearLayout>
     </LinearLayout>
 

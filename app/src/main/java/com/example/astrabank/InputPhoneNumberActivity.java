@@ -15,7 +15,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.astrabank.controller.UserController;
+import com.example.astrabank.utils.CallBack;
+
 public class InputPhoneNumberActivity extends AppCompatActivity {
+    private final String LOG_TAG = "InputPhoneNumberActivity";
     Button bt0, bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9;
     ImageButton btBackSpace, btCheck;
     EditText etPhoneNumber;
@@ -146,12 +150,15 @@ public class InputPhoneNumberActivity extends AppCompatActivity {
     }
 
     private void handleCheck() {
+
         String phoneNumber = etPhoneNumber.getText().toString();
         if (phoneNumber.length() != 10) {
             Toast.makeText(this, "Số điện thoại phải có 10 số", Toast.LENGTH_SHORT).show();
             return;
         }
-        changeScreen(SentOTPCodeActivity.class, phoneNumber);
+
+        // kiem tra sdt co ton tai trong db khong
+        checkPhone(phoneNumber);
     }
 
     private void changeScreen(Class<?> newScreen, String phoneNumber) {
@@ -160,5 +167,35 @@ public class InputPhoneNumberActivity extends AppCompatActivity {
         startActivity(intent);
         Log.d("Phone number: ", phoneNumber);
         finish();
+    }
+
+
+
+    // kiểm tra số điện thoại có được phép được đăng kí hay không
+    private void checkPhone(String phoneNumber) {
+        Log.d(LOG_TAG, "Check phone number exist");
+        UserController userController = new UserController(this);
+
+        userController.checkPhoneExist(phoneNumber, new CallBack<Boolean>() {
+            @Override
+            public void onResult(Boolean result) {
+                if (!result) {
+                    Log.d(LOG_TAG, "Phone number can register new user");
+//                    Toast.makeText(InputPhoneNumberActivity.this, "Số điện thoại được phép đăng kí", Toast.LENGTH_SHORT).show();
+
+                    changeScreen(SentOTPCodeActivity.class, phoneNumber);
+                }
+                else {
+                    Log.d(LOG_TAG, "Phone number can not register new user");
+                    Toast.makeText(InputPhoneNumberActivity.this, "Số điện thoại đã tồn tại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.d(LOG_TAG, "Check Failed");
+                Toast.makeText(InputPhoneNumberActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
