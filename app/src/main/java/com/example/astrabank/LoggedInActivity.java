@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout; // <-- Thêm import
 
+import com.example.astrabank.utils.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -26,7 +27,7 @@ public class LoggedInActivity extends AppCompatActivity {
     private boolean visible = true;
     ImageView iv_move_money, img_toggle_visibility, ivHeadClose;
     LinearLayout ll_move_money;
-    TextView tv_balance_masked;
+    TextView tv_balance_masked, tvName;
     NavigationView navigationView;
     View navHeader, navFooter;
     AppCompatButton btSignOut;
@@ -50,7 +51,14 @@ public class LoggedInActivity extends AppCompatActivity {
 //        navFooter = navigationView.findViewById(R.id.footer_root);
         ivHeadClose = navHeader.findViewById(R.id.iv_header_close);
         btSignOut = navHeader.findViewById(R.id.btn_logout);
+//        btSignOut = navFooter.findViewById(R.id.btn_dang_xuat);
+        tvName = navHeader.findViewById(R.id.tv_header_name);
+
         mAuth = FirebaseAuth.getInstance();
+
+        tvName.setText("Hello,\n" + LoginManager.getInstance().getUser().getFullName());
+
+
 
         ivHeadClose.setOnClickListener(new View.OnClickListener() {
             @Override

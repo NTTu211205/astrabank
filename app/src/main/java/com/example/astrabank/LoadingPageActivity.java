@@ -3,14 +3,29 @@ package com.example.astrabank;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.astrabank.models.User;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoadingPageActivity extends AppCompatActivity {
     Button btSignUp, btSignIn;
@@ -43,10 +58,12 @@ public class LoadingPageActivity extends AppCompatActivity {
                 changeScreen(LoginActivity.class);
             }
         });
+
     }
+
+
     private void changeScreen(Class<?> newScreen) {
         Intent intent = new Intent(this, newScreen);
         startActivity(intent);
-        finish();
     }
 }

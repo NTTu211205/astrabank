@@ -15,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class InputNewPhoneNumberActivity extends AppCompatActivity {
+public class AccountAndCardActivity extends AppCompatActivity {
 //    Button bt0, bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9;
 //    ImageButton btBackSpace, btCheck;
 //    EditText etPhoneNumber;

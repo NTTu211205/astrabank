@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".InputNewPhoneNumberActivity">
+    tools:context=".LoginActivity">
     <LinearLayout
         android:id="@+id/logo_block"
         android:layout_width="wrap_content"
@@ -104,7 +104,6 @@
         android:visibility="gone"
         android:autofillHints="phone"
         android:background="@drawable/edittext_border"
-        android:focusableInTouchMode="false"
         android:hint="Password"
         android:inputType="phone"
         android:paddingStart="15dp"

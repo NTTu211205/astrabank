@@ -177,7 +177,7 @@
                     android:id="@+id/actv_occupation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
+                    android:inputType="text"
                     android:drawableEnd="@drawable/ic_back"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -213,7 +213,7 @@
                     android:id="@+id/actv_income"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
+                    android:inputType="text"
                     android:drawableEnd="@drawable/ic_back"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
