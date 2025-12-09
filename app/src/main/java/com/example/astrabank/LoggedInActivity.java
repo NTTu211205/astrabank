@@ -1,6 +1,7 @@
 package com.example.astrabank;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,9 +24,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoggedInActivity extends AppCompatActivity {
-    LinearLayout ll_middle;
+    LinearLayout ll_middle,ll_products;
     private boolean visible = true;
-    ImageView iv_move_money, img_toggle_visibility, ivHeadClose;
+    ImageView iv_move_money, img_toggle_visibility, ivHeadClose, btnPhoneCall;
     LinearLayout ll_move_money;
     TextView tv_balance_masked, tvName;
     NavigationView navigationView;
@@ -48,11 +49,14 @@ public class LoggedInActivity extends AppCompatActivity {
         tv_balance_masked = findViewById(R.id.tv_balance_masked);
         navigationView = findViewById(R.id.nav_view);
         navHeader = navigationView.getHeaderView(0);
+
 //        navFooter = navigationView.findViewById(R.id.footer_root);
         ivHeadClose = navHeader.findViewById(R.id.iv_header_close);
         btSignOut = navHeader.findViewById(R.id.btn_logout);
+        btnPhoneCall = navHeader.findViewById(R.id.btn_phone_call);
 //        btSignOut = navFooter.findViewById(R.id.btn_dang_xuat);
         tvName = navHeader.findViewById(R.id.tv_header_name);
+        ll_products = findViewById(R.id.ll_discoverProducts);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -97,7 +101,14 @@ public class LoggedInActivity extends AppCompatActivity {
                 }
             }
         });
-
+        btnPhoneCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:0392593911"));
+                startActivity(intent);
+            }
+        });
         // --- Code mới để xử lý Menu (Side View) ---
         drawerLayout = findViewById(R.id.drawer_layout);
         ivMenuToggle = findViewById(R.id.iv_menu_toggle);
@@ -111,7 +122,13 @@ public class LoggedInActivity extends AppCompatActivity {
                 }
             }
         });
-
+        ll_products.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoggedInActivity.this, DiscoverProductsActivity.class);
+                startActivity(intent);
+            }
+        });
         // --- Sửa code EdgeToEdge của bạn ---
         // Áp dụng padding cho layout GỐC (DrawerLayout) thay vì ScrollView (main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".OwnOTPActivity">
+
+    <!-- Nút back (mũi tên quay lại) -->
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_back"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Quay lại"
+        app:tint="@android:color/black" />
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/logo"
+        android:contentDescription="Logo ứng dụng" />
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="24dp"
+        android:text="Enter your own OTP to finish transaction"
+        android:textColor="@android:color/black"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <!-- Layout chứa các ô nhập mã OTP -->
+    <LinearLayout
+        android:id="@+id/ll_otp_fields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <!-- Ô nhập ký tự thứ 1 -->
+        <EditText
+            android:id="@+id/et_otp_1"
+            style="@style/OtpEditTextStyle"
+            android:layout_width="0dp"
+            android:inputType="numberPassword"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Ô nhập ký tự thứ 2 -->
+        <EditText
+            android:id="@+id/et_otp_2"
+            style="@style/OtpEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="numberPassword"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Ô nhập ký tự thứ 3 -->
+        <EditText
+            android:id="@+id/et_otp_3"
+            style="@style/OtpEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="numberPassword"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Ô nhập ký tự thứ 4 -->
+        <EditText
+            android:id="@+id/et_otp_4"
+            style="@style/OtpEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="numberPassword"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Ô nhập ký tự thứ 5 (nếu mã có 5 ký tự) -->
+        <EditText
+            android:id="@+id/et_otp_5"
+            style="@style/OtpEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="numberPassword"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Ô nhập ký tự thứ 6 (nếu mã có 6 ký tự) -->
+        <EditText
+            android:id="@+id/et_otp_6"
+            style="@style/OtpEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="numberPassword"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Text "Quên mã mở khóa?" -->
+    <Button
+        android:id="@+id/tv_forgot_otp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/numpad_button_black"
+        android:text="Confirm"
+        android:textSize="16sp" />
+
+</LinearLayout>

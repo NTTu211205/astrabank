@@ -18,6 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EndtermMOA">
         <activity
+            android:name=".TransactionSuccessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FinishTransactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NotificationsManagementActivity"
+            android:exported="false" />
+        <activity
             android:name=".TransactionToNewPersonActivity"
             android:exported="false" />
         <activity
@@ -37,8 +46,8 @@
             android:exported="false" />
         <activity
             android:name=".OwnOTPActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".TransactionActivity"
             android:exported="false" />
