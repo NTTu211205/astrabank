@@ -1,164 +1,113 @@
-package com.example.astrabank;
-
-import android.content.Intent;
+package com.example.astrabank; //
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class AccountAndCardActivity extends AppCompatActivity {
-//    Button bt0, bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9;
-//    ImageButton btBackSpace, btCheck;
-//    EditText etPhoneNumber;
+
+    // Khai báo các biến View
+    private ImageButton btnBack, btnFavorite, btnToggleEye, btnCopyAccount;
+    private TextView tvUserName,tvNumCard, tvBalance, tvSetNickname, tvPhoneNumber, tvAccountNumber;
+    private Button btnViewMoreHistory;
+
+    // Biến trạng thái để kiểm tra đang ẩn hay hiện số dư
+    private boolean isHidden = false;
+
+    // Lưu trữ giá trị gốc để khi hiện lại không bị mất
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_account_and_card);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-//        bt0 = findViewById(R.id.btn0);
-//        bt1 = findViewById(R.id.btn1);
-//        bt2 = findViewById(R.id.btn2);
-//        bt3 = findViewById(R.id.btn3);
-//        bt4 = findViewById(R.id.btn4);
-//        bt5 = findViewById(R.id.btn5);
-//        bt6 = findViewById(R.id.btn6);
-//        bt7 = findViewById(R.id.btn7);
-//        bt8 = findViewById(R.id.btn8);
-//        bt9 = findViewById(R.id.btn9);
-//        btBackSpace = findViewById(R.id.btnBackSpace);
-//        btCheck = findViewById(R.id.btnCheck);
-//        etPhoneNumber = findViewById(R.id.et_phone_number);
-//
-//        setClickListeners();
+        initViews();
+        setupEvents();
     }
 
-//    public void click(View v) {
-//        int id = v.getId();
-//
-//        if (id == R.id.btnBackSpace) {
-//            handleBackspace();
-//        } else if (id == R.id.btnCheck) {
-//            handleCheck();
-//        } else {
-//            Button numberButton = (Button) v;
-//            etPhoneNumber.append(numberButton.getText().toString());
-//        }
-//    }
-//
-//    private void setClickListeners() {
-//        bt1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        bt2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        bt3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        bt4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        bt5.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        bt6.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        bt7.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        bt8.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        bt9.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        bt0.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//        btBackSpace.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        click(v);
-//                    }
-//                }
-//        );
-//        btCheck.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                click(v);
-//            }
-//        });
-//    }
-//
-//    private void handleBackspace() {
-//        String currentText = etPhoneNumber.getText().toString();
-//        if (!currentText.isEmpty()) {
-//            etPhoneNumber.setText(currentText.substring(0, currentText.length() - 1));
-//        }
-//    }
-//
-//    private void handleCheck() {
-//        String phoneNumber = etPhoneNumber.getText().toString();
-//        if (phoneNumber.length() != 10) {
-//            Toast.makeText(this, "Số điện thoại phải có 10 số", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        changeScreen(SentOTPCodeActivity.class, phoneNumber);
-//    }
-//
-//    private void changeScreen(Class<?> newScreen, String phoneNumber) {
-//        Intent intent = new Intent(this, newScreen);
-//        intent.putExtra("phone", phoneNumber);
-//        startActivity(intent);
-//        Log.d("Phone number: ", phoneNumber);
-//        finish();
-//    }
+    private void initViews() {
+        // Nút bấm
+        btnBack = findViewById(R.id.btnBack);
+        btnFavorite = findViewById(R.id.btnFavorite);
+        btnToggleEye = findViewById(R.id.btnToggleEye);
+        btnCopyAccount = findViewById(R.id.btnCopyAccount);
+        btnViewMoreHistory = findViewById(R.id.btnViewMoreHistory);
+        tvNumCard = findViewById(R.id.tv_numcard);
+
+        // Text hiển thị
+        tvUserName = findViewById(R.id.tvUserName);
+        tvBalance = findViewById(R.id.tvBalance);
+        tvSetNickname = findViewById(R.id.tvSetNickname);
+        tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
+        tvAccountNumber = findViewById(R.id.tvAccountNumber);
+    }
+
+    private void setupEvents() {
+        // --- Xử lý nút Quay lại ---
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Đóng màn hình hiện tại
+                finish();
+            }
+        });
+
+        // --- Xử lý nút Yêu thích ---
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AccountAndCardActivity.this, "Đã thêm vào danh sách yêu thích!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // --- Xử lý nút Mắt (Ẩn/Hiện thông tin) ---
+        btnToggleEye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleInformationVisibility();
+            }
+        });
+
+        // --- Xử lý nút Copy số tài khoản ---
+        btnCopyAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyToClipboard(tvAccountNumber.getText().toString());
+            }
+        });
+
+        // --- Xử lý nút Xem thêm lịch sử ---
+        btnViewMoreHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AccountAndCardActivity.this, "Chức năng đang phát triển...", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Hàm logic để ẩn/hiện số dư và số tài khoản
+    private void toggleInformationVisibility() {
+        isHidden = !isHidden; // Đảo ngược trạng thái
+
+        if (isHidden) {
+            tvNumCard.setText("1234 1234 1234 7613");
+            btnToggleEye.setAlpha(0.5f);
+        } else {
+            tvNumCard.setText(".... 7613");
+            btnToggleEye.setAlpha(1.0f);
+        }
+    }
+
+    private void copyToClipboard(String textToCopy) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Copied Account Number", textToCopy);
+        clipboard.setPrimaryClip(clip);
+
+        Toast.makeText(this, "Đã sao chép: " + textToCopy, Toast.LENGTH_SHORT).show();
+    }
 }

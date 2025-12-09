@@ -24,7 +24,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoggedInActivity extends AppCompatActivity {
-    LinearLayout ll_middle,ll_products;
+    LinearLayout ll_middle,ll_products, ll_account_and_card;
     private boolean visible = true;
     ImageView iv_move_money, img_toggle_visibility, ivHeadClose, btnPhoneCall;
     LinearLayout ll_move_money;
@@ -49,7 +49,8 @@ public class LoggedInActivity extends AppCompatActivity {
         tv_balance_masked = findViewById(R.id.tv_balance_masked);
         navigationView = findViewById(R.id.nav_view);
         navHeader = navigationView.getHeaderView(0);
-
+        ll_account_and_card = findViewById(R.id.ll_accountAndCard);
+        ll_move_money = findViewById(R.id.ll_moveMoney);
 //        navFooter = navigationView.findViewById(R.id.footer_root);
         ivHeadClose = navHeader.findViewById(R.id.iv_header_close);
         btSignOut = navHeader.findViewById(R.id.btn_logout);
@@ -126,6 +127,13 @@ public class LoggedInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoggedInActivity.this, DiscoverProductsActivity.class);
+                startActivity(intent);
+            }
+        });
+        ll_account_and_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoggedInActivity.this, AccountAndCardActivity.class);
                 startActivity(intent);
             }
         });
