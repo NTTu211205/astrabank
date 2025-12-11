@@ -374,14 +374,28 @@
         </ScrollView>
 
     </RelativeLayout>
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
+    <LinearLayout
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#E0E0DB"
-        app:headerLayout="@layout/nav_custom_layout"
-        app:itemTextColor="@android:color/black"
-        app:itemIconTint="#555555" />
+        android:orientation="vertical"
+        android:background="#E0E0DB">
+        <include
+            layout="@layout/nav_header" />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:menu="@menu/activity_main_side_menu"
+            app:itemTextColor="@android:color/black"
+            app:itemIconTint="#555555" />
+        <include
+            layout="@layout/nav_footer" />
+
+    </LinearLayout>
+
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

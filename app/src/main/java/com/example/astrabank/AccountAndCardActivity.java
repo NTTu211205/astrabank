@@ -33,7 +33,7 @@ public class AccountAndCardActivity extends AppCompatActivity {
     private void initViews() {
         // Nút bấm
         btnBack = findViewById(R.id.btnBack);
-        btnFavorite = findViewById(R.id.btnFavorite);
+//        btnFavorite = findViewById(R.id.btnFavorite);
         btnToggleEye = findViewById(R.id.btnToggleEye);
         btnCopyAccount = findViewById(R.id.btnCopyAccount);
         btnViewMoreHistory = findViewById(R.id.btnViewMoreHistory);

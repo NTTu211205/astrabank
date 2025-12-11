@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@android:color/black">
+
+    <ImageView
+        android:id="@+id/iv_header_logo"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/iv_header_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:layout_gravity="end"
+        android:layout_marginTop="-30dp"/>
+
+    <TextView
+        android:id="@+id/tv_header_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello,\nTRAN CAO PHONG"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"/>
+
+    <TextView
+        android:id="@+id/tv_header_member_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Membership Information >"
+        android:textColor="#006FFF"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"/>
+</LinearLayout>

@@ -3,14 +3,17 @@ package com.example.astrabank;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton; // <-- Thêm import
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
@@ -26,10 +29,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoggedInActivity extends AppCompatActivity {
     LinearLayout ll_middle,ll_products, ll_account_and_card;
     private boolean visible = true;
-    ImageView iv_move_money, img_toggle_visibility, ivHeadClose, btnPhoneCall;
+    ImageView iv_move_money, img_toggle_visibility, ivHeadClose, btnPhoneCall, btnNotifications;
     LinearLayout ll_move_money;
     TextView tv_balance_masked, tvName;
-    NavigationView navigationView;
+    NavigationView navigationView, navMenuInner;
     View navHeader, navFooter;
     AppCompatButton btSignOut;
 
@@ -48,22 +51,52 @@ public class LoggedInActivity extends AppCompatActivity {
         iv_move_money = findViewById(R.id.iv_move_money);
         tv_balance_masked = findViewById(R.id.tv_balance_masked);
         navigationView = findViewById(R.id.nav_view);
-        navHeader = navigationView.getHeaderView(0);
         ll_account_and_card = findViewById(R.id.ll_accountAndCard);
         ll_move_money = findViewById(R.id.ll_moveMoney);
-//        navFooter = navigationView.findViewById(R.id.footer_root);
-        ivHeadClose = navHeader.findViewById(R.id.iv_header_close);
-        btSignOut = navHeader.findViewById(R.id.btn_logout);
-        btnPhoneCall = navHeader.findViewById(R.id.btn_phone_call);
-//        btSignOut = navFooter.findViewById(R.id.btn_dang_xuat);
-        tvName = navHeader.findViewById(R.id.tv_header_name);
+        ivHeadClose = findViewById(R.id.iv_header_close);
+        btSignOut = findViewById(R.id.btn_logout);
+        btnPhoneCall = findViewById(R.id.btn_phone_call);
+        tvName = findViewById(R.id.tv_header_name);
         ll_products = findViewById(R.id.ll_discoverProducts);
 
         mAuth = FirebaseAuth.getInstance();
 
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            int id = menuItem.getItemId();
+
+            if (id == R.id.nav_notifications) {
+                startActivity(new Intent(LoggedInActivity.this, NotificationsManagementActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+            else if (id == R.id.nav_edit){
+                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+            }
+            else if (id == R.id.nav_discover) {
+                Intent intent = new Intent(LoggedInActivity.this, DiscoverProductsActivity.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+            else if (id == R.id.nav_setting) {
+                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+            }
+            else if (id == R.id.nav_offers) {
+                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+            }
+            return false;
+        });
+
         tvName.setText("Hello,\n" + LoginManager.getInstance().getUser().getFullName());
 
-
+        btnPhoneCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Change to Notifications Management layout:
+                Intent intent = new Intent(LoggedInActivity.this, NotificationsManagementActivity.class);
+                startActivity(intent);
+            }
+        });
 
         ivHeadClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,8 +170,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // --- Sửa code EdgeToEdge của bạn ---
-        // Áp dụng padding cho layout GỐC (DrawerLayout) thay vì ScrollView (main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -163,8 +194,7 @@ public class LoggedInActivity extends AppCompatActivity {
         bottomSheet.show(getSupportFragmentManager(), "TransferOptionsTag");
     }
 
-    // --- Code mới: Xử lý nút Back của điện thoại ---
-    // (Để đóng menu nếu nó đang mở)
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
