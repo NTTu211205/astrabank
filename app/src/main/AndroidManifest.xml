@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EndtermMOA">
         <activity
+            android:name=".SeeAllAccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".TransactionSuccessActivity"
             android:exported="false" />
         <activity
@@ -81,6 +84,9 @@
         <activity
             android:name=".InputPhoneNumberActivity"
             android:exported="true" />
+        <activity
+            android:name=".LogInOTPCodeActivity"
+            android:exported="false" />
         <activity
             android:name=".LoadingPageActivity"
             android:exported="true">

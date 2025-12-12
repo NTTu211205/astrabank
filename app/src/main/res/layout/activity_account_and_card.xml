@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:id="@+id/main"
     tools:context=".AccountAndCardActivity">
 
     <RelativeLayout
@@ -14,7 +14,6 @@
             android:id="@+id/rlHeader"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#FFF8E1"
             android:paddingHorizontal="16dp">
 
             <ImageButton
@@ -219,67 +218,12 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rl_transaction_history"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/tvHist1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Interest Payment"
-                        android:textColor="#333"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvHist1"
-                        android:text="09 Dec 2025"
-                        android:textColor="#777"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:text="+ 1,200 VND"
-                        android:textColor="#4CAF50"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:id="@+id/tvHist2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Transfer Incoming"
-                        android:textColor="#333"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvHist2"
-                        android:text="08 Dec 2025"
-                        android:textColor="#777"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:text="+ 500,000 VND"
-                        android:textColor="#4CAF50"
-                        android:textStyle="bold" />
-                </RelativeLayout>
+                    tools:listitem="@layout/item_transaction_history"
+                    tools:itemCount="2"/>
 
                 <Button
                     android:id="@+id/btnViewMoreHistory"

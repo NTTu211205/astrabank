@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/btn_back"
@@ -58,12 +57,13 @@
         android:text="12"
         android:textSize="14sp"
         android:textColor="@android:color/white"
-        app:actionLayout="@layout/menu_badge_side"
         android:gravity="center"
+        android:background="@drawable/bg_circle_red"
         android:layout_toEndOf="@id/tv_main_title"
         android:layout_alignTop="@id/tv_main_title"
         android:layout_alignBottom="@id/tv_main_title"
         android:layout_marginStart="8dp" />
+
 
     <LinearLayout
         android:id="@+id/ll_tab_container"
