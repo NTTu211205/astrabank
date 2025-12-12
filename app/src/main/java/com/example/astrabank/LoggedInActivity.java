@@ -72,7 +72,7 @@ public class LoggedInActivity extends AppCompatActivity {
             else if (id == R.id.nav_edit){
                 Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
             }
-            else if (id == R.id.nav_discover) {
+            else if (id == R.id.nav_nearest_bank) {
                 Intent intent = new Intent(LoggedInActivity.this, DiscoverProductsActivity.class);
                 startActivity(intent);
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -81,8 +81,11 @@ public class LoggedInActivity extends AppCompatActivity {
             else if (id == R.id.nav_setting) {
                 Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
             }
-            else if (id == R.id.nav_offers) {
-                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+            else if (id == R.id.nav_all_account) {
+                Intent intent = new Intent(LoggedInActivity.this, SeeAllAccountActivity.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
             }
             return false;
         });

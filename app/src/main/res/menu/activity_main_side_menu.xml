@@ -9,21 +9,22 @@
             android:title="Notifications"
             app:actionLayout="@layout/menu_badge_side" />
         <item
+            android:id="@+id/nav_all_account"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="See All Account" />
+        <item
             android:id="@+id/nav_edit"
             android:icon="@android:drawable/ic_menu_send"
             android:title="Edit Personal Informations" />
         <item
-            android:id="@+id/nav_discover"
+            android:id="@+id/nav_nearest_bank"
             android:icon="@android:drawable/ic_dialog_map"
-            android:title="Discover Products" />
+            android:title="See Nearest Bank Branch" />
         <item
             android:id="@+id/nav_setting"
             android:icon="@android:drawable/ic_menu_manage"
             android:title="Setting" />
-        <item
-            android:id="@+id/nav_offers"
-            android:icon="@android:drawable/ic_menu_today"
-            android:title="Card Offers" />
+
     </group>
 
 </menu>

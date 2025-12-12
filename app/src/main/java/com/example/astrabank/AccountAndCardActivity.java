@@ -9,6 +9,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 public class AccountAndCardActivity extends AppCompatActivity {
 
@@ -25,7 +28,13 @@ public class AccountAndCardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_account_and_card);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         initViews();
         setupEvents();
     }
@@ -57,13 +66,13 @@ public class AccountAndCardActivity extends AppCompatActivity {
             }
         });
 
-        // --- Xử lý nút Yêu thích ---
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AccountAndCardActivity.this, "Đã thêm vào danh sách yêu thích!", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        // --- Xử lý nút Yêu thích ---
+//        btnFavorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(AccountAndCardActivity.this, "Đã thêm vào danh sách yêu thích!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         // --- Xử lý nút Mắt (Ẩn/Hiện thông tin) ---
         btnToggleEye.setOnClickListener(new View.OnClickListener() {
