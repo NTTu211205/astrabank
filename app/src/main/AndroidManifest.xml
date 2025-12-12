@@ -18,6 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EndtermMOA">
         <activity
+            android:name=".MapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GetBankBranchActivity"
+            android:exported="false" />
+        <activity android:name=".SavingsDetailsActivity" />
+        <activity
+            android:name=".MortgageDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SeeAllAccountActivity"
             android:exported="false" />
         <activity
@@ -96,6 +106,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyARlDi-1DQ0IMiJSJAdhBd6aaspgG43hpY" />
     </application>
 
 </manifest>

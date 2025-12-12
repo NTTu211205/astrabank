@@ -1,13 +1,19 @@
 package com.example.astrabank;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -16,6 +22,8 @@ public class SeeAllAccountActivity extends AppCompatActivity {
 
     // 1. Khai báo các biến View
     private ImageButton btnBack;
+    private Button btnSeeCheckingAcc, btnSeeSavingAcc, btnSeeMortgageAcc;
+
 
     // Layout cha của từng thẻ (để bắt sự kiện click vào cả thẻ)
     private RelativeLayout rlChecking, rlSavings, rlMortgage;
@@ -28,7 +36,13 @@ public class SeeAllAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_see_all_account);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         initViews();
         setupData();
         setupEvents();
@@ -57,6 +71,10 @@ public class SeeAllAccountActivity extends AppCompatActivity {
         tvMortgageNumber = findViewById(R.id.tvMortgageNumber);
         tvPaymentAmount = findViewById(R.id.tvPaymentAmount);
         tvPaymentFrequency = findViewById(R.id.tvPaymentFrequency);
+
+        btnSeeCheckingAcc = findViewById(R.id.btnSeeCheckingAcc);
+        btnSeeSavingAcc = findViewById(R.id.btnSeeSavingAcc);
+        btnSeeMortgageAcc = findViewById(R.id.btnSeeMortgageAcc);
     }
 
     private void setupData() {
@@ -136,6 +154,27 @@ public class SeeAllAccountActivity extends AppCompatActivity {
 
                 // 3. Hiển thị
                 builder.show();
+            }
+        });
+        btnSeeCheckingAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SeeAllAccountActivity.this, AccountAndCardActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnSeeSavingAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SeeAllAccountActivity.this, SavingsDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnSeeMortgageAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SeeAllAccountActivity.this, MortgageDetailsActivity.class);
+                startActivity(intent);
             }
         });
     }
