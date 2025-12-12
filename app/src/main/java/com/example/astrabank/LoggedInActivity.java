@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton; // <-- Thêm import
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoggedInActivity extends AppCompatActivity {
     LinearLayout ll_middle,ll_products, ll_account_and_card;
+    RelativeLayout rl_maps;
     private boolean visible = true;
     ImageView iv_move_money, img_toggle_visibility, ivHeadClose, btnPhoneCall, btnNotifications;
     LinearLayout ll_move_money;
@@ -58,7 +60,7 @@ public class LoggedInActivity extends AppCompatActivity {
         btnPhoneCall = findViewById(R.id.btn_phone_call);
         tvName = findViewById(R.id.tv_header_name);
         ll_products = findViewById(R.id.ll_discoverProducts);
-
+        rl_maps =  findViewById(R.id.rl_maps);
         mAuth = FirebaseAuth.getInstance();
 
         navigationView.setNavigationItemSelectedListener(menuItem -> {
@@ -72,7 +74,7 @@ public class LoggedInActivity extends AppCompatActivity {
             else if (id == R.id.nav_edit){
                 Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
             }
-            else if (id == R.id.nav_nearest_bank) {
+            else if (id == R.id.nav_discover) {
                 Intent intent = new Intent(LoggedInActivity.this, DiscoverProductsActivity.class);
                 startActivity(intent);
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -100,7 +102,13 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        rl_maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoggedInActivity.this, GetBankBranchActivity.class);
+                startActivity(intent);
+            }
+        });
         ivHeadClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

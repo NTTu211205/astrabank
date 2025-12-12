@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     android:fillViewport="true">
 
     <LinearLayout
@@ -33,7 +34,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/rlCheckingAccount"
             android:layout_width="match_parent"
@@ -104,7 +104,15 @@
                     android:textColor="#0D1E4C" />
             </LinearLayout>
         </RelativeLayout>
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSeeCheckingAcc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/numpad_button_grey"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="See Details"/>
         <RelativeLayout
             android:id="@+id/rlSavingsAccount"
             android:layout_width="match_parent"
@@ -220,7 +228,15 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSeeSavingAcc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/numpad_button_grey"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="See Details"/>
         <RelativeLayout
             android:id="@+id/rlMortgageAccount"
             android:layout_width="match_parent"
@@ -319,6 +335,14 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSeeMortgageAcc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/numpad_button_grey"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="See Details"/>
     </LinearLayout>
 </ScrollView>
