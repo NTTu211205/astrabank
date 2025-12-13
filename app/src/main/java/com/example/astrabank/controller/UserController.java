@@ -63,33 +63,33 @@ public class UserController {
     // thêm một người dùng mới
     // thêm thành công trả về true
     // thêm thất bạit rả về false
-    public void createUser(String userID, String fullName, String dateOfBirth,
-                           String nationalID, String email, String phone, String address,
-                           String occupation, String companyName, Double averageSalary,
-                           Boolean status, String transactionPIN, CallBack<Boolean> callBack) {
-
-        User user = new User(userID, fullName.toUpperCase(), dateOfBirth,
-                 nationalID, email, phone, address,
-                 occupation, companyName, averageSalary,
-                 status, transactionPIN);
-
-        db.document(userID)
-                .set(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        callBack.onResult(true);
-                        Log.d(LOG_TAG, "create user success");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        callBack.onFailure(new Exception("Lỗi trong quá trình thêm dữ liệu"));
-                        Log.d(LOG_TAG, "create user error");
-                    }
-                });
-    }
+//    public void createUser(String userID, String fullName, String dateOfBirth,
+//                           String nationalID, String email, String phone, String address,
+//                           String occupation, String companyName, Double averageSalary,
+//                           Boolean status, String transactionPIN, CallBack<Boolean> callBack) {
+//
+//        User user = new User(userID, fullName.toUpperCase(), dateOfBirth,
+//                 nationalID, email, phone, address,
+//                 occupation, companyName, averageSalary,
+//                 status, transactionPIN);
+//
+//        db.document(userID)
+//                .set(user)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//                        callBack.onResult(true);
+//                        Log.d(LOG_TAG, "create user success");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        callBack.onFailure(new Exception("Lỗi trong quá trình thêm dữ liệu"));
+//                        Log.d(LOG_TAG, "create user error");
+//                    }
+//                });
+//    }
 
     // kiểm tra mã giao dịch đúng không trước khi thực hiện giao dịch chuyển tiền
     // đúng -> true

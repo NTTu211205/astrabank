@@ -15,17 +15,30 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.astrabank.api.ApiClient;
+import com.example.astrabank.api.ApiService;
+import com.example.astrabank.api.request.LoginPhoneRequest;
+import com.example.astrabank.api.response.ApiResponse;
 import com.example.astrabank.models.User;
 import com.example.astrabank.utils.LoginManager;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LogInOTPCodeActivity extends AppCompatActivity {
 
@@ -96,7 +109,32 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                         Toast.makeText(this, "Xác thực OTP thành công!", Toast.LENGTH_SHORT).show();
 
                         // Sau khi login Firebase thành công, lấy thông tin user từ Firestore
-                        getUserInformation(user.getUid());
+                        if (user != null) {
+                            user.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                    if (task.isSuccessful()) {
+                                        String uid = task.getResult().getToken();
+
+                                        if (!uid.isEmpty()) {
+                                            signIn(uid);
+                                        }
+                                        else {
+                                            Toast.makeText(LogInOTPCodeActivity.this, "Không tìm thấy id của người dùng", Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "uid not found");
+                                        }
+                                    }
+                                    else {
+                                        Toast.makeText(LogInOTPCodeActivity.this, "Lỗi khi truy vẫn dữ liệu", Toast.LENGTH_SHORT).show();
+                                        Log.e(TAG, "Error getting document", task.getException());
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            Toast.makeText(this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+                            Log.w(TAG, "Document does not exist for UID: " + user.getUid());
+                        }
                     } else {
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
                         if (task.getException() != null) {
@@ -110,29 +148,43 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                 });
     }
 
-    private void getUserInformation(String uid) {
-        DocumentReference docRef = db.collection("users").document(uid);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    User user = documentSnapshot.toObject(User.class);
-                    // Lưu user vào Singleton quản lý
-                    LoginManager.getInstance().setUser(user);
+    private void signIn(String uid) {
+        LoginPhoneRequest loginPhoneRequest = new LoginPhoneRequest(uid);
+        Log.d("Token", uid);
 
-                    // Chuyển sang màn hình chính
-                    changeScreen(LoggedInActivity.class);
-                } else {
-                    Log.d(GET_USER_TAG, "User not exist in Firestore");
-                    Toast.makeText(LogInOTPCodeActivity.this, "Tài khoản chưa được đăng ký trong hệ thống.", Toast.LENGTH_LONG).show();
-                    // Ở đây có thể điều hướng sang màn hình Đăng ký mới nếu cần
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<User>> call = apiService.loginWithPhone(loginPhoneRequest);
+        call.enqueue(new Callback<ApiResponse<User>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<User> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        if (apiResponse.getResult() != null && apiResponse.getResult().get(0) != null) {
+                            User user = apiResponse.getResult().get(0);
+
+                            LoginManager.getInstance().setUser(user);
+                            changeScreen(LoggedInActivity.class);
+                        }
+                    }
+                    else {
+                        Log.w(TAG, "API Success but response body is null.");
+                        Toast.makeText(LogInOTPCodeActivity.this, "Đăng nhập không thành công do không \n" +
+                                " tìm thấy dữ liệu người dùng", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Log.e(TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
+                    Toast.makeText(LogInOTPCodeActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
+
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(GET_USER_TAG, "Load data error");
-                Toast.makeText(LogInOTPCodeActivity.this, "Lỗi tải dữ liệu người dùng.", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+                Log.e(TAG, "Network failure: " + t.getMessage());
+                Toast.makeText(LogInOTPCodeActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
             }
         });
     }
