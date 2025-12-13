@@ -3,25 +3,39 @@ package com.example.astrabank.models;
 
 import com.example.astrabank.constant.AccountType;
 import com.google.firebase.Timestamp;
+import com.google.gson.annotations.SerializedName;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Account {
-    private String userId;           // ID người sở hữu tài khoản
-    private String accountNumber;    // Số tài khoản
-    private boolean AccountStatus;          // Trạng thái tài khoản (active, disabled,...)
-    private long balance;            // Số dư
-    private AccountType AccountType;        // Loại tài khoản (saving, checking,...)
-    private Timestamp createdAt;
+    @SerializedName("userId")
+    private String userId;
+
+    @SerializedName("accountNumber")
+    private String accountNumber;
+
+    // JSON key viết hoa chữ A → bắt buộc dùng SerializedName
+    @SerializedName("AccountStatus")
+    private Boolean accountStatus;
+
+    @SerializedName("balance")
+    private Long balance;
+
+    @SerializedName("accountType")
+    private AccountType accountType; // hoặc enum AccountType
+
+    @SerializedName("createdAt")
+    private Date createdAt;
 
     public Account(String userId, String accountNumber, boolean accountStatus,
                    long balance, AccountType accountType) {
         this.userId = userId;
         this.accountNumber = accountNumber;
-        AccountStatus = accountStatus;
+        this.accountStatus = accountStatus;
         this.balance = balance;
-        AccountType = accountType;
-        this.createdAt = Timestamp.now();
+        this.accountType = accountType;
+        this.createdAt = new Date();
     }
 
     public String getUserId() {
@@ -41,11 +55,11 @@ public class Account {
     }
 
     public boolean isAccountStatus() {
-        return AccountStatus;
+        return accountStatus;
     }
 
     public void setAccountStatus(boolean accountStatus) {
-        AccountStatus = accountStatus;
+        accountStatus = accountStatus;
     }
 
     public long getBalance() {
@@ -57,18 +71,18 @@ public class Account {
     }
 
     public AccountType getAccountType() {
-        return AccountType;
+        return accountType;
     }
 
     public void setAccountType(AccountType accountType) {
-        AccountType = accountType;
+        accountType = accountType;
     }
 
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 }

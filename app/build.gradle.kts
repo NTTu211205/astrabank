@@ -55,4 +55,9 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
 
     implementation("org.mindrot:jbcrypt:0.4")
+
+    implementation("com.google.code.gson:gson:2.13.2")
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 }

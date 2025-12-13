@@ -1,12 +1,13 @@
 package com.example.astrabank.utils;
 
+import com.example.astrabank.models.Account;
 import com.example.astrabank.models.User;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginManager {
     private static volatile LoginManager instance;
-
     private static User user;
+    private static Account account;
     private static FirebaseUser firebaseUser;
 
 
@@ -33,6 +34,14 @@ public class LoginManager {
         LoginManager.firebaseUser = firebaseUser;
     }
 
+    public static Account getAccount() {
+        return account;
+    }
+
+    public static void setAccount(Account account) {
+        LoginManager.account = account;
+    }
+
     public static User getUser() {
         return user;
     }
@@ -43,6 +52,7 @@ public class LoginManager {
 
     public static void clearUser() {
         LoginManager.user = null;
+        LoginManager.account = null;
         LoginManager.firebaseUser = null;
     }
 

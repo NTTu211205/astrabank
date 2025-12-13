@@ -4,28 +4,60 @@ import com.google.firebase.Firebase;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.ServerTimestamp;
+import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class User {
+    @SerializedName("userID")
     private String userID;
+
+    @SerializedName("fullName")
     private String fullName;
+
+    @SerializedName("dateOfBirth")
     private String dateOfBirth;
+
+    @SerializedName("nationalID")
     private String nationalID;
+
+    @SerializedName("email")
     private String email;
+
+    @SerializedName("phone")
     private String phone;
+
+    @SerializedName("address")
     private String address;
+
+    @SerializedName("occupation")
     private String occupation;
+
+    @SerializedName("companyName")
     private String companyName;
+
+    @SerializedName("averageSalary")
     private Double averageSalary;
+
+    @SerializedName("status")
     private Boolean status;
+
+    @SerializedName("transactionPIN")
     private String transactionPIN;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+
+    @SerializedName("createdAt")
+    private Date createdAt;
+
+    @SerializedName("updatedAt")
+    private Date updatedAt;
+
+    @SerializedName("password")
+    private String password;
 
     public User() {}
 
-    public User(String userID, String fullName, String dateOfBirth, String nationalID, String email, String phone, String address, String occupation, String companyName, Double averageSalary, Boolean status, String transactionPIN) {
+    public User(String userID, String fullName, String dateOfBirth, String nationalID, String email, String phone, String address, String occupation, String companyName, Double averageSalary, Boolean status, String transactionPIN, String password) {
         this.userID = userID;
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
@@ -38,8 +70,9 @@ public class User {
         this.averageSalary = averageSalary;
         this.status = status;
         this.transactionPIN = transactionPIN;
-        this.createdAt = Timestamp.now();
-        this.updatedAt = Timestamp.now();
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+        this.password = password;
     }
 
     public HashMap<String, Object> mapping() {
