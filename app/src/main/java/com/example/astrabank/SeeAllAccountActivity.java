@@ -22,6 +22,8 @@ import com.example.astrabank.api.response.ApiResponse;
 import com.example.astrabank.models.Account;
 import com.example.astrabank.utils.LoginManager;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -44,6 +46,8 @@ public class SeeAllAccountActivity extends AppCompatActivity {
     private TextView tvCheckingNumber, tvCheckingBalance;
     private TextView tvSavingsNumber, tvSavingsBalance, tvInterestRate, tvMonthlyProfit;
     private TextView tvMortgageNumber, tvPaymentAmount, tvPaymentFrequency;
+
+    private String savingAccountNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +102,7 @@ public class SeeAllAccountActivity extends AppCompatActivity {
         findDefaultAccount(LoginManager.getInstance().getUser().getUserID(), "CHECKING");
 
         // --- Savings Account ---
-        tvSavingsNumber.setText("**** 5678");
-        tvSavingsBalance.setText(currencyFormat.format(12000.00));
-        tvInterestRate.setText("4.5% APY"); // Lãi suất
+        findSavingAccount(LoginManager.getInstance().getUser().getUserID(), "SAVING");
         tvMonthlyProfit.setText("+ " + currencyFormat.format(45.00)); // Lợi nhuận tháng
 
         tvMortgageNumber.setText("Loan #9988-77");
@@ -116,7 +118,15 @@ public class SeeAllAccountActivity extends AppCompatActivity {
         }
     }
 
-    private void findDefaultAccount(String userID, String checking) {
+    private String formatMoney(long amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.'); // Bắt buộc dùng dấu chấm
+        formatter.setDecimalFormatSymbols(symbols);
+        return formatter.format(amount);
+    }
+
+    private void findSavingAccount(String userID, String checking) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<ApiResponse<Account>> call = apiService.getDefaultAccount(userID, checking);
 
@@ -130,7 +140,51 @@ public class SeeAllAccountActivity extends AppCompatActivity {
                         if (apiResponse.getResult() != null) {
                             NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
                             Account account = apiResponse.getResult();
-                            tvCheckingBalance.setText(currencyFormat.format(account.getBalance()));
+                            savingAccountNumber = account.getAccountNumber();
+                            tvSavingsNumber.setText(savingAccountNumber.substring(savingAccountNumber.length()-5, savingAccountNumber.length()));
+                            tvSavingsBalance.setText(formatMoney(account.getBalance()));
+                            tvInterestRate.setText(String.valueOf(account.getInterestRate() * 100) + " %"); // Lãi suất
+                        }
+                    }
+                    else {
+                        Log.w(LOG_TAG, "API Success but body is null.");
+                        Toast.makeText(SeeAllAccountActivity.this, "Không tìm thấy tài khoản mặc định", Toast.LENGTH_SHORT).show();
+                        changeScreen(LoggedInActivity.class);
+                        LoginManager.clearUser();
+                    }
+                }
+                else {
+                    Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
+                    Toast.makeText(SeeAllAccountActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    changeScreen(LoadingPageActivity.class);
+                    LoginManager.clearUser();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
+                Log.e(LOG_TAG, "Network failure: " + t.getMessage());
+                Toast.makeText(SeeAllAccountActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                changeScreen(LoadingPageActivity.class);
+                LoginManager.clearUser();
+            }
+        });
+    }
+
+    private void findDefaultAccount(String userID, String checking) {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<Account>> call = apiService.getDefaultAccount(userID, checking);
+
+        call.enqueue(new Callback<ApiResponse<Account>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Account>> call, Response<ApiResponse<Account>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<Account> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        if (apiResponse.getResult() != null) {
+                            Account account = apiResponse.getResult();
+                            tvCheckingBalance.setText(formatMoney(account.getBalance()));
                         }
                     }
                     else {
@@ -163,7 +217,6 @@ public class SeeAllAccountActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 
     private void setupEvents() {
         // Nút Back
