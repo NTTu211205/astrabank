@@ -227,8 +227,8 @@ public class LoggedInActivity extends AppCompatActivity {
                     ApiResponse<Account> apiResponse = response.body();
 
                     if (apiResponse != null) {
-                        if (apiResponse.getResult() != null && apiResponse.getResult().get(0) != null) {
-                            Account account = apiResponse.getResult().get(0);
+                        if (apiResponse.getResult() != null) {
+                            Account account = apiResponse.getResult();
                             LoginManager.getInstance().setAccount(account);
                         }
                     }

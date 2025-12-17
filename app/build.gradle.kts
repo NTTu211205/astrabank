@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
@@ -15,6 +18,20 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val keystoreFile = project.rootProject.file("local.properties")
+        val properties = Properties()
+
+        // 2. Load file local.properties nếu nó tồn tại
+        if (keystoreFile.exists()) {
+            properties.load(FileInputStream(keystoreFile))
+        }
+
+        val apiKey = properties.getProperty("API_KEY") ?: ""
+        buildConfigField("String", "API_KEY", "\"$apiKey\"")    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {

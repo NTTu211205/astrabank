@@ -1,5 +1,6 @@
 package com.example.astrabank;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -30,8 +31,13 @@ public class SelectRecipientActivity extends AppCompatActivity {
         llANewReceiver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                changeScreen(TransactionToNewPersonActivity.class);
             }
         });
+    }
+
+    private void changeScreen(Class<?> nextScreen) {
+        Intent intent = new Intent(this, nextScreen);
+        startActivity(intent);
     }
 }

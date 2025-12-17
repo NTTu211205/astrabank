@@ -10,7 +10,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL = "http://10.0.2.2:8080/api/";
+    private static final String BASE_URL = "https://astrabank-backend.onrender.com/api/";
 
     public static Retrofit getClient() {
         Gson gson = new GsonBuilder()
@@ -18,14 +18,19 @@ public class ApiClient {
                 .create();
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .readTimeout(30, TimeUnit.SECONDS)    // Tăng thời gian chờ đọc
-                .connectTimeout(30, TimeUnit.SECONDS) // Tăng thời gian chờ kết nối
+                // --- THÊM DÒNG NÀY ĐỂ GẮN KEY ---
+                .addInterceptor(new AuthInterceptor())
+                // ---------------------------------
+
+                .readTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
                 .build();
 
+        // 3. Tạo Retrofit
         return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BASE_URL) // Đảm bảo BASE_URL kết thúc bằng dấu / (ví dụ: https://api.com/)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(okHttpClient)
+                .client(okHttpClient) // Đưa client đã gắn key vào đây
                 .build();
     }
 }

@@ -18,8 +18,7 @@
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:contentDescription="Close"
-            android:tint="#000000"/>
+            android:contentDescription="Close" />
     </RelativeLayout>
 
 
@@ -81,62 +80,82 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="You are transferring to"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:paddingHorizontal="16dp"
-            android:layout_marginBottom="20dp"/>
-
         <LinearLayout
-            android:id="@+id/header_selected_bank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/iv_selected_bank_logo"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_launcher_background"
-                android:background="@drawable/bg_search_rounded"
-                android:padding="8dp"/>
-
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="12dp"
-                android:layout_gravity="center_vertical">
+                android:text="You are transferring to"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:paddingHorizontal="16dp"
+                android:layout_marginBottom="20dp"/>
 
-                <TextView
-                    android:id="@+id/tv_selected_bank_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Techcombank - TCB"
-                    android:textColor="#007AFF"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+            <LinearLayout
+                android:id="@+id/header_selected_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
 
-                <EditText
-                    android:id="@+id/et_account_number"
+                <ImageView
+                    android:id="@+id/iv_selected_bank_logo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_launcher_background"
+                    android:background="@drawable/bg_search_rounded"
+                    android:padding="8dp"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Account number?"
-                    android:background="@null"
-                    android:textSize="18sp"
-                    android:inputType="number"
-                    android:textColorHint="#BDBDBD"
-                    android:layout_marginTop="4dp"/>
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_selected_bank_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Techcombank - TCB"
+                        android:textColor="#007AFF"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <EditText
+                        android:id="@+id/et_account_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Account number?"
+                        android:background="@null"
+                        android:textSize="18sp"
+                        android:inputType="number"
+                        android:textColorHint="#BDBDBD"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
             </LinearLayout>
+
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tiếp theo"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_margin="10dp"
+            android:background="@drawable/numpad_button_black"/>
+
     </LinearLayout>
 
 </LinearLayout>

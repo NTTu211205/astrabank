@@ -3,10 +3,12 @@ package com.example.astrabank.models;
 public class Bank {
     private String bankName;
     private String bankSymbol;
+    private String bankFullName;
 
-    public Bank(String bankName, String bankSymbol) {
+    public Bank(String bankName, String bankSymbol, String bankFullName) {
         this.bankName = bankName;
         this.bankSymbol = bankSymbol;
+        this.bankFullName = bankFullName;
     }
 
     public String getBankName() {
@@ -15,6 +17,14 @@ public class Bank {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public String getBankFullName() {
+        return bankFullName;
+    }
+
+    public void setBankFullName(String bankFullName) {
+        this.bankFullName = bankFullName;
     }
 
     public String getBankSymbol() {
