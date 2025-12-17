@@ -86,6 +86,8 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                     return;
                 }
                 if (mVerificationId != null) {
+                    btnVerify.setEnabled(false);
+                    btnVerify.setText("●   ●   ●");
                     verifyOTP(code);
                 } else {
                     Toast.makeText(LogInOTPCodeActivity.this, "Lỗi xác thực (Mất ID)", Toast.LENGTH_SHORT).show();
@@ -122,9 +124,13 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                                         else {
                                             Toast.makeText(LogInOTPCodeActivity.this, "Không tìm thấy id của người dùng", Toast.LENGTH_SHORT).show();
                                             Log.d(TAG, "uid not found");
+                                            btnVerify.setEnabled(true);
+                                            btnVerify.setText("LOGIN");
                                         }
                                     }
                                     else {
+                                        btnVerify.setEnabled(true);
+                                        btnVerify.setText("LOGIN");
                                         Toast.makeText(LogInOTPCodeActivity.this, "Lỗi khi truy vẫn dữ liệu", Toast.LENGTH_SHORT).show();
                                         Log.e(TAG, "Error getting document", task.getException());
                                     }
@@ -132,10 +138,14 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                             });
                         }
                         else {
+                            btnVerify.setEnabled(true);
+                            btnVerify.setText("LOGIN");
                             Toast.makeText(this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
                             Log.w(TAG, "Document does not exist for UID: " + user.getUid());
                         }
                     } else {
+                        btnVerify.setEnabled(true);
+                        btnVerify.setText("LOGIN");
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
                         if (task.getException() != null) {
                             Toast.makeText(this, "Mã OTP không đúng hoặc hết hạn.", Toast.LENGTH_LONG).show();
@@ -143,6 +153,8 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> {
+                    btnVerify.setEnabled(true);
+                    btnVerify.setText("LOGIN");
                     Log.e(SIGN_IN_TAG, "Error", e);
                     Toast.makeText(LogInOTPCodeActivity.this, "Lỗi hệ thống: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
@@ -170,12 +182,16 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                         }
                     }
                     else {
+                        btnVerify.setEnabled(true);
+                        btnVerify.setText("LOGIN");
                         Log.w(TAG, "API Success but response body is null.");
                         Toast.makeText(LogInOTPCodeActivity.this, "Đăng nhập không thành công do không \n" +
                                 " tìm thấy dữ liệu người dùng", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
+                    btnVerify.setEnabled(true);
+                    btnVerify.setText("LOGIN");
                     Log.e(TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
                     Toast.makeText(LogInOTPCodeActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
                 }
@@ -183,6 +199,8 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+                btnVerify.setEnabled(true);
+                btnVerify.setText("LOGIN");
                 Log.e(TAG, "Network failure: " + t.getMessage());
                 Toast.makeText(LogInOTPCodeActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
             }

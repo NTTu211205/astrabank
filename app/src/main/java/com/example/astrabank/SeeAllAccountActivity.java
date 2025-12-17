@@ -2,6 +2,7 @@ package com.example.astrabank;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,10 +16,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.astrabank.api.ApiClient;
+import com.example.astrabank.api.ApiService;
+import com.example.astrabank.api.response.ApiResponse;
+import com.example.astrabank.models.Account;
+import com.example.astrabank.utils.LoginManager;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SeeAllAccountActivity extends AppCompatActivity {
+    private final String LOG_TAG = "SeeAllAccountActivity";
 
     // 1. Khai báo các biến View
     private ImageButton btnBack;
@@ -81,8 +93,9 @@ public class SeeAllAccountActivity extends AppCompatActivity {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
         // --- Checking Account ---
-        tvCheckingNumber.setText("**** 1234");
-        tvCheckingBalance.setText(currencyFormat.format(5450.00));
+        String checkAccountNumber = LoginManager.getInstance().getAccount().getAccountNumber();
+        tvCheckingNumber.setText("****" + checkAccountNumber.substring(checkAccountNumber.length() - 5, checkAccountNumber.length()));
+        findDefaultAccount(LoginManager.getInstance().getUser().getUserID(), "CHECKING");
 
         // --- Savings Account ---
         tvSavingsNumber.setText("**** 5678");
@@ -102,6 +115,55 @@ public class SeeAllAccountActivity extends AppCompatActivity {
             tvPaymentFrequency.setText("Bi-weekly");
         }
     }
+
+    private void findDefaultAccount(String userID, String checking) {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<Account>> call = apiService.getDefaultAccount(userID, checking);
+
+        call.enqueue(new Callback<ApiResponse<Account>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Account>> call, Response<ApiResponse<Account>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<Account> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        if (apiResponse.getResult() != null) {
+                            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
+                            Account account = apiResponse.getResult();
+                            tvCheckingBalance.setText(currencyFormat.format(account.getBalance()));
+                        }
+                    }
+                    else {
+                        Log.w(LOG_TAG, "API Success but body is null.");
+                        Toast.makeText(SeeAllAccountActivity.this, "Không tìm thấy tài khoản mặc định", Toast.LENGTH_SHORT).show();
+                        changeScreen(LoggedInActivity.class);
+                        LoginManager.clearUser();
+                    }
+                }
+                else {
+                    Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
+                    Toast.makeText(SeeAllAccountActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    changeScreen(LoadingPageActivity.class);
+                    LoginManager.clearUser();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
+                Log.e(LOG_TAG, "Network failure: " + t.getMessage());
+                Toast.makeText(SeeAllAccountActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                changeScreen(LoadingPageActivity.class);
+                LoginManager.clearUser();
+            }
+        });
+    }
+
+    private void changeScreen(Class<?> nextScreen) {
+        Intent intent = new Intent(this, nextScreen);
+        startActivity(intent);
+        finish();
+    }
+
 
     private void setupEvents() {
         // Nút Back
