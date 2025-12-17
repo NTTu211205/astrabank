@@ -78,7 +78,6 @@ public class TransactionSuccessActivity extends AppCompatActivity {
 
         // --- Xử lý sự kiện (Ví dụ) ---
         btnHoanThanh.setOnClickListener(v -> {
-
             changeScreen(LoggedInActivity.class);
         });
 
@@ -90,7 +89,8 @@ public class TransactionSuccessActivity extends AppCompatActivity {
         String date = intent.getStringExtra("date");
         String transId = intent.getStringExtra("transactionId");
 
-        tvAmount.setText(formatMoney(amount) + " VND");
+        String moneyString = formatMoney(amount);
+        tvAmount.setText(moneyString + " VND");
         tvReceiverName.setText(receiverName);
         tvReceiverAccount.setText(receiverAccountNumber);
         tvBankName.setText(bankSymbol);
@@ -100,6 +100,7 @@ public class TransactionSuccessActivity extends AppCompatActivity {
 
         getBank(bankSymbol);
     }
+
     private String formatMoney(long amount) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();

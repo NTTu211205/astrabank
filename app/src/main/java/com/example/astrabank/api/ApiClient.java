@@ -13,7 +13,6 @@ public class ApiClient {
 //    private static final String BASE_URL = "https://astrabank-backend.onrender.com/api/";
     private static final String BASE_URL = "http://10.0.2.2:8080/api/";
 
-
     public static Retrofit getClient() {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
