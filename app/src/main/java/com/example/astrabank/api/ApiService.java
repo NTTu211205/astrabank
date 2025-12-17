@@ -1,6 +1,7 @@
 package com.example.astrabank.api;
 
 import com.example.astrabank.api.request.LoginPhoneRequest;
+import com.example.astrabank.api.response.AccountResponse;
 import com.example.astrabank.api.response.ApiResponse;
 import com.example.astrabank.models.Account;
 import com.example.astrabank.models.Bank;
@@ -12,6 +13,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -24,7 +26,7 @@ public interface ApiService {
     @GET("banks/all")
     Call<ApiResponse<List<Bank>>> getAllBank();
 
-//    @GET("accounts/{accountNumber}")
-//    Call<Api>
+    @GET("accounts/{accountNumber}")
+    Call<ApiResponse<AccountResponse>> findAccount(@Path("accountNumber") String accountNumber);
 
 }
