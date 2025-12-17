@@ -13,6 +13,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.astrabank.utils.LoginManager;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 public class AccountAndCardActivity extends AppCompatActivity {
 
     // Khai báo các biến View
@@ -54,7 +59,25 @@ public class AccountAndCardActivity extends AppCompatActivity {
         tvSetNickname = findViewById(R.id.tvSetNickname);
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
         tvAccountNumber = findViewById(R.id.tvAccountNumber);
+
+        String accountNumber = LoginManager.getInstance().getAccount().getAccountNumber();
+        String fullName = LoginManager.getInstance().getUser().getFullName();
+        tvNumCard.setText("..." + accountNumber.substring(accountNumber.length() - 4));
+        tvAccountNumber.setText(accountNumber);
+        tvSetNickname.setText(fullName);
+        tvUserName.setText(fullName);
+        tvBalance.setText(formatMoney(LoginManager.getInstance().getAccount().getBalance()));
+        tvPhoneNumber.setText(LoginManager.getInstance().getUser().getPhone());
     }
+
+    private String formatMoney(long amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.'); // Bắt buộc dùng dấu chấm
+        formatter.setDecimalFormatSymbols(symbols);
+        return formatter.format(amount);
+    }
+
 
     private void setupEvents() {
         // --- Xử lý nút Quay lại ---
@@ -65,14 +88,6 @@ public class AccountAndCardActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-//        // --- Xử lý nút Yêu thích ---
-//        btnFavorite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(AccountAndCardActivity.this, "Đã thêm vào danh sách yêu thích!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         // --- Xử lý nút Mắt (Ẩn/Hiện thông tin) ---
         btnToggleEye.setOnClickListener(new View.OnClickListener() {
@@ -101,13 +116,14 @@ public class AccountAndCardActivity extends AppCompatActivity {
 
     // Hàm logic để ẩn/hiện số dư và số tài khoản
     private void toggleInformationVisibility() {
-        isHidden = !isHidden; // Đảo ngược trạng thái
+        isHidden = !isHidden;
+        String accountNumber = LoginManager.getInstance().getAccount().getAccountNumber();
 
         if (isHidden) {
-            tvNumCard.setText("1234 1234 1234 7613");
+            tvNumCard.setText(accountNumber);
             btnToggleEye.setAlpha(0.5f);
         } else {
-            tvNumCard.setText(".... 7613");
+            tvNumCard.setText("...." + accountNumber.substring(accountNumber.length() - 5));
             btnToggleEye.setAlpha(1.0f);
         }
     }

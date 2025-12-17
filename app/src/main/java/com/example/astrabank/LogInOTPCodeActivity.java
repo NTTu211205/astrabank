@@ -162,8 +162,8 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                     ApiResponse<User> apiResponse = response.body();
 
                     if (apiResponse != null) {
-                        if (apiResponse.getResult() != null && apiResponse.getResult().get(0) != null) {
-                            User user = apiResponse.getResult().get(0);
+                        if (apiResponse.getResult() != null) {
+                            User user = apiResponse.getResult();
 
                             LoginManager.getInstance().setUser(user);
                             changeScreen(LoggedInActivity.class);

@@ -3,6 +3,7 @@ package com.example.astrabank.api;
 import com.example.astrabank.api.request.LoginPhoneRequest;
 import com.example.astrabank.api.response.ApiResponse;
 import com.example.astrabank.models.Account;
+import com.example.astrabank.models.Bank;
 import com.example.astrabank.models.User;
 
 import java.util.List;
@@ -19,5 +20,11 @@ public interface ApiService {
 
     @GET("accounts/my-account")
     Call<ApiResponse<Account>> getDefaultAccount(@Query("userId") String uid, @Query("accountType") String accountType);
+
+    @GET("banks/all")
+    Call<ApiResponse<List<Bank>>> getAllBank();
+
+//    @GET("accounts/{accountNumber}")
+//    Call<Api>
 
 }

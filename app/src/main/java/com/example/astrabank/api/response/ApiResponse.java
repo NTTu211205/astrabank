@@ -10,9 +10,9 @@ public class ApiResponse<T> {
     @SerializedName("message")
     private String message;
     @SerializedName("result")
-    private List<T> result;
+    private T result;
 
-    public ApiResponse(int code, String message, List<T> result) {
+    public ApiResponse(int code, String message, T result) {
         this.code = code;
         this.message = message;
         this.result = result;
@@ -34,11 +34,11 @@ public class ApiResponse<T> {
         this.message = message;
     }
 
-    public List<T> getResult() {
+    public T getResult() {
         return result;
     }
 
-    public void setResult(List<T> result) {
+    public void setResult(T result) {
         this.result = result;
     }
 }

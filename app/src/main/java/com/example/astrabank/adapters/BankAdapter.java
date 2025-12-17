@@ -1,4 +1,4 @@
-package com.example.astrabank;
+package com.example.astrabank.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,20 +7,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.astrabank.R;
+import com.example.astrabank.models.Bank;
+
 import java.util.List;
 
 public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder> {
 
-    private List<BankModel> bankList;
+    private List<Bank> bankList;
     private OnBankClickListener listener; // Interface để xử lý click
 
     // Interface để giao tiếp với Activity
     public interface OnBankClickListener {
-        void onBankClick(BankModel bank);
+        void onBankClick(Bank bank);
     }
 
     // Constructor nhận vào dữ liệu và listener
-    public BankAdapter(List<BankModel> bankList, OnBankClickListener listener) {
+    public BankAdapter(List<Bank> bankList, OnBankClickListener listener) {
         this.bankList = bankList;
         this.listener = listener;
     }
@@ -35,12 +39,12 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BankViewHolder holder, int position) {
-        BankModel bank = bankList.get(position);
+        Bank bank = bankList.get(position);
 
         // Gán dữ liệu lên View
-        holder.tvShortName.setText(bank.getShortName());
-        holder.tvFullName.setText(bank.getFullName());
-        holder.ivLogo.setImageResource(bank.getLogoResId());
+        holder.tvShortName.setText(bank.getBankSymbol());
+        holder.tvFullName.setText(bank.getBankFullName());
+//        holder.ivLogo.setImageResource(bank.getLogoResId());
 
         // Bắt sự kiện Click vào item
         holder.itemView.setOnClickListener(v -> {
