@@ -156,7 +156,6 @@ public class TransactionActivity extends AppCompatActivity {
         });
     }
 
-
     private void fillSpinnerData(List<Account> accountList) {
         ArrayAdapter<Account> adapter = new ArrayAdapter<>(
                 this,

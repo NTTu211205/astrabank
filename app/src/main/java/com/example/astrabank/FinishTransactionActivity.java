@@ -117,7 +117,7 @@ public class FinishTransactionActivity extends AppCompatActivity {
                         else if (check) {
                             Log.d(LOG_TAG, "CHECK_PIN:transaction pin is correct");
                             // progress transaction
-                            progressTransaction();
+                            progressInBankTransaction();
 
                         }
                         else {
@@ -144,7 +144,21 @@ public class FinishTransactionActivity extends AppCompatActivity {
         });
     }
 
-    private void progressTransaction(){
+    private void progressOutBankTransaction() {
+        TransactionRequest transactionRequest = new TransactionRequest(
+                sourceAccountNumber,
+                sourceBankSymbol,
+                desAccountNumber,
+                desBankSymbol,
+                amount,
+                TransactionType.TRANSFER,
+                content,
+                senderName,
+                receiverName
+        );
+    }
+
+    private void progressInBankTransaction(){
         TransactionRequest transactionRequest = new TransactionRequest(
                 sourceAccountNumber,
                 sourceBankSymbol,
@@ -158,7 +172,13 @@ public class FinishTransactionActivity extends AppCompatActivity {
         );
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<ApiResponse<Transaction>> call = apiService.progressTransfer(transactionRequest);
+        Call<ApiResponse<Transaction>> call;
+        if (desBankSymbol.equals("ATB")) {
+            call = apiService.progressTransfer(transactionRequest);
+        }
+        else {
+            call = apiService.sendTransaction(transactionRequest);
+        }
 
         call.enqueue(new Callback<ApiResponse<Transaction>>() {
             @Override
