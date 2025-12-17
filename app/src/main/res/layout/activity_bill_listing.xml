@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Mortgage Account"
+            android:text="Electric Bill"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -80,102 +80,8 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#D32F2F"
+            android:backgroundTint="#000000"
             android:padding="12dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@android:color/white"
-        android:padding="16dp"
-        android:layout_margin="10dp"
-        android:elevation="2dp"
-        android:layout_marginBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Loan Details"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="12dp"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Collateral Property"
-                android:textColor="#757575"/>
-
-            <TextView
-                android:id="@+id/tv_property_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="123 Maple Ave, NY"
-                android:textStyle="bold"
-                android:textColor="#000000"/>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#EEEEEE"
-            android:layout_marginBottom="8dp"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Outstanding Balance"
-                android:textColor="#757575"/>
-
-            <TextView
-                android:id="@+id/tv_outstanding_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="$ 185,400.00"
-                android:textStyle="bold"
-                android:textColor="#000000"/>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#EEEEEE"
-            android:layout_marginBottom="8dp"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Interest Rate"
-                android:textColor="#757575"/>
-
-            <TextView
-                android:id="@+id/tv_loan_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="3.8% Fixed"
-                android:textStyle="bold"
-                android:textColor="#000000"/>
-        </RelativeLayout>
-
     </LinearLayout>
 
     <TextView

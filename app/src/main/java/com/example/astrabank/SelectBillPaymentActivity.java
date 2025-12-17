@@ -1,6 +1,9 @@
 package com.example.astrabank;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +23,28 @@ public class SelectBillPaymentActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        setupServiceClick(R.id.tv_electric, "Electricity");
+        setupServiceClick(R.id.tv_water, "Water");
+        setupServiceClick(R.id.tv_item_internet, "Internet");
+        setupServiceClick(R.id.tv_mobile_top_up, "Mobile Top-up");
+        setupServiceClick(R.id.tv_mobile_charge, "Postpaid Mobile");
+        setupServiceClick(R.id.tv_data, "Mobile Data");
+        setupServiceClick(R.id.tv_bus_ticket, "Bus Tickets");
+        setupServiceClick(R.id.tv_tuition, "Tuition");
+        setupServiceClick(R.id.tv_airline_tickets, "Airline Tickets");
+
+        findViewById(R.id.img_back).setOnClickListener(v -> finish());
+        findViewById(R.id.img_close).setOnClickListener(v -> finish());
+    }
+
+    private void setupServiceClick(int viewId, String serviceName) {
+        TextView serviceView = findViewById(viewId);
+        if (serviceView != null) {
+            serviceView.setOnClickListener(v -> {
+                Intent intent = new Intent(SelectBillPaymentActivity.this, BillListingActivity.class);
+                intent.putExtra("SERVICE_NAME", serviceName);
+                startActivity(intent);
+            });
+        }
     }
 }

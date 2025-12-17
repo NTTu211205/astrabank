@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="16dp">
 
+    <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:layout_marginBottom="16dp">
 
         <ImageView
@@ -18,15 +21,19 @@
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:contentDescription="Close" />
+            android:contentDescription="Close"
+            android:clickable="true"
+            android:focusable="true" />
     </RelativeLayout>
 
-
+    <!-- ================== BANK SELECTION ================== -->
     <LinearLayout
         android:id="@+id/layout_bank_selection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
+        android:layout_margin="10dp"
         android:visibility="visible">
 
         <TextView
@@ -36,16 +43,19 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#000000"
-            android:paddingHorizontal="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:layout_marginBottom="16dp"/>
 
+        <!-- Search -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="24dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical">
 
             <ImageView
                 android:layout_width="40dp"
@@ -56,8 +66,9 @@
 
             <EditText
                 android:id="@+id/et_search_bank"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
+                android:layout_weight="1"
                 android:hint="Search bank?"
                 android:background="@null"
                 android:textSize="16sp"
@@ -66,25 +77,30 @@
                 android:layout_marginStart="8dp"/>
         </LinearLayout>
 
+        <!-- Bank list -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_bank_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
     </LinearLayout>
 
-
+    <!-- ================== ACCOUNT INPUT ================== -->
     <LinearLayout
         android:id="@+id/layout_account_input"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
+        android:layout_margin="10dp"
         android:visibility="gone">
 
+        <!-- Content -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -93,7 +109,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#000000"
-                android:paddingHorizontal="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:layout_marginBottom="20dp"/>
 
             <LinearLayout
@@ -101,10 +118,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:descendantFocusability="afterDescendants">
 
                 <ImageView
                     android:id="@+id/iv_selected_bank_logo"
@@ -115,11 +132,11 @@
                     android:padding="8dp"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_gravity="center_vertical">
+                    android:layout_marginStart="12dp">
 
                     <TextView
                         android:id="@+id/tv_selected_bank_name"
@@ -141,21 +158,19 @@
                         android:textColorHint="#BDBDBD"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
+        <!-- Continue button -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tiếp theo"
+            android:text="Continue"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_margin="10dp"
             android:background="@drawable/numpad_button_black"/>
-
     </LinearLayout>
 
 </LinearLayout>
