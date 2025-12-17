@@ -45,7 +45,8 @@
             android:exported="false" />
         <activity
             android:name=".FinishTransactionActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".NotificationsManagementActivity"
             android:exported="false" />
