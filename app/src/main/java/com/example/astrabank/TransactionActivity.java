@@ -112,7 +112,6 @@ public class TransactionActivity extends AppCompatActivity {
         return formatter.format(amount);
     }
 
-
     private void getAccountData(String userID) {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<ApiResponse<List<Account>>>  call = apiService.getAllMyAccount(userID);
@@ -132,16 +131,19 @@ public class TransactionActivity extends AppCompatActivity {
                         else {
                             Toast.makeText(TransactionActivity.this, "Không tìm được tài khoản phù hợp", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG, "Can not load account data");
+                            changePreScreen(TransactionToNewPersonActivity.class);
                         }
                     }
                     else {
                         Toast.makeText(TransactionActivity.this, "Không tìm được tài khoản phù hợp", Toast.LENGTH_SHORT).show();
                         Log.d(LOG_TAG, "Can not load account data");
+                        changePreScreen(TransactionToNewPersonActivity.class);
                     }
                 }
                 else {
                     Toast.makeText(TransactionActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "Error from server");
+                    changePreScreen(TransactionToNewPersonActivity.class);
                 }
             }
 
@@ -149,6 +151,7 @@ public class TransactionActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponse<List<Account>>> call, Throwable t) {
                 Toast.makeText(TransactionActivity.this, "Kiểm tra kết nối internet", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "Internet disconnect");
+                changePreScreen(TransactionToNewPersonActivity.class);
             }
         });
     }
@@ -184,5 +187,11 @@ public class TransactionActivity extends AppCompatActivity {
                 // Không làm gì
             }
         });
+    }
+
+    private void changePreScreen(Class<?> preScreen) {
+        Intent intent = new Intent(this, preScreen);
+        startActivity(intent);
+        finish();
     }
 }
