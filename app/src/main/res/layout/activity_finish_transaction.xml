@@ -21,6 +21,7 @@
 
     <!-- Logo -->
     <ImageView
+        android:layout_marginStart="10dp"
         android:id="@+id/iv_logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -35,6 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="24dp"
         android:text="Enter your own OTP to finish transaction"
         android:textColor="@android:color/black"
@@ -47,6 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
 
@@ -56,6 +61,7 @@
             style="@style/OtpEditTextStyle"
             android:layout_width="0dp"
             android:inputType="numberPassword"
+            android:maxLength="1"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp" />
@@ -66,6 +72,7 @@
             style="@style/OtpEditTextStyle"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:maxLength="1"
             android:inputType="numberPassword"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp" />
@@ -76,6 +83,7 @@
             style="@style/OtpEditTextStyle"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:maxLength="1"
             android:inputType="numberPassword"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp" />
@@ -85,6 +93,7 @@
             android:id="@+id/et_otp_4"
             style="@style/OtpEditTextStyle"
             android:layout_width="0dp"
+            android:maxLength="1"
             android:layout_weight="1"
             android:inputType="numberPassword"
             android:layout_height="wrap_content"
@@ -96,6 +105,7 @@
             style="@style/OtpEditTextStyle"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:maxLength="1"
             android:inputType="numberPassword"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp" />
@@ -105,17 +115,20 @@
             android:id="@+id/et_otp_6"
             style="@style/OtpEditTextStyle"
             android:layout_width="0dp"
+            android:maxLength="1"
             android:layout_weight="1"
             android:inputType="numberPassword"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <!-- Text "Quên mã mở khóa?" -->
-    <Button
-        android:id="@+id/tv_forgot_otp"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/tv_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/white"
         android:layout_marginTop="24dp"
         android:background="@drawable/numpad_button_black"
         android:text="Confirm"

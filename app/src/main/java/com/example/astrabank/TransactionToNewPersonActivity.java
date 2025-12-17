@@ -146,7 +146,7 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
     private void initViews() {
         layoutBankSelection = findViewById(R.id.layout_bank_selection);
         layoutAccountInput = findViewById(R.id.layout_account_input);
-        headerSelectedBank = findViewById(R.id.header_selected_bank); // Layout bấm để chọn lại
+        headerSelectedBank = findViewById(R.id.header_selected_bank);
 
         btnClose = findViewById(R.id.btn_close);
         rvBankList = findViewById(R.id.rv_bank_list);

@@ -1,5 +1,7 @@
 package com.example.astrabank.models;
 
+import androidx.annotation.NonNull;
+
 public class Bank {
     private String bankName;
     private String bankSymbol;
@@ -33,5 +35,11 @@ public class Bank {
 
     public void setBankSymbol(String bankSymbol) {
         this.bankSymbol = bankSymbol;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.bankFullName + "(" + this.bankName + ")";
     }
 }

@@ -35,11 +35,13 @@ import retrofit2.Response;
 public class TransactionActivity extends AppCompatActivity {
     private final String LOG_TAG = "TransactionActivity";
     Button btnMakePayment;
-    String accountNumber, accountName, desBankSymbol;
+    String desAccountNumber, desAccountName, desBankSymbol;
     TextView tvReceiverName, tvReceiverAccount, tvBalance;
     EditText etContent, etAmount;
     Spinner snAccountType;
     Account selectedAccount;
+    long amount;
+    String content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +67,12 @@ public class TransactionActivity extends AppCompatActivity {
         getAccountData(LoginManager.getInstance().getUser().getUserID());
 
         Intent intent = getIntent();
-        accountNumber = intent.getStringExtra("accountNumber");
-        accountName = intent.getStringExtra("accountName");
+        desAccountNumber = intent.getStringExtra("accountNumber");
+        desAccountName = intent.getStringExtra("accountName");
         desBankSymbol = intent.getStringExtra("desBankSymbol");
 
-
-
-        tvReceiverName.setText(accountName);
-        tvReceiverAccount.setText(accountNumber);
+        tvReceiverName.setText(desAccountName);
+        tvReceiverAccount.setText(desAccountNumber);
         etContent.setText(LoginManager.getInstance().getUser().getFullName() + " CHUYEN KHOAN");
 
         btnMakePayment = findViewById(R.id.btn_confirm_payment);
@@ -82,24 +82,26 @@ public class TransactionActivity extends AppCompatActivity {
                 btnMakePayment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(TransactionActivity.this, TransactionSuccessActivity.class);
-//
-//                        intent.putExtra("IS_BILL_PAYMENT", false);
-//
-//                        intent.putExtra("AMOUNT", "500,000"); // Lấy từ et_amount.getText().toString()
-//                        intent.putExtra("CONTENT", "Nguyen Van A chuyen tien"); // Lấy từ et_content
-//                        intent.putExtra("TRANSACTION_CODE", "FT123456789");
-//                        intent.putExtra("DATE_TIME", "17 Dec, 2025 14:30");
-//
-//                        intent.putExtra("RECEIVER_NAME", "TRAN CAO PHONG");
-//                        intent.putExtra("RECEIVER_ACC", "86686886688668");
-//                        intent.putExtra("BANK_NAME", "Techcombank");
-//
-//                        startActivity(intent);
+                        amount = Long.parseLong(etAmount.getText().toString());
+                        content = etContent.getText().toString();
+                        changeNextScreen(FinishTransactionActivity.class);
                     }
                 });
             }
         });
+    }
+
+    private void changeNextScreen(Class<?> nextScreen) {
+        Intent intent = new Intent(this, nextScreen);
+        intent.putExtra("desAccountNumber", desAccountNumber);
+        intent.putExtra("receiverName", desAccountName);
+        intent.putExtra("desBankSymbol", desBankSymbol);
+        intent.putExtra("sourceAccountNumber", selectedAccount.getAccountNumber());
+        intent.putExtra("senderName", LoginManager.getInstance().getUser().getFullName());
+        intent.putExtra("sourceBankSymbol", "ATB");
+        intent.putExtra("amount", amount);
+        intent.putExtra("content", content);
+        startActivity(intent);
     }
 
     private String formatMoney(long amount) {
