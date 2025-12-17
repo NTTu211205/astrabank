@@ -87,6 +87,8 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 accountNumber = etAccountNumber.getText().toString();
+                btContinue.setText("●   ●   ●");
+                btContinue.setEnabled(false);
 
                 if (selectedBank != null && !accountNumber.isEmpty()) {
                     // check stk
@@ -96,6 +98,10 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
                     else {
                         checkAccountNumber(accountNumber, selectedBank.getBankSymbol());
                     }
+                }
+                else {
+                    btContinue.setText("Continue");
+                    btContinue.setEnabled(true);
                 }
             }
         });
@@ -122,16 +128,22 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
                         else {
                             Toast.makeText(TransactionToNewPersonActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG, "Account not exist");
+                            btContinue.setText("Continue");
+                            btContinue.setEnabled(true);
                         }
                     }
                     else {
                         Toast.makeText(TransactionToNewPersonActivity.this, "Không tải được dữ liệu", Toast.LENGTH_SHORT).show();
                         Log.d(LOG_TAG, "Can not load data");
+                        btContinue.setText("Continue");
+                        btContinue.setEnabled(true);
                     }
                 }
                 else {
                     Toast.makeText(TransactionToNewPersonActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "Error from server");
+                    btContinue.setText("Continue");
+                    btContinue.setEnabled(true);
                 }
             }
 
@@ -139,6 +151,8 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponse<AccountResponse>> call, Throwable t) {
                 Toast.makeText(TransactionToNewPersonActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "Internet disconnect");
+                btContinue.setText("Continue");
+                btContinue.setEnabled(true);
             }
         });
     }
@@ -164,16 +178,22 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
                         else {
                             Toast.makeText(TransactionToNewPersonActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG, "Account not exist");
+                            btContinue.setText("Continue");
+                            btContinue.setEnabled(true);
                         }
                     }
                     else {
                         Toast.makeText(TransactionToNewPersonActivity.this, "Không tải được dữ liệu", Toast.LENGTH_SHORT).show();
                         Log.d(LOG_TAG, "Can not load data");
+                        btContinue.setText("Continue");
+                        btContinue.setEnabled(true);
                     }
                 }
                 else {
                     Toast.makeText(TransactionToNewPersonActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "Error from server");
+                    btContinue.setText("Continue");
+                    btContinue.setEnabled(true);
                 }
             }
 
@@ -181,6 +201,8 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponse<AccountResponse>> call, Throwable t) {
                 Toast.makeText(TransactionToNewPersonActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "Internet disconnect");
+                btContinue.setText("Continue");
+                btContinue.setEnabled(true);
             }
         });
     }

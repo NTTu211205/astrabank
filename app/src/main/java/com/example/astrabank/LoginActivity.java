@@ -59,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (phone.startsWith("0")) {
                     phone = "+84" + phone.substring(1);
                 }
-
-                Toast.makeText(LoginActivity.this, "Đang gửi mã OTP...", Toast.LENGTH_SHORT).show();
+                btLogin.setText("●   ●   ●");
+                btLogin.setEnabled(false);
                 sendOTP(phone);
             }
         });
@@ -77,6 +77,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
+                btLogin.setText("GET CODE");
+                btLogin.setEnabled(true);
                 Log.w(TAG, "onVerificationFailed", e);
                 Toast.makeText(LoginActivity.this, "Gửi mã thất bại: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -85,7 +87,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onCodeSent(@NonNull String verificationId,
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent:" + verificationId);
-
+                btLogin.setText("GET CODE");
+                btLogin.setEnabled(true);
                 // CHUYỂN MÀN HÌNH SAU KHI ĐÃ GỬI MÃ
                 Intent intent = new Intent(LoginActivity.this, LogInOTPCodeActivity.class);
                 intent.putExtra("verificationId", verificationId);

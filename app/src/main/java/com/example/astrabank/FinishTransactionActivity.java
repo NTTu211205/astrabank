@@ -91,6 +91,8 @@ public class FinishTransactionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String pin = getOtpCode();
+                tvConfirm.setText("●   ●   ●");
+                tvConfirm.setEnabled(false);
                 checkPin(pin);
             }
         });
@@ -111,6 +113,8 @@ public class FinishTransactionActivity extends AppCompatActivity {
                         Boolean check = apiResponse.getResult();
 
                         if (check == null) {
+                            tvConfirm.setText("Confirm");
+                            tvConfirm.setEnabled(true);
                             Toast.makeText(FinishTransactionActivity.this, "Lỗi trong quá trình kiểm tra mã pin", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG, "CHECK_PIN:processing validate error, result is null");
                         }
@@ -121,16 +125,22 @@ public class FinishTransactionActivity extends AppCompatActivity {
 
                         }
                         else {
+                            tvConfirm.setText("Confirm");
+                            tvConfirm.setEnabled(true);
                             Toast.makeText(FinishTransactionActivity.this, "Mã pin không đúng, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG, "CHECK_PIN:transaction pin is wrong");
                         }
                     }
                     else {
+                        tvConfirm.setText("Confirm");
+                        tvConfirm.setEnabled(true);
                         Toast.makeText(FinishTransactionActivity.this, "Không tìm được tài khoản phù hợp", Toast.LENGTH_SHORT).show();
                         Log.d(LOG_TAG, "CHECK_PIN:Can not load account data");
                     }
                 }
                 else {
+                    tvConfirm.setText("Confirm");
+                    tvConfirm.setEnabled(true);
                     Toast.makeText(FinishTransactionActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "CHECK_PIN:Error from server");
                 }
@@ -138,24 +148,12 @@ public class FinishTransactionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<Boolean>> call, Throwable t) {
+                tvConfirm.setText("Confirm");
+                tvConfirm.setEnabled(true);
                 Toast.makeText(FinishTransactionActivity.this, "Kiểm tra kết nối internet", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "CHECK_PIN:Internet disconnect");
             }
         });
-    }
-
-    private void progressOutBankTransaction() {
-        TransactionRequest transactionRequest = new TransactionRequest(
-                sourceAccountNumber,
-                sourceBankSymbol,
-                desAccountNumber,
-                desBankSymbol,
-                amount,
-                TransactionType.TRANSFER,
-                content,
-                senderName,
-                receiverName
-        );
     }
 
     private void progressInBankTransaction(){
@@ -203,16 +201,22 @@ public class FinishTransactionActivity extends AppCompatActivity {
                                     );
                         }
                         else {
+                            tvConfirm.setText("Confirm");
+                            tvConfirm.setEnabled(true);
                             Toast.makeText(FinishTransactionActivity.this, "Giao dịch không thành công", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG, "PROGRESS_TRANSACTION:Transaction failed");
                         }
                     }
                     else {
+                        tvConfirm.setText("Confirm");
+                        tvConfirm.setEnabled(true);
                         Toast.makeText(FinishTransactionActivity.this, "Lỗi trong quá trình xử lí giao dịch", Toast.LENGTH_SHORT).show();
                         Log.d(LOG_TAG, "PROGRESS_TRANSACTIONTransaction processing error");
                     }
                 }
                 else {
+                    tvConfirm.setText("Confirm");
+                    tvConfirm.setEnabled(true);
                     Toast.makeText(FinishTransactionActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "PROGRESS_TRANSACTIONError from server");
                 }
@@ -220,6 +224,8 @@ public class FinishTransactionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<Transaction>> call, Throwable t) {
+                tvConfirm.setText("Confirm");
+                tvConfirm.setEnabled(true);
                 Toast.makeText(FinishTransactionActivity.this, "Kiểm tra kết nối internet", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "PROGRESS_TRANSACTIONInternet disconnect");
             }
