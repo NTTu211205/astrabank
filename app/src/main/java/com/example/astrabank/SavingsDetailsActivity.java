@@ -1,8 +1,11 @@
 package com.example.astrabank;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +17,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.astrabank.TESTACCOUNT.Transaction;
 import com.example.astrabank.TESTACCOUNT.TransactionAdapter;
+import com.example.astrabank.api.ApiClient;
+import com.example.astrabank.api.ApiService;
+import com.example.astrabank.api.response.ApiResponse;
+import com.example.astrabank.models.Account;
+import com.example.astrabank.utils.LoginManager;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SavingsDetailsActivity extends AppCompatActivity {
+    private final String LOG_TAG = "SavingsDetailsActivity";
 
     private RecyclerView rvHistory;
     private TransactionAdapter adapter;
@@ -28,6 +45,8 @@ public class SavingsDetailsActivity extends AppCompatActivity {
     private TextView tvTotalBalance;
     private TextView tvInterestRate;
     private TextView tvLastProfit;
+
+    TextView tvAccountNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +76,12 @@ public class SavingsDetailsActivity extends AppCompatActivity {
         tvInterestRate = findViewById(R.id.tv_interest_rate);
         tvLastProfit = findViewById(R.id.tv_last_profit);
         btnBack = findViewById(R.id.btnBack);
+        tvAccountNumber = findViewById(R.id.tv_account_number);
     }
 
     private void setupHeaderData() {
         // In a real app, you would pass these via Intent or fetch from API
-        tvTotalBalance.setText("$ 12,000.00");
-        tvInterestRate.setText("4.5% APY");
-        tvLastProfit.setText("+ $ 45.00");
+        findSavingAccount(LoginManager.getInstance().getUser().getUserID(), "SAVING");
     }
 
     private void setupRecyclerView() {
@@ -81,4 +99,66 @@ public class SavingsDetailsActivity extends AppCompatActivity {
         rvHistory.setLayoutManager(new LinearLayoutManager(this));
         rvHistory.setAdapter(adapter);
     }
+
+    private String formatMoney(long amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.'); // Bắt buộc dùng dấu chấm
+        formatter.setDecimalFormatSymbols(symbols);
+        return formatter.format(amount);
+    }
+
+    private void findSavingAccount(String userID, String checking) {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<Account>> call = apiService.getDefaultAccount(userID, checking);
+
+        call.enqueue(new Callback<ApiResponse<Account>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Account>> call, Response<ApiResponse<Account>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<Account> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        if (apiResponse.getResult() != null) {
+                            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
+                            Account account = apiResponse.getResult();
+                            String accountNumber = account.getAccountNumber();
+
+                            tvAccountNumber.setText("***"+accountNumber.substring(accountNumber.length()-5, accountNumber.length()));
+                            tvTotalBalance.setText("VND " + formatMoney(account.getBalance()));
+                            tvInterestRate.setText((account.getInterestRate() * 100) + "%");
+                            tvLastProfit.setText("+ $ 45.00");
+                        }
+                    }
+                    else {
+                        Log.w(LOG_TAG, "API Success but body is null.");
+                        Toast.makeText(SavingsDetailsActivity.this, "Không tìm thấy tài khoản mặc định", Toast.LENGTH_SHORT).show();
+                        changeScreen(SeeAllAccountActivity.class);
+                        LoginManager.clearUser();
+                    }
+                }
+                else {
+                    Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
+                    Toast.makeText(SavingsDetailsActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    changeScreen(SeeAllAccountActivity.class);
+                    LoginManager.clearUser();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
+                Log.e(LOG_TAG, "Network failure: " + t.getMessage());
+                Toast.makeText(SavingsDetailsActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                changeScreen(SeeAllAccountActivity.class);
+                LoginManager.clearUser();
+            }
+        });
+    }
+
+    private void changeScreen(Class<?> nextScreen) {
+        Intent intent = new Intent(this, nextScreen);
+        startActivity(intent);
+        finish();
+    }
+
 }

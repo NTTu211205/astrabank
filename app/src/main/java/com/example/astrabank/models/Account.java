@@ -30,6 +30,9 @@ public class Account {
     @SerializedName("createdAt")
     private Date createdAt;
 
+    @SerializedName("interestRate")
+    private Double interestRate;
+
     public Account(String userId, String accountNumber, boolean accountStatus,
                    long balance, AccountType accountType) {
         this.userId = userId;
@@ -38,6 +41,26 @@ public class Account {
         this.balance = balance;
         this.accountType = accountType;
         this.createdAt = new Date();
+    }
+
+    public Boolean getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(Boolean accountStatus) {
+        this.accountStatus = accountStatus;
+    }
+
+    public void setBalance(Long balance) {
+        this.balance = balance;
+    }
+
+    public Double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(Double interestRate) {
+        this.interestRate = interestRate;
     }
 
     public String getUserId() {
