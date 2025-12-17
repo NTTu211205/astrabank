@@ -36,11 +36,17 @@ public interface ApiService {
     @GET("accounts/{accountNumber}")
     Call<ApiResponse<AccountResponse>> findAccount(@Path("accountNumber") String accountNumber);
 
+    @GET("accounts/{accountNumber}/{bankSymbol}")
+    Call<ApiResponse<AccountResponse>> findAccount(@Path("accountNumber") String accountNumber, @Path("bankSymbol") String bankSymbol);
+
     @GET("accounts/findAll/{userId}")
     Call<ApiResponse<List<Account>>> getAllMyAccount (@Path("userId") String userId);
 
     @POST("transactions/transfer")
     Call<ApiResponse<Transaction>> progressTransfer(@Body TransactionRequest transactionRequest);
+
+    @POST("transactions/sendTransaction")
+    Call<ApiResponse<Transaction>> sendTransaction(@Body TransactionRequest transactionRequest);
 
     @GET("banks/{bankSymbol}")
     Call<ApiResponse<Bank>> getBank(@Path("bankSymbol") String bankSymbol);

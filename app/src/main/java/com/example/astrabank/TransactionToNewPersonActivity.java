@@ -94,9 +94,51 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
                         checkAccountNumber(accountNumber);
                     }
                     else {
-
+                        checkAccountNumber(accountNumber, selectedBank.getBankSymbol());
                     }
                 }
+            }
+        });
+    }
+
+    private void checkAccountNumber(String accountNumber, String bankSymbol) {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<AccountResponse>> call = apiService.findAccount(accountNumber, bankSymbol);
+
+        call.enqueue(new Callback<ApiResponse<AccountResponse>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<AccountResponse>> call, Response<ApiResponse<AccountResponse>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<AccountResponse> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        AccountResponse accountResponse = apiResponse.getResult();
+
+                        if (accountResponse != null) {
+                            // chuyền màn hình, show account info
+                            account = accountResponse;
+                            changeNextScreen(TransactionActivity.class);
+                        }
+                        else {
+                            Toast.makeText(TransactionToNewPersonActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
+                            Log.d(LOG_TAG, "Account not exist");
+                        }
+                    }
+                    else {
+                        Toast.makeText(TransactionToNewPersonActivity.this, "Không tải được dữ liệu", Toast.LENGTH_SHORT).show();
+                        Log.d(LOG_TAG, "Can not load data");
+                    }
+                }
+                else {
+                    Toast.makeText(TransactionToNewPersonActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Log.d(LOG_TAG, "Error from server");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<AccountResponse>> call, Throwable t) {
+                Toast.makeText(TransactionToNewPersonActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, "Internet disconnect");
             }
         });
     }
