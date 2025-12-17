@@ -1,5 +1,6 @@
 package com.example.astrabank;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -75,9 +76,8 @@ public class MortgageDetailsActivity extends AppCompatActivity {
         btnMakePayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MortgageDetailsActivity.this,
-                        "Processing payment of $1,250.00...",
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MortgageDetailsActivity.this, MortgagePaymentActivity.class);
+                startActivity(intent);
             }
         });
         btnBack.setOnClickListener(new View.OnClickListener() {
