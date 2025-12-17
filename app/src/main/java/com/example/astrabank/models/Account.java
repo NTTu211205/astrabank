@@ -1,6 +1,8 @@
 package com.example.astrabank.models;
 
 
+import androidx.annotation.NonNull;
+
 import com.example.astrabank.constant.AccountType;
 import com.google.firebase.Timestamp;
 import com.google.gson.annotations.SerializedName;
@@ -84,5 +86,11 @@ public class Account {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return accountType + "(" + accountNumber + ")";
     }
 }

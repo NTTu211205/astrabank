@@ -29,4 +29,7 @@ public interface ApiService {
     @GET("accounts/{accountNumber}")
     Call<ApiResponse<AccountResponse>> findAccount(@Path("accountNumber") String accountNumber);
 
+    @GET("accounts/findAll/{userId}")
+    Call<ApiResponse<List<Account>>> getAllMyAccount (@Path("userId") String userId);
+
 }

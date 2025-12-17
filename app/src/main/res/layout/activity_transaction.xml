@@ -151,7 +151,7 @@
 
             <LinearLayout
                 android:layout_width="380dp"
-                android:layout_height="120dp"
+                android:layout_height="match_parent"
                 android:padding="10dp"
                 android:background="@drawable/numpad_button_default"
                 android:orientation="vertical">
@@ -168,26 +168,13 @@
                         android:layout_marginEnd="12dp"
                         android:src="@android:drawable/ic_menu_save" />
 
-                    <TextView
-                        android:id="@+id/tv_account_1_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:layout_toEndOf="@id/iv_account_2_icon"
-                        android:text="Payment Account (•• 8668)"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
+                    <Spinner
+                        android:id="@+id/sn_account_type"
+                        android:layout_width="250dp"
+                        android:layout_height="40dp"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown"/>
 
-                    <ImageView
-                        android:id="@+id/iv_account_1_dropdown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginStart="10dp"
-                        android:src="@android:drawable/arrow_down_float"
-                        app:tint="#757575" />
                 </LinearLayout>
 
                 <RelativeLayout
