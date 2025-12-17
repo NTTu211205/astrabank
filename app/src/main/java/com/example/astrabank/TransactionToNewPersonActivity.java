@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.astrabank.adapters.BankAdapter;
 import com.example.astrabank.api.ApiClient;
 import com.example.astrabank.api.ApiService;
+import com.example.astrabank.api.response.AccountResponse;
 import com.example.astrabank.api.response.ApiResponse;
 import com.example.astrabank.models.Bank;
 
@@ -58,7 +59,9 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
 
     AppCompatButton btContinue;
 
+    String accountNumber;
     Bank selectedBank;
+    AccountResponse account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,16 +86,59 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
         btContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String accountNumber = etAccountNumber.getText().toString();
+                accountNumber = etAccountNumber.getText().toString();
 
                 if (selectedBank != null && !accountNumber.isEmpty()) {
+                    // check stk
                     if (selectedBank.getBankSymbol().equals("ATB")) {
-
+                        checkAccountNumber(accountNumber);
                     }
                     else {
 
                     }
                 }
+            }
+        });
+    }
+
+    private void checkAccountNumber(String accountNumber) {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<AccountResponse>> call = apiService.findAccount(accountNumber);
+
+        call.enqueue(new Callback<ApiResponse<AccountResponse>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<AccountResponse>> call, Response<ApiResponse<AccountResponse>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<AccountResponse> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        AccountResponse accountResponse = apiResponse.getResult();
+
+                        if (accountResponse != null) {
+                            // chuyền màn hình, show account info
+                            account = accountResponse;
+                            changeNextScreen(TransactionActivity.class);
+                        }
+                        else {
+                            Toast.makeText(TransactionToNewPersonActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
+                            Log.d(LOG_TAG, "Account not exist");
+                        }
+                    }
+                    else {
+                        Toast.makeText(TransactionToNewPersonActivity.this, "Không tải được dữ liệu", Toast.LENGTH_SHORT).show();
+                        Log.d(LOG_TAG, "Can not load data");
+                    }
+                }
+                else {
+                    Toast.makeText(TransactionToNewPersonActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Log.d(LOG_TAG, "Error from server");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<AccountResponse>> call, Throwable t) {
+                Toast.makeText(TransactionToNewPersonActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, "Internet disconnect");
             }
         });
     }
@@ -152,11 +198,21 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
         });
     }
 
-    private void changePreScreen(Class<?>preScreen) {
+    private void changePreScreen(Class<?> preScreen) {
         Intent intent = new Intent(this, preScreen);
         startActivity(intent);
         finish();
     }
+
+    private void changeNextScreen(Class<?> nextScreen) {
+        Intent intent = new Intent(this, nextScreen);
+        intent.putExtra("desBankSymbol", selectedBank.getBankSymbol());
+        intent.putExtra("accountNumber", account.getAccountNumber());
+        intent.putExtra("accountName", account.getAccountName());
+        startActivity(intent);
+        finish();
+    }
+
 
     private void setupRecyclerView() {
         // Khi click vào 1 item ngân hàng trong List
