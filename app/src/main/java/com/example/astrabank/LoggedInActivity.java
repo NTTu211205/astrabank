@@ -9,9 +9,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton; // <-- Thêm import
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar; // <--- MỚI THÊM
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +22,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView; // <--- MỚI THÊM
 import androidx.core.graphics.Insets;
-import androidx.core.view.GravityCompat; // <-- Thêm import
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.drawerlayout.widget.DrawerLayout; // <-- Thêm import
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.astrabank.api.ApiClient;
 import com.example.astrabank.api.ApiService;
@@ -43,6 +45,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -51,29 +54,35 @@ import retrofit2.Response;
 
 public class LoggedInActivity extends AppCompatActivity {
     private final String LOG_TAG = "LoggedInActivity";
-    LinearLayout ll_middle,ll_products, ll_account_and_card;
-    RelativeLayout rl_maps;
+    LinearLayout ll_middle, ll_products, ll_account_and_card;
+    RelativeLayout rl_maps, rlNotifCount;
     private boolean visible = true;
     ImageView iv_move_money, img_toggle_visibility, ivHeadClose, btnPhoneCall, btnNotifications;
-    LinearLayout ll_move_money;
-    TextView tv_balance_masked, tvName;
+    LinearLayout ll_move_money, llScanQR;
+    TextView tv_balance_masked, tvName, tvHoTro;
     NavigationView navigationView, navMenuInner;
     View navHeader, navFooter;
     AppCompatButton btSignOut;
 
     // --- Biến mới cho Menu (Side View) ---
     private DrawerLayout drawerLayout;
-    private ImageButton ivMenuToggle; // Nút menu bo tròn
+    private ImageButton ivMenuToggle;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListenerRegistration balanceListener;
+
+    // --- [MỚI] Biến cho phần Insights (Chi tiêu & Số dư bình quân) ---
+    private CardView cardSpendingInsight, cardAvgBalance;
+    private TextView btnSeeSpending, btnSeeAvgBalance;
+    private ProgressBar pbMonth10, pbMonth9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_logged_in); // Tải file XML (đã chứa DrawerLayout)
+        setContentView(R.layout.activity_logged_in);
 
+        // Ánh xạ cũ (Giữ nguyên)
         img_toggle_visibility = findViewById(R.id.img_toggle_visibility);
         iv_move_money = findViewById(R.id.iv_move_money);
         tv_balance_masked = findViewById(R.id.tv_balance_masked);
@@ -85,7 +94,19 @@ public class LoggedInActivity extends AppCompatActivity {
         btnPhoneCall = findViewById(R.id.btn_phone_call);
         tvName = findViewById(R.id.tv_header_name);
         ll_products = findViewById(R.id.ll_discoverProducts);
-        rl_maps =  findViewById(R.id.rl_maps);
+        rl_maps = findViewById(R.id.rl_maps);
+        tvHoTro = findViewById(R.id.tv_ho_tro);
+        rlNotifCount = findViewById(R.id.rl_notif_count);
+        llScanQR = findViewById(R.id.ll_scanQR);
+
+        // --- [MỚI] Ánh xạ các view mới thêm vào ---
+        cardSpendingInsight = findViewById(R.id.card_spending_insight);
+        cardAvgBalance = findViewById(R.id.card_avg_balance);
+        btnSeeSpending = findViewById(R.id.btn_see_spending_details);
+        btnSeeAvgBalance = findViewById(R.id.btn_see_balance_details);
+        pbMonth10 = findViewById(R.id.pb_month_10); // Thanh tiến trình tháng 10
+        pbMonth9 = findViewById(R.id.pb_month_9);   // Thanh tiến trình tháng 9
+
         mAuth = FirebaseAuth.getInstance();
 
         findDefaultAccount(LoginManager.getInstance().getUser().getUserID(), "CHECKING");
@@ -97,20 +118,22 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(new Intent(LoggedInActivity.this, NotificationsManagementActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
-            }
-            else if (id == R.id.nav_edit){
-                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-            else if (id == R.id.nav_discover) {
+            } else if (id == R.id.nav_edit) {
+                Intent intent = new Intent(LoggedInActivity.this, EditPersonalInformationActivity.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            } else if (id == R.id.nav_discover) {
                 Intent intent = new Intent(LoggedInActivity.this, DiscoverProductsActivity.class);
                 startActivity(intent);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
-            }
-            else if (id == R.id.nav_setting) {
-                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-            else if (id == R.id.nav_all_account) {
+            } else if (id == R.id.nav_setting) {
+                Intent intent = new Intent(LoggedInActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            } else if (id == R.id.nav_all_account) {
                 Intent intent = new Intent(LoggedInActivity.this, SeeAllAccountActivity.class);
                 startActivity(intent);
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -121,13 +144,6 @@ public class LoggedInActivity extends AppCompatActivity {
 
         tvName.setText("Hello,\n" + LoginManager.getInstance().getUser().getFullName());
 
-        btnPhoneCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoggedInActivity.this, NotificationsManagementActivity.class);
-                startActivity(intent);
-            }
-        });
         rl_maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,9 +151,24 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        rlNotifCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoggedInActivity.this, NotificationsManagementActivity.class);
+                startActivity(intent);
+            }
+        });
         ivHeadClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+        llScanQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoggedInActivity.this, ScanQRActivity.class);
+                startActivity(intent);
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
@@ -161,12 +192,12 @@ public class LoggedInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (visible) {
                     startListeningToBalance(LoginManager.getInstance().getAccount().getAccountNumber());
-                    tv_balance_masked.setTextSize(10);
+                    tv_balance_masked.setTextSize(14);
                     img_toggle_visibility.setImageResource(R.drawable.ic_show_eye);
                     visible = false;
-                }
-                else {
+                } else {
                     tv_balance_masked.setText("* * * * * *");
+                    tv_balance_masked.setTextSize(14);
                     img_toggle_visibility.setImageResource(R.drawable.ic_hide_eye);
                     visible = true;
                 }
@@ -180,14 +211,13 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // --- Code mới để xử lý Menu (Side View) ---
+
         drawerLayout = findViewById(R.id.drawer_layout);
         ivMenuToggle = findViewById(R.id.iv_menu_toggle);
 
         ivMenuToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Nếu menu đang đóng, mở nó ra từ bên trái
                 if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
@@ -201,7 +231,13 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        tvHoTro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoggedInActivity.this, SupportActivity.class);
+                startActivity(intent);
+            }
+        });
         ll_account_and_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,11 +245,40 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        View.OnClickListener spendingListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoggedInActivity.this, SpendingInsightActivity.class);
+                startActivity(intent);
+            }
+        };
+        // Gán sự kiện click cho cả Card và nút Text
+        if (cardSpendingInsight != null) cardSpendingInsight.setOnClickListener(spendingListener);
+        if (btnSeeSpending != null) btnSeeSpending.setOnClickListener(spendingListener);
+
+        View.OnClickListener avgBalanceListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoggedInActivity.this, AverageBalanceActivity.class);
+                startActivity(intent);
+            }
+        };
+        if (cardAvgBalance != null) cardAvgBalance.setOnClickListener(avgBalanceListener);
+        if (btnSeeAvgBalance != null) btnSeeAvgBalance.setOnClickListener(avgBalanceListener);
+
+        updateSpendingChartData();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void updateSpendingChartData() {
+        if (pbMonth10 != null) pbMonth10.setProgress(80);
+        if (pbMonth9 != null) pbMonth9.setProgress(60);
     }
 
     private void findDefaultAccount(String userID, String checking) {
@@ -231,15 +296,13 @@ public class LoggedInActivity extends AppCompatActivity {
                             Account account = apiResponse.getResult();
                             LoginManager.getInstance().setAccount(account);
                         }
-                    }
-                    else {
+                    } else {
                         Log.w(LOG_TAG, "API Success but body is null.");
                         Toast.makeText(LoggedInActivity.this, "Không tìm thấy tài khoản mặc định", Toast.LENGTH_SHORT).show();
                         changeScreen(LoadingPageActivity.class);
                         LoginManager.clearUser();
                     }
-                }
-                else {
+                } else {
                     Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
                     Toast.makeText(LoggedInActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
                     changeScreen(LoadingPageActivity.class);
@@ -289,7 +352,7 @@ public class LoggedInActivity extends AppCompatActivity {
     private String formatMoney(long amount) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator('.'); // Bắt buộc dùng dấu chấm
+        symbols.setGroupingSeparator('.');
         formatter.setDecimalFormatSymbols(symbols);
         return formatter.format(amount);
     }
@@ -309,7 +372,6 @@ public class LoggedInActivity extends AppCompatActivity {
         TransferOptionsBottomSheet bottomSheet = new TransferOptionsBottomSheet();
         bottomSheet.show(getSupportFragmentManager(), "TransferOptionsTag");
     }
-
 
     @Override
     public void onBackPressed() {

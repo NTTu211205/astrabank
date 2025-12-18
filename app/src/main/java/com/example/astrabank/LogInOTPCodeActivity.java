@@ -42,7 +42,7 @@ import retrofit2.Response;
 
 public class LogInOTPCodeActivity extends AppCompatActivity {
 
-    private EditText etOTP; // Map với et_phone_number trong XML của bạn
+    private EditText etOTP;
     private Button btnVerify;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -56,7 +56,7 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        // Sử dụng layout bạn đã gửi
+
         setContentView(R.layout.item_enter_otpcode);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -65,16 +65,12 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Khởi tạo Firebase
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // Ánh xạ View
-        // LƯU Ý: Trong XML 'item_enter_otpcode.xml', ID của ô nhập liệu là et_phone_number
         etOTP = findViewById(R.id.et_phone_number);
         btnVerify = findViewById(R.id.btnLogin); // Nút Login đóng vai trò Verify
 
-        // Nhận verificationId từ màn hình trước
         mVerificationId = getIntent().getStringExtra("verificationId");
 
         btnVerify.setOnClickListener(new View.OnClickListener() {

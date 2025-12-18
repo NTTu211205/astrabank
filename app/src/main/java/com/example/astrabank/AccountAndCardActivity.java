@@ -25,10 +25,8 @@ public class AccountAndCardActivity extends AppCompatActivity {
     private TextView tvUserName,tvNumCard, tvBalance, tvSetNickname, tvPhoneNumber, tvAccountNumber;
     private Button btnViewMoreHistory;
 
-    // Biến trạng thái để kiểm tra đang ẩn hay hiện số dư
     private boolean isHidden = false;
 
-    // Lưu trữ giá trị gốc để khi hiện lại không bị mất
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +71,7 @@ public class AccountAndCardActivity extends AppCompatActivity {
     private String formatMoney(long amount) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator('.'); // Bắt buộc dùng dấu chấm
+        symbols.setGroupingSeparator('.');
         formatter.setDecimalFormatSymbols(symbols);
         return formatter.format(amount);
     }
@@ -84,12 +82,10 @@ public class AccountAndCardActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Đóng màn hình hiện tại
                 finish();
             }
         });
 
-        // --- Xử lý nút Mắt (Ẩn/Hiện thông tin) ---
         btnToggleEye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +93,6 @@ public class AccountAndCardActivity extends AppCompatActivity {
             }
         });
 
-        // --- Xử lý nút Copy số tài khoản ---
         btnCopyAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,16 +100,13 @@ public class AccountAndCardActivity extends AppCompatActivity {
             }
         });
 
-        // --- Xử lý nút Xem thêm lịch sử ---
         btnViewMoreHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AccountAndCardActivity.this, "Chức năng đang phát triển...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AccountAndCardActivity.this, "Coming soon...", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-    // Hàm logic để ẩn/hiện số dư và số tài khoản
     private void toggleInformationVisibility() {
         isHidden = !isHidden;
         String accountNumber = LoginManager.getInstance().getAccount().getAccountNumber();
@@ -133,6 +125,6 @@ public class AccountAndCardActivity extends AppCompatActivity {
         ClipData clip = ClipData.newPlainText("Copied Account Number", textToCopy);
         clipboard.setPrimaryClip(clip);
 
-        Toast.makeText(this, "Đã sao chép: " + textToCopy, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Copied: " + textToCopy, Toast.LENGTH_SHORT).show();
     }
 }

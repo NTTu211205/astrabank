@@ -31,12 +31,4 @@
         android:textStyle="bold"
         android:layout_marginTop="24dp"/>
 
-    <TextView
-        android:id="@+id/tv_header_member_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Membership Information >"
-        android:textColor="#006FFF"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"/>
 </LinearLayout>

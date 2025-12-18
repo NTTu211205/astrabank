@@ -19,6 +19,21 @@
         android:theme="@style/Theme.EndtermMOA"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditPersonalInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AverageBalanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SpendingInsightActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SupportActivity"
+            android:exported="false" />
+        <activity
             android:name=".BillListingActivity"
             android:exported="false" />
         <activity
@@ -46,7 +61,7 @@
         <activity
             android:name=".FinishTransactionActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".NotificationsManagementActivity"
             android:exported="false" />
@@ -85,9 +100,6 @@
             android:name=".LoggedInActivity"
             android:exported="false" />
         <activity
-            android:name=".HomePageActivity"
-            android:exported="false" />
-        <activity
             android:name=".RecreatePasswordActivity"
             android:exported="false" />
         <activity
@@ -117,6 +129,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SpendingActivity" />
+        <activity android:name=".SavingActivity" />
+        <activity android:name=".InvestmentActivity" />
+        <activity android:name=".InsuranceActivity" />
+        <activity android:name=".AutoEarningActivity" />
+        <activity android:name=".IncentiveActivity" />
+        <activity android:name=".MyQRCodeActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -39,7 +39,6 @@
                     android:id="@+id/ll_account_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_customerName"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="197dp"
@@ -76,24 +75,18 @@
                             android:id="@+id/tv_balance_masked"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingStart="20dp"
+                            android:layout_margin="10dp"
                             android:text="* * * * * *"
                             android:textColor="@android:color/black"
-                            android:textSize="10dp" />
+                            android:textSize="14sp" />
 
                         <ImageView
                             android:id="@+id/img_toggle_visibility"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_marginStart="16dp"
+                            android:layout_margin="10dp"
                             android:src="@drawable/ic_hide_eye"
                             app:tint="@android:color/black" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_weight="1" />
-
                     </LinearLayout>
                 </LinearLayout>
 
@@ -101,7 +94,6 @@
                     android:id="@+id/ll_middle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_customerName"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="16dp"
@@ -125,18 +117,8 @@
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
                             android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                android:src="@drawable/ic_account" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="Account \n &amp;Card"
-                                android:textSize="10sp" />
+                            <ImageView android:layout_width="38dp" android:layout_height="38dp" android:src="@drawable/ic_account" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal" android:text="Account \n &amp;Card" android:textSize="10sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -147,19 +129,8 @@
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
                             android:padding="5dp">
-
-                            <ImageView
-                                android:id="@+id/iv_move_money"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                android:src="@drawable/ic_move_money" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="Move\nMoney"
-                                android:textSize="10sp" />
+                            <ImageView android:id="@+id/iv_move_money" android:layout_width="38dp" android:layout_height="38dp" android:src="@drawable/ic_move_money" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal" android:text="Move\nMoney" android:textSize="10sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -170,18 +141,8 @@
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
                             android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                android:src="@drawable/ic_scanqr" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="Scan QR"
-                                android:textSize="10sp" />
+                            <ImageView android:layout_width="38dp" android:layout_height="38dp" android:src="@drawable/ic_scanqr" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal" android:text="Scan QR" android:textSize="10sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -192,18 +153,8 @@
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
                             android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                android:src="@drawable/ic_discover_product" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="Discover \nProducts"
-                                android:textSize="10sp" />
+                            <ImageView android:layout_width="38dp" android:layout_height="38dp" android:src="@drawable/ic_discover_product" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_horizontal" android:text="Discover \nProducts" android:textSize="10sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -221,7 +172,7 @@
                             android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:background="@drawable/numpad_button_grey"
-                            android:text="AstraBank rewards"
+                            android:text="AstraBank Rewards"
                             android:textAllCaps="false"
                             android:textSize="12sp" />
 
@@ -240,32 +191,146 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_notification"
+                    android:id="@+id/ll_insights_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ll_middle"
+                    android:layout_marginTop="20dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_spending_insight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:id="@+id/tv_insight_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Smart Finance"
+                                android:textColor="#757575"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tv_insight_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Last Month's Spending Review"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_insight_desc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="In October, you spent more on Shopping than usual."
+                                android:textColor="#555555"
+                                android:textSize="14sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <TextView android:layout_width="50dp" android:layout_height="wrap_content" android:text="Oct" android:textStyle="bold" android:textColor="#333" />
+                                    <ProgressBar android:id="@+id/pb_month_10" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progress="80" android:progressTint="#FFB300" android:backgroundTint="#E0E0E0" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+                                    <TextView android:layout_width="50dp" android:layout_height="wrap_content" android:text="Sep" android:textColor="#999" />
+                                    <ProgressBar android:id="@+id/pb_month_9" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="8dp" android:max="100" android:progress="60" android:progressTint="#BDBDBD" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+                                <TextView android:id="@+id/btn_see_spending_details" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="See Details  ➔" android:textColor="@android:color/black" android:textStyle="bold" />
+                                <TextView android:id="@+id/tv_insight_date" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="Nov 04, 2025" android:textColor="#999" android:textSize="12sp" />
+                            </RelativeLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_avg_balance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="1dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="20dp">
+                            <TextView android:id="@+id/tv_avg_balance_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Average Balance" android:textColor="@android:color/black" android:textSize="18sp" android:textStyle="bold" />
+                            <ImageView android:id="@+id/iv_balance_chart" android:layout_width="match_parent" android:layout_height="140dp" android:layout_below="@id/tv_avg_balance_title" android:layout_marginTop="16dp" android:layout_marginBottom="16dp" android:src="@drawable/ic_chart" app:tint="#FFB300" android:scaleType="fitCenter"/>
+                            <TextView android:id="@+id/btn_see_balance_details" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/iv_balance_chart" android:layout_centerHorizontal="true" android:text="See Details" android:textColor="#2962FF" android:textStyle="bold" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ll_insights_container"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/radius_layout"
-                    android:orientation="vertical">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_information"
-                        android:paddingStart="15dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="15dp"
-                        android:paddingBottom="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <androidx.appcompat.widget.AppCompatButton
+                    android:orientation="vertical"
+                    android:clipToPadding="true">
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/numpad_button_grey"
-                        android:text="See All Notifications"
-                        android:textAllCaps="false"
-                        android:textSize="20sp"
-                        android:drawableRight="@drawable/ic_forward"/>
+                        android:padding="16dp">
+                        <TextView android:id="@+id/tv_notif_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:text="Ride Metro for $0 with Visa" android:textColor="@android:color/black" android:textSize="18sp" android:textStyle="bold" />
+                        <TextView android:id="@+id/tv_notif_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/tv_notif_title" android:layout_marginTop="4dp" android:text="Yesterday" android:textColor="@android:color/darker_gray" android:textSize="14sp" />
+                        <TextView android:id="@+id/tv_notif_desc" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/tv_notif_time" android:layout_marginTop="8dp" android:ellipsize="end" android:maxLines="2" android:text="Free Metro rides, travel between city ends easily with AstraBank Visa cards..." android:textColor="#555555" android:textSize="15sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_notif_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F5F5F5"
+                        android:padding="12dp">
+                        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:gravity="center_vertical" android:orientation="horizontal">
+                            <TextView android:id="@+id/tv_notif_count" android:layout_width="24dp" android:layout_height="24dp" android:background="@drawable/bg_circle_red" android:gravity="center" android:text="12" android:textColor="@android:color/white" android:textSize="12sp" android:textStyle="bold" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:text="Notifications" android:textColor="@android:color/darker_gray" android:textSize="16sp" />
+                        </LinearLayout>
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@drawable/ic_forward" app:tint="@android:color/darker_gray" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -289,58 +354,17 @@
                         app:tabIndicatorHeight="0dp"
                         app:tabBackground="@android:color/white"
                         app:tabRippleColor="@null" >
-
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nearest Activities" />
-
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Balance Fluctuations" />
-
+                        <com.google.android.material.tabs.TabItem android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Recent Activities" />
+                        <com.google.android.material.tabs.TabItem android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Balance History" />
                     </com.google.android.material.tabs.TabLayout>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingVertical="8dp"
-                        android:paddingHorizontal="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:text="Today"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="16sp"/>
-
-                        <ImageView
-                            android:id="@+id/img_refresh"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_forward" />
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="8dp" android:paddingHorizontal="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:layout_centerVertical="true" android:text="Today" android:textColor="@android:color/darker_gray" android:textSize="16sp"/>
+                        <ImageView android:id="@+id/img_refresh" android:layout_width="24dp" android:layout_height="24dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@drawable/ic_forward" />
                     </RelativeLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_transactions"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:listitem="@layout/items_list_transaction"
-                        tools:itemCount="3"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_balance_list"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/items_list_balance_fluc"
-                        tools:itemCount="3" />
+                    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_transactions" android:layout_width="match_parent" android:layout_height="wrap_content" tools:listitem="@layout/items_list_transaction" tools:itemCount="3" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_balance_list" android:layout_width="0dp" android:layout_height="0dp" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" tools:listitem="@layout/items_list_balance_fluc" tools:itemCount="3" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_see_more_transactions"
@@ -351,7 +375,7 @@
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/radius_layout"
                         android:paddingHorizontal="24dp"
-                        android:text="Xem thêm"
+                        android:text="See More"
                         android:textAllCaps="false"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
@@ -364,7 +388,7 @@
                     android:layout_marginTop="78dp"
                     android:layout_marginEnd="329dp"
                     android:background="@drawable/side_menu_button_background"
-                    android:contentDescription="Mở menu"
+                    android:contentDescription="Open menu"
                     android:elevation="4dp"
                     android:padding="10dp"
                     android:scaleType="fitCenter"
@@ -372,16 +396,15 @@
                     app:tint="@android:color/black" />
             </RelativeLayout>
         </ScrollView>
-
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:orientation="vertical"
         android:background="#E0E0DB">
-        <include
-            layout="@layout/nav_header" />
+        <include layout="@layout/nav_header" />
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
@@ -391,11 +414,7 @@
             app:menu="@menu/activity_main_side_menu"
             app:itemTextColor="@android:color/black"
             app:itemIconTint="#555555" />
-        <include
-            layout="@layout/nav_footer" />
-
+        <include layout="@layout/nav_footer" />
     </LinearLayout>
-
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
