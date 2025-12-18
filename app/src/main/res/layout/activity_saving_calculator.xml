@@ -57,14 +57,14 @@
                     android:id="@+id/tv_interest_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5.8% p.a"
+                    android:text="4.5% p.a"
                     android:textSize="40sp"
                     android:textStyle="bold"
                     android:textColor="#4CAF50"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="For 12 months term"
+                    android:text="Every Year"
                     android:textColor="#757575"/>
             </LinearLayout>
 
@@ -76,6 +76,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <EditText
+                android:id="@+id/etInitBalance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
@@ -88,40 +89,40 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Term"
+                android:text="Notice about Saving Account"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                android:layout_marginBottom="30dp">
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="1 Mo"
-                    android:backgroundTint="#E0E0E0"
-                    android:textColor="#333"
-                    android:layout_marginEnd="8dp"/>
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="6 Mo"
-                    android:backgroundTint="#E0E0E0"
-                    android:textColor="#333"
-                    android:layout_marginEnd="8dp"/>
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="12 Mo"
-                    android:backgroundTint="@android:color/black"
-                    android:textColor="@android:color/white"/>
-            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="3"-->
+<!--                android:layout_marginBottom="30dp">-->
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="1 Mo"-->
+<!--                    android:backgroundTint="#E0E0E0"-->
+<!--                    android:textColor="#333"-->
+<!--                    android:layout_marginEnd="8dp"/>-->
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="6 Mo"-->
+<!--                    android:backgroundTint="#E0E0E0"-->
+<!--                    android:textColor="#333"-->
+<!--                    android:layout_marginEnd="8dp"/>-->
+<!--                <Button-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="12 Mo"-->
+<!--                    android:backgroundTint="@android:color/black"-->
+<!--                    android:textColor="@android:color/white"/>-->
+<!--            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,20 +134,23 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Estimated Interest"
+                    android:text=" - Interest is calculated on the actual daily balance. Interest will be automatically credited to your account at 00:00 on the 1st of each month. \n
+- The interest rate for demand deposit accounts is 0.45% per year (subject to change according to the bank's regulations from time to time). You can deposit/withdraw money at any time without penalty. \n
+- The initial balance of the savings account must be at least 1,000,000."
                     android:textColor="#2E7D32"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="+ 580,000 VND"
-                    android:textStyle="bold"
-                    android:textColor="#2E7D32"/>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="+ 580,000 VND"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textColor="#2E7D32"/>-->
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
     <Button
+        android:id="@+id/btOpen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

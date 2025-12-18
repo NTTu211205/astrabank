@@ -1,6 +1,7 @@
 package com.example.astrabank.api;
 
 import com.example.astrabank.api.request.LoginPhoneRequest;
+import com.example.astrabank.api.request.SavingAccountRequest;
 import com.example.astrabank.api.request.TransactionRequest;
 import com.example.astrabank.api.response.AccountResponse;
 import com.example.astrabank.api.response.ApiResponse;
@@ -42,8 +43,14 @@ public interface ApiService {
     @GET("accounts/findAll/{userId}")
     Call<ApiResponse<List<Account>>> getAllMyAccount (@Path("userId") String userId);
 
+    @POST("accounts/create-saving-account")
+    Call<ApiResponse<Account>> createSavingAccount(@Body SavingAccountRequest savingAccountRequest);
+
     @POST("transactions/transfer")
     Call<ApiResponse<Transaction>> progressTransfer(@Body TransactionRequest transactionRequest);
+
+    @GET("transactions/histories/{accountNumber}")
+    Call<ApiResponse<List<Transaction>>> getHistories(@Path("accountNumber") String accountNumber);
 
     @POST("transactions/sendTransaction")
     Call<ApiResponse<Transaction>> sendTransaction(@Body TransactionRequest transactionRequest);

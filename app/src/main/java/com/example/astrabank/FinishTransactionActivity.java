@@ -24,9 +24,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.astrabank.api.ApiClient;
 import com.example.astrabank.api.ApiService;
+import com.example.astrabank.api.request.SavingAccountRequest;
 import com.example.astrabank.api.request.TransactionRequest;
 import com.example.astrabank.api.response.ApiResponse;
+import com.example.astrabank.constant.AccountType;
 import com.example.astrabank.constant.TransactionType;
+import com.example.astrabank.models.Account;
 import com.example.astrabank.models.Transaction;
 import com.example.astrabank.utils.LoginManager;
 
@@ -44,6 +47,8 @@ public class FinishTransactionActivity extends AppCompatActivity {
     private String content;
     private long amount;
     AppCompatButton tvConfirm;
+    String savingAccountCreate = "";
+    Long savingAccountBalance;
 
     private EditText[] otpEditTexts = new EditText[6];
     private final String LOG_TAG = "FinishTransactionActivity";
@@ -61,6 +66,12 @@ public class FinishTransactionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
+            savingAccountCreate = intent.getStringExtra("requestSavingAccount");
+            savingAccountBalance = intent.getLongExtra("savingAccountBalance", 0);
+            if (savingAccountCreate == null) {
+                savingAccountCreate = "NO_REQUEST";
+            }
+
             desAccountNumber = intent.getStringExtra("desAccountNumber");
             receiverName = intent.getStringExtra("receiverName");
             desBankSymbol = intent.getStringExtra("desBankSymbol");
@@ -121,8 +132,13 @@ public class FinishTransactionActivity extends AppCompatActivity {
                         else if (check) {
                             Log.d(LOG_TAG, "CHECK_PIN:transaction pin is correct");
                             // progress transaction
-                            progressInBankTransaction();
-
+                            if (savingAccountCreate.equals("create")) {
+                                // findAccount
+                                findSavingAccount();
+                            }
+                            else {
+                                progressInBankTransaction();
+                            }
                         }
                         else {
                             tvConfirm.setText("Confirm");
@@ -152,6 +168,155 @@ public class FinishTransactionActivity extends AppCompatActivity {
                 tvConfirm.setEnabled(true);
                 Toast.makeText(FinishTransactionActivity.this, "Kiểm tra kết nối internet", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "CHECK_PIN:Internet disconnect");
+            }
+        });
+    }
+
+    private void findSavingAccount() {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<Account>> call = apiService.getDefaultAccount(
+                LoginManager.getInstance().getUser().getUserID(),
+                "SAVING"
+        );
+
+        call.enqueue(new Callback<ApiResponse<Account>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Account>> call, Response<ApiResponse<Account>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<Account> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        Account account = apiResponse.getResult();
+
+                        if (account != null) {
+                            Log.d(LOG_TAG, "Account is exist");
+                            Toast.makeText(FinishTransactionActivity.this, "Account is exist", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            createSavingAccount();
+                        }
+                    }
+                    else {
+                        Log.d(LOG_TAG, "Error from server");
+                        Toast.makeText(FinishTransactionActivity.this, "Error from server", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Log.d(LOG_TAG, "Error in processing checking");
+                    Toast.makeText(FinishTransactionActivity.this, "Error in processing checking", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
+                Log.d(LOG_TAG, "CHECKING ACCOUNT EXIST:Internet disconnect");
+                Toast.makeText(FinishTransactionActivity.this, "Internet disconnect", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void createSavingAccount() {
+        SavingAccountRequest savingAccountRequest = new SavingAccountRequest(
+                LoginManager.getInstance().getUser().getUserID(),
+                AccountType.SAVING,
+                (long) 0
+        );
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<Account>> call = apiService.createSavingAccount(savingAccountRequest);
+
+        call.enqueue(new Callback<ApiResponse<Account>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Account>> call, Response<ApiResponse<Account>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<Account> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        Account account = apiResponse.getResult();
+                        if (account != null) {
+                            progressTransferInSavingAccount(account);
+                        }
+                        else {
+                            Log.d(LOG_TAG, "Account is not created");
+                            Toast.makeText(FinishTransactionActivity.this, "Account is not created", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        Log.d(LOG_TAG, "Error from server");
+                        Toast.makeText(FinishTransactionActivity.this, "Error from server", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Log.d(LOG_TAG, "Error in processing create");
+                    Toast.makeText(FinishTransactionActivity.this, "Error in processing create", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
+                Log.d(LOG_TAG, "Internet disconnect");
+                Toast.makeText(FinishTransactionActivity.this, "Internet disconnect", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void progressTransferInSavingAccount(Account savingAccount) {
+        TransactionRequest transactionRequest = new TransactionRequest(
+                LoginManager.getInstance().getAccount().getAccountNumber(),
+                "ATB",
+                savingAccount.getAccountNumber(),
+                "ATB",
+                savingAccountBalance,
+                TransactionType.TRANSFER,
+                "INIT BALANCE IN SAVING ACCOUNT",
+                LoginManager.getInstance().getUser().getFullName(),
+                LoginManager.getInstance().getUser().getFullName()
+        );
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<Transaction>> call = apiService.progressTransfer(transactionRequest);
+
+        call.enqueue(new Callback<ApiResponse<Transaction>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Transaction>> call, Response<ApiResponse<Transaction>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<Transaction> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        Transaction transaction = apiResponse.getResult();
+
+                        if (transaction != null) {
+                            Log.d(LOG_TAG, "PROGRESS_TRANSACTION:Transaction success");
+                            changeNextScreen(SavingsDetailsActivity.class);
+                        }
+                        else {
+                            tvConfirm.setText("Confirm");
+                            tvConfirm.setEnabled(true);
+                            Toast.makeText(FinishTransactionActivity.this, "Giao dịch không thành công", Toast.LENGTH_SHORT).show();
+                            Log.d(LOG_TAG, "PROGRESS_TRANSACTION:Transaction failed");
+                        }
+                    }
+                    else {
+                        tvConfirm.setText("Confirm");
+                        tvConfirm.setEnabled(true);
+                        Toast.makeText(FinishTransactionActivity.this, "Lỗi trong quá trình xử lí giao dịch", Toast.LENGTH_SHORT).show();
+                        Log.d(LOG_TAG, "PROGRESS_TRANSACTIONTransaction processing error");
+                    }
+                }
+                else {
+                    tvConfirm.setText("Confirm");
+                    tvConfirm.setEnabled(true);
+                    Toast.makeText(FinishTransactionActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Log.d(LOG_TAG, "PROGRESS_TRANSACTIONError from server");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Transaction>> call, Throwable t) {
+                tvConfirm.setText("Confirm");
+                tvConfirm.setEnabled(true);
+                Toast.makeText(FinishTransactionActivity.this, "Kiểm tra kết nối internet", Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, "PROGRESS_TRANSACTIONInternet disconnect");
             }
         });
     }
@@ -242,6 +407,12 @@ public class FinishTransactionActivity extends AppCompatActivity {
         intent.putExtra("content", content);
         intent.putExtra("date", date);
         intent.putExtra("transactionId", id);
+        startActivity(intent);
+        finish();
+    }
+
+    private void changeNextScreen(Class<?> nextScreen) {
+        Intent intent = new Intent(this, nextScreen);
         startActivity(intent);
         finish();
     }

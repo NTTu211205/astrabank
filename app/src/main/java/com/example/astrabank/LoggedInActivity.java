@@ -151,6 +151,7 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         rlNotifCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,12 +159,14 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         ivHeadClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
+
         llScanQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,6 +206,7 @@ public class LoggedInActivity extends AppCompatActivity {
                 }
             }
         });
+
         btnPhoneCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,6 +235,7 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         tvHoTro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,6 +243,7 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         ll_account_and_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -336,6 +342,7 @@ public class LoggedInActivity extends AppCompatActivity {
                     Long balance = snapshot.getLong("balance");
 
                     if (balance != null) {
+                        LoginManager.getInstance().getAccount().setBalance(balance);
                         String formattedMoney = formatMoney(balance);
 
                         tv_balance_masked.setText(formattedMoney);
