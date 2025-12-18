@@ -104,7 +104,6 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = task.getResult().getUser();
                         Log.d(TAG, "signInWithCredential:success");
-                        Toast.makeText(this, "Xác thực OTP thành công!", Toast.LENGTH_SHORT).show();
 
                         // Sau khi login Firebase thành công, lấy thông tin user từ Firestore
                         if (user != null) {

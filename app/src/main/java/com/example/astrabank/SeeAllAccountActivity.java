@@ -105,17 +105,19 @@ public class SeeAllAccountActivity extends AppCompatActivity {
         findSavingAccount(LoginManager.getInstance().getUser().getUserID(), "SAVING");
         tvMonthlyProfit.setText("+ " + currencyFormat.format(45.00)); // Lợi nhuận tháng
 
-        tvMortgageNumber.setText("Loan #9988-77");
+
+        findMortgageAccount(LoginManager.getInstance().getUser().getUserID(), "MORTGAGE");
+//        tvMortgageNumber.setText("Loan #9988-77");
 
         boolean payMonthly = true;
 
-        if (payMonthly) {
-            tvPaymentAmount.setText(currencyFormat.format(1250.00));
-            tvPaymentFrequency.setText("Monthly");
-        } else {
-            tvPaymentAmount.setText(currencyFormat.format(625.00));
-            tvPaymentFrequency.setText("Bi-weekly");
-        }
+//        if (payMonthly) {
+//            tvPaymentAmount.setText(currencyFormat.format(1250.00));
+//            tvPaymentFrequency.setText("Monthly");
+//        } else {
+//            tvPaymentAmount.setText(currencyFormat.format(625.00));
+//            tvPaymentFrequency.setText("Bi-weekly");
+//        }
     }
 
     private String formatMoney(long amount) {
@@ -141,23 +143,23 @@ public class SeeAllAccountActivity extends AppCompatActivity {
                             NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
                             Account account = apiResponse.getResult();
                             savingAccountNumber = account.getAccountNumber();
-                            tvSavingsNumber.setText(savingAccountNumber.substring(savingAccountNumber.length()-5, savingAccountNumber.length()));
+                            tvSavingsNumber.setText("*****" + savingAccountNumber.substring(savingAccountNumber.length()-5, savingAccountNumber.length()));
                             tvSavingsBalance.setText(formatMoney(account.getBalance()));
                             tvInterestRate.setText(String.valueOf(account.getInterestRate() * 100) + " %"); // Lãi suất
+                            long profit = (long) (account.getBalance() * account.getInterestRate() / 12);
+                            tvMonthlyProfit.setText(formatMoney(profit));
+                            rlSavings.setVisibility(View.VISIBLE);
+                            btnSeeSavingAcc.setVisibility(View.VISIBLE);
                         }
                     }
                     else {
-                        Log.w(LOG_TAG, "API Success but body is null.");
-                        Toast.makeText(SeeAllAccountActivity.this, "Không tìm thấy tài khoản mặc định", Toast.LENGTH_SHORT).show();
-                        changeScreen(LoggedInActivity.class);
-                        LoginManager.clearUser();
+                        rlSavings.setVisibility(View.GONE);
+                        btnSeeSavingAcc.setVisibility(View.GONE);
                     }
                 }
                 else {
                     Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
                     Toast.makeText(SeeAllAccountActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
-                    changeScreen(LoadingPageActivity.class);
-                    LoginManager.clearUser();
                 }
             }
 
@@ -165,8 +167,48 @@ public class SeeAllAccountActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
                 Log.e(LOG_TAG, "Network failure: " + t.getMessage());
                 Toast.makeText(SeeAllAccountActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
-                changeScreen(LoadingPageActivity.class);
-                LoginManager.clearUser();
+            }
+        });
+    }
+
+    private void findMortgageAccount(String userID, String checking) {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<Account>> call = apiService.getDefaultAccount(userID, checking);
+
+        call.enqueue(new Callback<ApiResponse<Account>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Account>> call, Response<ApiResponse<Account>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<Account> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        if (apiResponse.getResult() != null) {
+
+                        }
+                        else {
+                            rlMortgage.setVisibility(View.GONE);
+                            btnSeeMortgageAcc.setVisibility(View.GONE);
+                        }
+                    }
+                    else {
+                        rlMortgage.setVisibility(View.GONE);
+                        btnSeeMortgageAcc.setVisibility(View.GONE);
+                    }
+                }
+                else {
+                    rlMortgage.setVisibility(View.GONE);
+                    btnSeeMortgageAcc.setVisibility(View.GONE);
+                    Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
+                    Toast.makeText(SeeAllAccountActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
+                rlMortgage.setVisibility(View.GONE);
+                btnSeeMortgageAcc.setVisibility(View.GONE);
+                Log.e(LOG_TAG, "Network failure: " + t.getMessage());
+                Toast.makeText(SeeAllAccountActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -227,50 +269,50 @@ public class SeeAllAccountActivity extends AppCompatActivity {
             }
         });
 
-        rlChecking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View dialogView = getLayoutInflater().inflate(R.layout.item_checking_account, null);
+//        rlChecking.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                View dialogView = getLayoutInflater().inflate(R.layout.item_checking_account, null);
+//
+//                // 2. Tạo hộp thoại chứa view đó
+//                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SeeAllAccountActivity.this);
+//                builder.setView(dialogView);
+//                builder.setCancelable(true);
+//
+//                // 3. Hiển thị
+//                builder.show();
+//            }
+//        });
 
-                // 2. Tạo hộp thoại chứa view đó
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SeeAllAccountActivity.this);
-                builder.setView(dialogView);
-                builder.setCancelable(true);
+//        rlSavings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                View dialogView = getLayoutInflater().inflate(R.layout.item_saving_account, null);
+//
+//                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SeeAllAccountActivity.this);
+//                builder.setView(dialogView);
+//                builder.setCancelable(true);
+//
+//                // 3. Hiển thị
+//                builder.show();
+//            }
+//        });
 
-                // 3. Hiển thị
-                builder.show();
-            }
-        });
-
-        rlSavings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View dialogView = getLayoutInflater().inflate(R.layout.item_saving_account, null);
-
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SeeAllAccountActivity.this);
-                builder.setView(dialogView);
-                builder.setCancelable(true);
-
-                // 3. Hiển thị
-                builder.show();
-            }
-        });
-
-        rlMortgage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 1. Tạo view từ file xml
-                View dialogView = getLayoutInflater().inflate(R.layout.item_mortage_account, null);
-
-                // 2. Tạo hộp thoại chứa view đó
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SeeAllAccountActivity.this);
-                builder.setView(dialogView);
-                builder.setCancelable(true);
-
-                // 3. Hiển thị
-                builder.show();
-            }
-        });
+//        rlMortgage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // 1. Tạo view từ file xml
+//                View dialogView = getLayoutInflater().inflate(R.layout.item_mortage_account, null);
+//
+//                // 2. Tạo hộp thoại chứa view đó
+//                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(SeeAllAccountActivity.this);
+//                builder.setView(dialogView);
+//                builder.setCancelable(true);
+//
+//                // 3. Hiển thị
+//                builder.show();
+//            }
+//        });
         btnSeeCheckingAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

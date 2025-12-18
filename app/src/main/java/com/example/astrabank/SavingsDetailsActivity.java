@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.astrabank.TESTACCOUNT.Transaction;
+import com.example.astrabank.models.Transaction;
 import com.example.astrabank.TESTACCOUNT.TransactionAdapter;
 import com.example.astrabank.api.ApiClient;
 import com.example.astrabank.api.ApiService;
@@ -66,7 +66,6 @@ public class SavingsDetailsActivity extends AppCompatActivity {
         setupHeaderData();
 
         // 3. Setup RecyclerView for History
-        setupRecyclerView();
         btnBack.setOnClickListener(v -> finish());
     }
 
@@ -84,20 +83,53 @@ public class SavingsDetailsActivity extends AppCompatActivity {
         findSavingAccount(LoginManager.getInstance().getUser().getUserID(), "SAVING");
     }
 
-    private void setupRecyclerView() {
+    private void setupRecyclerView(String accountNumber) {
         transactionList = new ArrayList<>();
 
         // Mock Data: Deposit History
-        transactionList.add(new Transaction("Monthly Deposit", "Dec 01, 2025", 1000.00));
-        transactionList.add(new Transaction("Interest Payment", "Nov 30, 2025", 45.00));
-        transactionList.add(new Transaction("Mobile Transfer", "Nov 15, 2025", 500.00));
-        transactionList.add(new Transaction("Monthly Deposit", "Nov 01, 2025", 1000.00));
-        transactionList.add(new Transaction("Cash Deposit", "Oct 20, 2025", 200.00));
-        transactionList.add(new Transaction("Interest Payment", "Oct 31, 2025", 42.50));
+//        transactionList.add(new Transaction("Monthly Deposit", "Dec 01, 2025", 1000.00));
+//        transactionList.add(new Transaction("Interest Payment", "Nov 30, 2025", 45.00));
+//        transactionList.add(new Transaction("Mobile Transfer", "Nov 15, 2025", 500.00));
+//        transactionList.add(new Transaction("Monthly Deposit", "Nov 01, 2025", 1000.00));
+//        transactionList.add(new Transaction("Cash Deposit", "Oct 20, 2025", 200.00));
+//        transactionList.add(new Transaction("Interest Payment", "Oct 31, 2025", 42.50));
 
-        adapter = new TransactionAdapter(transactionList);
-        rvHistory.setLayoutManager(new LinearLayoutManager(this));
-        rvHistory.setAdapter(adapter);
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+
+        // 2. Gọi API
+        Call<ApiResponse<List<Transaction>>> call = apiService.getHistories(accountNumber);
+
+        call.enqueue(new Callback<ApiResponse<List<Transaction>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Transaction>>> call, Response<ApiResponse<List<Transaction>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<List<Transaction>> apiResponse = response.body();
+
+                    // Kiểm tra code xem có thành công không (Ví dụ 1000 là OK)
+                    if (apiResponse.getResult() != null) {
+                        List<Transaction> listGiaoDich = apiResponse.getResult();
+
+                        if (listGiaoDich != null && !listGiaoDich.isEmpty()) {
+                            adapter = new TransactionAdapter(listGiaoDich);
+                            rvHistory.setLayoutManager(new LinearLayoutManager(SavingsDetailsActivity.this));
+                            rvHistory.setAdapter(adapter);
+                        } else {
+                            Log.d(LOG_TAG, "No histories");
+                        }
+                    } else {
+                        Log.d(LOG_TAG, "Get histories error");
+                    }
+                } else {
+                    Log.d(LOG_TAG, "Histories not found");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Transaction>>> call, Throwable t) {
+                Toast.makeText(SavingsDetailsActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
     }
 
     private String formatMoney(long amount) {
@@ -124,10 +156,12 @@ public class SavingsDetailsActivity extends AppCompatActivity {
                             Account account = apiResponse.getResult();
                             String accountNumber = account.getAccountNumber();
 
+                            setupRecyclerView(accountNumber);
                             tvAccountNumber.setText("***"+accountNumber.substring(accountNumber.length()-5, accountNumber.length()));
                             tvTotalBalance.setText("VND " + formatMoney(account.getBalance()));
                             tvInterestRate.setText((account.getInterestRate() * 100) + "%");
-                            tvLastProfit.setText("+ $ 45.00");
+                            long profit = (long) (account.getBalance() * account.getInterestRate() / 12);
+                            tvLastProfit.setText(formatMoney(profit));
                         }
                     }
                     else {
@@ -153,6 +187,10 @@ public class SavingsDetailsActivity extends AppCompatActivity {
                 LoginManager.clearUser();
             }
         });
+    }
+
+    private void findAccountHistories(String accountNumber) {
+
     }
 
     private void changeScreen(Class<?> nextScreen) {
