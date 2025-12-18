@@ -3,9 +3,10 @@ package com.example.astrabank;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
@@ -39,23 +41,18 @@ import java.util.concurrent.Executors;
 public class ScanQRActivity extends AppCompatActivity {
 
     private PreviewView cameraPreview;
-    private ImageButton btnBack;
     private ExecutorService cameraExecutor;
     private boolean isProcessing = false;
 
-    private final ActivityResultLauncher<String> requestPermissionLauncher =
+    // ================== PERMISSION LAUNCHER ==================
+    private final ActivityResultLauncher<String> requestCameraPermissionLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.RequestPermission(),
                     isGranted -> {
                         if (isGranted) {
                             startCamera();
                         } else {
-                            Toast.makeText(
-                                    this,
-                                    "Camera permission is required to scan QR codes",
-                                    Toast.LENGTH_LONG
-                            ).show();
-                            finish();
+                            showPermissionDeniedDialog();
                         }
                     }
             );
@@ -67,7 +64,7 @@ public class ScanQRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_qr);
 
         cameraPreview = findViewById(R.id.camera_preview);
-        btnBack = findViewById(R.id.btn_back_scan);
+        ImageButton btnBack = findViewById(R.id.btn_back_scan);
         LinearLayout llShowMyQr = findViewById(R.id.ll_show_my_qr);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -78,24 +75,40 @@ public class ScanQRActivity extends AppCompatActivity {
 
         btnBack.setOnClickListener(v -> finish());
 
-        llShowMyQr.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MyQRCodeActivity.class);
-            startActivity(intent);
-        });
+        llShowMyQr.setOnClickListener(v ->
+                startActivity(new Intent(this, MyQRCodeActivity.class))
+        );
 
         cameraExecutor = Executors.newSingleThreadExecutor();
         checkCameraPermission();
     }
 
+    // ================== CHECK PERMISSION ==================
     private void checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             startCamera();
         } else {
-            requestPermissionLauncher.launch(Manifest.permission.CAMERA);
+            requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA);
         }
     }
 
+    // ================== DIALOG KHI TỪ CHỐI ==================
+    private void showPermissionDeniedDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Camera permission required")
+                .setMessage("This feature needs camera access to scan QR codes. Please allow camera permission in settings.")
+                .setCancelable(false)
+                .setPositiveButton("Open Settings", (dialog, which) -> {
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.setData(Uri.fromParts("package", getPackageName(), null));
+                    startActivity(intent);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> finish())
+                .show();
+    }
+
+    // ================== CAMERA ==================
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture =
                 ProcessCameraProvider.getInstance(this);
@@ -113,22 +126,21 @@ public class ScanQRActivity extends AppCompatActivity {
 
                 imageAnalysis.setAnalyzer(cameraExecutor, this::processImageProxy);
 
-                CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
-
                 cameraProvider.unbindAll();
                 cameraProvider.bindToLifecycle(
                         this,
-                        cameraSelector,
+                        CameraSelector.DEFAULT_BACK_CAMERA,
                         preview,
                         imageAnalysis
                 );
 
             } catch (ExecutionException | InterruptedException e) {
-                Log.e("ScanQR", "Error starting camera", e);
+                Log.e("ScanQR", "Start camera failed", e);
             }
         }, ContextCompat.getMainExecutor(this));
     }
 
+    // ================== SCAN QR ==================
     @androidx.annotation.OptIn(markerClass = androidx.camera.core.ExperimentalGetImage.class)
     private void processImageProxy(ImageProxy imageProxy) {
         if (imageProxy.getImage() == null || isProcessing) {
@@ -142,7 +154,7 @@ public class ScanQRActivity extends AppCompatActivity {
         );
 
         BarcodeScannerOptions options = new BarcodeScannerOptions.Builder()
-                .setBarcodeFormats(Barcode.FORMAT_QR_CODE, Barcode.FORMAT_ALL_FORMATS)
+                .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
                 .build();
 
         BarcodeScanner scanner = BarcodeScanning.getClient(options);
@@ -150,43 +162,22 @@ public class ScanQRActivity extends AppCompatActivity {
         scanner.process(image)
                 .addOnSuccessListener(barcodes -> {
                     if (!barcodes.isEmpty()) {
-                        Barcode barcode = barcodes.get(0);
-                        if (barcode.getRawValue() != null) {
-                            isProcessing = true;
-                            handleQRCodeResult(barcode.getRawValue());
-                        }
+                        isProcessing = true;
+                        handleQRCodeResult(barcodes.get(0).getRawValue());
                     }
                 })
-                .addOnFailureListener(e -> Log.e("ScanQR", "QR scan failed", e))
+                .addOnFailureListener(e ->
+                        Log.e("ScanQR", "Scan failed", e))
                 .addOnCompleteListener(task -> imageProxy.close());
     }
 
     private void handleQRCodeResult(String qrCodeData) {
-        runOnUiThread(() -> {
-            Toast.makeText(this, "QR code scanned successfully!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "QR scanned successfully", Toast.LENGTH_SHORT).show();
 
-            String accountNumber = qrCodeData;
-            String accountName = "Unknown Name";
-            String bankSymbol = "Unknown Bank";
-
-            if (qrCodeData.contains("|")) {
-                String[] parts = qrCodeData.split("\\|");
-                if (parts.length >= 3) {
-                    bankSymbol = parts[0];
-                    accountNumber = parts[1];
-                    accountName = parts[2];
-                }
-            } else if (qrCodeData.startsWith("000201")) {
-                accountName = "VietQR Code";
-            }
-
-            Intent intent = new Intent(this, TransactionActivity.class);
-            intent.putExtra("accountNumber", accountNumber);
-            intent.putExtra("accountName", accountName);
-            intent.putExtra("desBankSymbol", bankSymbol);
-            startActivity(intent);
-            finish();
-        });
+        Intent intent = new Intent(this, TransactionActivity.class);
+        intent.putExtra("qrData", qrCodeData);
+        startActivity(intent);
+        finish();
     }
 
     @Override

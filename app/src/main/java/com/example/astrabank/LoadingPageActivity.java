@@ -1,69 +1,61 @@
 package com.example.astrabank;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
-import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
+import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.example.astrabank.models.User;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoadingPageActivity extends AppCompatActivity {
-    Button btSignUp, btSignIn;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_loading_page);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        Button btSignUp = findViewById(R.id.btnSignUp);
+        Button btSignIn = findViewById(R.id.btnSignIn);
+        LinearLayout logoBlock = findViewById(R.id.logo_block);
+        LinearLayout bottomBlock = findViewById(R.id.bottom_block);
+
+        // 1. Ẩn khối nút bấm lúc đầu (để trong suốt)
+        bottomBlock.setAlpha(0f);
+        // Dịch chuyển khối nút xuống một chút để lát hiện lên cho đẹp
+        bottomBlock.setTranslationY(100f);
+
+        // 2. Xử lý Animation
+        logoBlock.post(() -> {
+            // Lấy chiều cao màn hình và chiều cao logo
+            float screenHeight = getResources().getDisplayMetrics().heightPixels;
+
+            // Tính toán để dịch chuyển logo xuống dưới đáy màn hình
+            // Hiện tại logo đang ở giữa (screenHeight/2). Muốn nó xuống đáy thì cộng thêm screenHeight/2
+            logoBlock.setTranslationY(screenHeight / 2f);
+
+            // Animation: Logo lướt từ dưới lên vị trí chính giữa (0f)
+            logoBlock.animate()
+                    .translationY(0f)
+                    .setDuration(1000)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .withEndAction(() -> {
+                        bottomBlock.animate()
+                                .alpha(1f)
+                                .setDuration(500)
+                                .start();
+                    })
+                    .start();
         });
 
-        btSignIn = findViewById(R.id.btnSignIn);
-        btSignUp = findViewById(R.id.btnSignUp);
-
-        btSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeScreen(InputPhoneNumberActivity.class);
-            }
-        });
-
-        btSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeScreen(LoginActivity.class);
-            }
-        });
-
+        // 3. Sự kiện Click
+        btSignUp.setOnClickListener(v -> changeScreen(InputPhoneNumberActivity.class));
+        btSignIn.setOnClickListener(v -> changeScreen(LoginActivity.class));
     }
-
 
     private void changeScreen(Class<?> newScreen) {
         Intent intent = new Intent(this, newScreen);
         startActivity(intent);
+        finish();
     }
 }
