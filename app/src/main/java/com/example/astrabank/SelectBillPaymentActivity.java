@@ -33,7 +33,6 @@ public class SelectBillPaymentActivity extends AppCompatActivity {
 //        setupServiceClick(R.id.tv_airline_tickets, "Airline Tickets");
 
         findViewById(R.id.img_back).setOnClickListener(v -> finish());
-        findViewById(R.id.img_close).setOnClickListener(v -> finish());
     }
 
     private void setupServiceClick(int viewId, String serviceName) {

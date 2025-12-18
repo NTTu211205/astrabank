@@ -20,6 +20,15 @@
         android:theme="@style/Theme.EndtermMOA"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SecurityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InvestigationRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PersonalInformationActivity"
+            android:exported="false" />
+        <activity
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
