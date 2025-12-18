@@ -173,8 +173,6 @@ public class TransactionActivity extends AppCompatActivity {
         snAccountType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Lấy đối tượng Account tại vị trí được chọn
-                // Vì ta truyền List<Account> vào Adapter, nên ở đây ép kiểu về (Account) được
                 selectedAccount = (Account) parent.getItemAtPosition(position);
 
                 tvBalance.setText("VND   " + formatMoney(selectedAccount.getBalance()));
@@ -183,7 +181,6 @@ public class TransactionActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Không làm gì
             }
         });
     }
