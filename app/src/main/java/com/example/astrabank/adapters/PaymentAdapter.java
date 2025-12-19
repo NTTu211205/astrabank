@@ -1,4 +1,4 @@
-package com.example.astrabank.TESTACCOUNT;
+package com.example.astrabank.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.astrabank.R;
+import com.example.astrabank.models.PaymentRecord;
 
 import java.util.List;
 
@@ -32,7 +33,6 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.PaymentV
         PaymentRecord payment = paymentList.get(position);
         holder.tvTitle.setText(payment.getTitle());
         holder.tvDate.setText(payment.getDate());
-        // Format amount: showing minus sign explicitly if desired
         holder.tvAmount.setText(String.format("- $ %,.2f", payment.getAmount()));
     }
 

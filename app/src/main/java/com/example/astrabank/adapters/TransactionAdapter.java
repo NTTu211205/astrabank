@@ -1,4 +1,4 @@
-package com.example.astrabank.TESTACCOUNT;
+package com.example.astrabank.adapters;
 
 import com.example.astrabank.models.Transaction;
 import android.view.LayoutInflater;

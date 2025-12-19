@@ -1,4 +1,4 @@
-package com.example.astrabank.TESTACCOUNT;
+package com.example.astrabank.models;
 
 public class PaymentRecord {
     private String title;

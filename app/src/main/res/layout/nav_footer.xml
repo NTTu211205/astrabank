@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="Tra cứu địa chỉ chi nhánh"
+                    android:text="Search Address Branch"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="và ATM"
+                    android:text="and ATM"
                     android:textColor="#333333"
                     android:textStyle="bold"
                     android:textSize="15sp" />
