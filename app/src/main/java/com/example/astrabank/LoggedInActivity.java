@@ -304,13 +304,6 @@ public class LoggedInActivity extends AppCompatActivity {
         if (btnSeeAvgBalance != null) btnSeeAvgBalance.setOnClickListener(avgBalanceListener);
 
         updateSpendingChartData();
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
         showTransactionHistory();
 
         btSeeMore.setOnClickListener(new View.OnClickListener() {
@@ -500,6 +493,14 @@ public class LoggedInActivity extends AppCompatActivity {
             holder.tvAmount.setText(notification.getAmount());
             holder.tvDescription.setText(notification.getContent());
             holder.tvTitle.setText(notification.getTitle());
+
+
+            if (notification.getAmount().contains("-")) {
+                holder.imageView.setImageResource(R.drawable.ic_transaction_out);
+            } else {
+                holder.imageView.setImageResource(R.drawable.ic_transaction_in);
+            }
+
         }
 
         @Override
@@ -509,12 +510,17 @@ public class LoggedInActivity extends AppCompatActivity {
 
         public class NotificationViewHolder extends RecyclerView.ViewHolder {
             TextView tvTitle, tvDescription, tvAmount;
-            ImageView imageView;
+            ImageView imageView; // Đã khai báo nhưng chưa dùng
+
             public NotificationViewHolder(@NonNull View itemView) {
                 super(itemView);
                 this.tvTitle = itemView.findViewById(R.id.tv_transaction_title);
                 this.tvDescription = itemView.findViewById(R.id.tv_transaction_description);
                 this.tvAmount = itemView.findViewById(R.id.tv_transaction_amount);
+
+                // --- [SỬA ĐỔI 2] Ánh xạ ID từ XML ---
+                // Dòng này bị thiếu trong code cũ của bạn
+                this.imageView = itemView.findViewById(R.id.img_transaction_icon);
             }
         }
     }

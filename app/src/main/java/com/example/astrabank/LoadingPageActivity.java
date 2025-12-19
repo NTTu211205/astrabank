@@ -20,28 +20,36 @@ public class LoadingPageActivity extends AppCompatActivity {
         LinearLayout logoBlock = findViewById(R.id.logo_block);
         LinearLayout bottomBlock = findViewById(R.id.bottom_block);
 
-        // 1. Ẩn khối nút bấm lúc đầu (để trong suốt)
+        // 1. Ẩn nút bottom trước
         bottomBlock.setAlpha(0f);
-        // Dịch chuyển khối nút xuống một chút để lát hiện lên cho đẹp
         bottomBlock.setTranslationY(100f);
 
-        // 2. Xử lý Animation
+        // 2. Xử lý Animation Logo
         logoBlock.post(() -> {
-            // Lấy chiều cao màn hình và chiều cao logo
-            float screenHeight = getResources().getDisplayMetrics().heightPixels;
+            // Lấy chiều cao thực tế của View cha (màn hình khả dụng)
+            View parentView = (View) logoBlock.getParent();
+            int parentHeight = parentView.getHeight();
 
-            // Tính toán để dịch chuyển logo xuống dưới đáy màn hình
-            // Hiện tại logo đang ở giữa (screenHeight/2). Muốn nó xuống đáy thì cộng thêm screenHeight/2
-            logoBlock.setTranslationY(screenHeight / 2f);
+            // Lấy toạ độ Y hiện tại của Logo (lúc này đang ở chính giữa màn hình do XML set)
+            float currentY = logoBlock.getY();
 
-            // Animation: Logo lướt từ dưới lên vị trí chính giữa (0f)
+            // Tính toán khoảng cách cần dịch chuyển để logo chui xuống đáy màn hình
+            // Công thức: (Độ cao màn hình) - (Vị trí hiện tại)
+            float startY = parentHeight - currentY;
+
+            // Đặt vị trí bắt đầu ở dưới đáy màn hình (hoặc lệch xuống một chút)
+            logoBlock.setTranslationY(startY);
+
+            // Bắt đầu Animation: Trả về 0f (tức là vị trí chính giữa màn hình đã set trong XML)
             logoBlock.animate()
                     .translationY(0f)
                     .setDuration(1000)
                     .setInterpolator(new DecelerateInterpolator())
                     .withEndAction(() -> {
+                        // Hiện các nút bấm lên
                         bottomBlock.animate()
                                 .alpha(1f)
+                                .translationY(0f) // Trả nút về vị trí chuẩn luôn
                                 .setDuration(500)
                                 .start();
                     })
@@ -52,6 +60,7 @@ public class LoadingPageActivity extends AppCompatActivity {
         btSignUp.setOnClickListener(v -> changeScreen(InputPhoneNumberActivity.class));
         btSignIn.setOnClickListener(v -> changeScreen(LoginActivity.class));
     }
+
 
     private void changeScreen(Class<?> newScreen) {
         Intent intent = new Intent(this, newScreen);

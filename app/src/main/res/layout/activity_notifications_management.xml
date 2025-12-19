@@ -23,10 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="130dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="111dp"
         android:padding="16dp"
-        android:text="Notifications"
+        android:text="Balance Fluctuations"
         android:textColor="#007bff"
         android:textStyle="bold" />
 
@@ -42,27 +42,14 @@
         android:id="@+id/tv_main_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BIẾN ĐỘNG SỐ DƯ"
+        android:text="balance fluctuations"
+        android:textAllCaps="true"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_below="@id/divider_header"/>
-
-    <TextView
-        android:id="@+id/tv_unread_count"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:text="12"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:background="@drawable/bg_circle_red"
-        android:layout_toEndOf="@id/tv_main_title"
-        android:layout_alignTop="@id/tv_main_title"
-        android:layout_alignBottom="@id/tv_main_title"
-        android:layout_marginStart="8dp" />
 
 
     <LinearLayout
@@ -81,7 +68,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Box"
+            android:text="All "
             android:gravity="center"
             android:background="@drawable/tab_selected_left"
             android:textColor="@android:color/black"

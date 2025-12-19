@@ -284,16 +284,16 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
             @Override
             public void onBankClick(Bank bank) {
                 selectedBank = bank;
-
-                // Điền thông tin vào màn hình input
                 tvSelectedBankName.setText(bank.getBankSymbol());
-//                ivSelectedBankLogo.setImageResource(bank.getLogoResId());
-                etAccountNumber.setText(""); // Reset ô nhập
 
-                // Chuyển giao diện: Ẩn List -> Hiện Input
+                if (bank.getLogoResId() != 0) {
+                    ivSelectedBankLogo.setImageResource(bank.getLogoResId());
+                } else {
+                    ivSelectedBankLogo.setImageResource(getLogoDrawableBySymbol(bank.getBankSymbol()));
+                }
+
+                etAccountNumber.setText("");
                 switchView(true);
-
-                // Focus vào ô nhập liệu
                 etAccountNumber.requestFocus();
             }
         });
@@ -301,7 +301,15 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
         rvBankList.setLayoutManager(new LinearLayoutManager(this));
         rvBankList.setAdapter(bankAdapter);
     }
+    private int getLogoDrawableBySymbol(String bankSymbol) {
+        if (bankSymbol == null) return R.drawable.ic_account; // Ảnh mặc định
 
+        switch (bankSymbol.toUpperCase()) {
+            case "ATB": return R.drawable.ic_logo;
+            case "HKH": return R.drawable.ic_hkh;
+            default: return R.drawable.ic_account;
+        }
+    }
     private void setupEvents() {
         // 1. Sự kiện nút Close (X)
         btnClose.setOnClickListener(new View.OnClickListener() {

@@ -6,7 +6,7 @@
         <item
             android:id="@+id/nav_notifications"
             android:icon="@android:drawable/ic_popup_reminder"
-            android:title="Notifications"
+            android:title="Balance Fluctuations"
             app:actionLayout="@layout/menu_badge_side" />
         <item
             android:id="@+id/nav_all_account"

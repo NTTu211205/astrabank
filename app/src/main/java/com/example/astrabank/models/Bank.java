@@ -6,11 +6,22 @@ public class Bank {
     private String bankName;
     private String bankSymbol;
     private String bankFullName;
+    private int logoResId;
 
-    public Bank(String bankName, String bankSymbol, String bankFullName) {
+    public int getLogoResId() {
+        return logoResId;
+    }
+
+    public void setLogoResId(int logoResId) {
+        this.logoResId = logoResId;
+    }
+
+
+    public Bank(String bankName, String bankSymbol, String bankFullName, int logoResId) {
         this.bankName = bankName;
         this.bankSymbol = bankSymbol;
         this.bankFullName = bankFullName;
+        this.logoResId = logoResId;
     }
 
     public String getBankName() {
