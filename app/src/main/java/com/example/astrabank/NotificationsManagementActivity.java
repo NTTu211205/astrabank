@@ -1,11 +1,13 @@
 package com.example.astrabank;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,10 +18,22 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.astrabank.api.ApiClient;
+import com.example.astrabank.api.ApiService;
+import com.example.astrabank.api.response.ApiResponse;
+import com.example.astrabank.models.Notification;
+import com.example.astrabank.models.Transaction;
+import com.example.astrabank.utils.LoginManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class NotificationsManagementActivity extends AppCompatActivity {
+    private final String LOG_TAG = "NotificationsManagementActivity";
 
     // 1. Khai báo các View và Data
     private ImageView btnBack;
@@ -52,59 +66,97 @@ public class NotificationsManagementActivity extends AppCompatActivity {
 
         // 3. Khởi tạo dữ liệu và RecyclerView
         initDummyData();
-        displayList = new ArrayList<>();
-        adapter = new NotificationAdapter(displayList);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-
-        // 4. Thiết lập sự kiện Click
-        if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish());
-        }
-
-        if (tvTabInbox != null) {
-            tvTabInbox.setOnClickListener(v -> {
-                isInboxSelected = true;
-                updateTabsUI();
-            });
-        }
-
-        if (tvTabRead != null) {
-            tvTabRead.setOnClickListener(v -> {
-                isInboxSelected = false;
-                updateTabsUI();
-            });
-        }
-
-        // Cập nhật giao diện mặc định ban đầu
-        updateTabsUI();
+//        displayList = new ArrayList<>();
+//        adapter = new NotificationAdapter(displayList);
+//
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(adapter);
+//
+//        // 4. Thiết lập sự kiện Click
+//        if (btnBack != null) {
+//            btnBack.setOnClickListener(v -> finish());
+//        }
+//
+//        if (tvTabInbox != null) {
+//            tvTabInbox.setOnClickListener(v -> {
+//                isInboxSelected = true;
+//                updateTabsUI();
+//            });
+//        }
+//
+//        if (tvTabRead != null) {
+//            tvTabRead.setOnClickListener(v -> {
+//                isInboxSelected = false;
+//                updateTabsUI();
+//            });
+//        }
+//
+//        // Cập nhật giao diện mặc định ban đầu
+//        updateTabsUI();
     }
 
     private void initDummyData() {
         fullList = new ArrayList<>();
-        fullList.add(new Notification("Ưu đãi tháng 12", "Giảm 50k khi thanh toán QR qua AstraBank", false));
-        fullList.add(new Notification("Biến động số dư", "Tài khoản của bạn vừa nhận +2,000,000 VNĐ", true));
-        fullList.add(new Notification("Cập nhật hệ thống", "AstraBank sẽ bảo trì từ 0h - 2h sáng mai",true));
-        fullList.add(new Notification("Quà tặng bạn mới", "Mở thẻ ngay nhận voucher 100k", false));
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<List<Notification>>> call = apiService.getUserHistories(LoginManager.getInstance().getUser().getUserID());
+
+        call.enqueue(new Callback<ApiResponse<List<Notification>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Notification>>> call, Response<ApiResponse<List<Notification>>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<List<Notification>> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        List<Notification> notifications = apiResponse.getResult();
+                        if (notifications != null) {
+                            fullList = notifications;
+
+                            adapter = new NotificationAdapter(fullList);
+//
+                            recyclerView.setLayoutManager(new LinearLayoutManager(NotificationsManagementActivity.this));
+                            recyclerView.setAdapter(adapter);
+                        }
+                        else {
+                            Log.d(LOG_TAG, "No Notification");
+                            Toast.makeText(NotificationsManagementActivity.this, "No Notification", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        Log.d(LOG_TAG, "Error from server");
+                        Toast.makeText(NotificationsManagementActivity.this, "Error from server", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Log.d(LOG_TAG, "Connect to server error");
+                    Toast.makeText(NotificationsManagementActivity.this, "Connect to server error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Notification>>> call, Throwable t) {
+                Log.d(LOG_TAG, "CHECKING ACCOUNT EXIST:Internet disconnect");
+                Toast.makeText(NotificationsManagementActivity.this, "Internet disconnect", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void updateTabsUI() {
-        if (isInboxSelected) {
-            // Tab Hộp thư được chọn
-            tvTabInbox.setBackgroundResource(R.drawable.tab_selected_left);
-            tvTabInbox.setTextColor(getResources().getColor(android.R.color.black));
-
-            tvTabRead.setBackgroundResource(R.drawable.tab_unselected_right);
-            tvTabRead.setTextColor(getResources().getColor(android.R.color.black));
-        } else {
-            // Tab Đã đọc được chọn
-            tvTabInbox.setBackgroundResource(R.drawable.tab_unselected_right);
-            tvTabInbox.setTextColor(getResources().getColor(android.R.color.black));
-
-            tvTabRead.setBackgroundResource(R.drawable.tab_selected_right);
-            tvTabRead.setTextColor(getResources().getColor(android.R.color.black));
-        }
+//        if (isInboxSelected) {
+//            // Tab Hộp thư được chọn
+//            tvTabInbox.setBackgroundResource(R.drawable.tab_selected_left);
+//            tvTabInbox.setTextColor(getResources().getColor(android.R.color.black));
+//
+//            tvTabRead.setBackgroundResource(R.drawable.tab_unselected_right);
+//            tvTabRead.setTextColor(getResources().getColor(android.R.color.black));
+//        } else {
+//            // Tab Đã đọc được chọn
+//            tvTabInbox.setBackgroundResource(R.drawable.tab_unselected_right);
+//            tvTabInbox.setTextColor(getResources().getColor(android.R.color.black));
+//
+//            tvTabRead.setBackgroundResource(R.drawable.tab_selected_right);
+//            tvTabRead.setTextColor(getResources().getColor(android.R.color.black));
+//        }
         filterData();
     }
 
@@ -115,8 +167,8 @@ public class NotificationsManagementActivity extends AppCompatActivity {
                 // Hộp thư: Hiện tất cả
                 displayList.add(n);
             } else {
-                // Đã đọc: Chỉ hiện tin có isRead = true
-                if (n.isRead()) displayList.add(n);
+//                // Đã đọc: Chỉ hiện tin có isRead = true
+//                if (n.isRead()) displayList.add(n);
             }
         }
         adapter.notifyDataSetChanged();
@@ -125,20 +177,21 @@ public class NotificationsManagementActivity extends AppCompatActivity {
     // --- INNER CLASSES (Gộp Model và Adapter vào đây) ---
 
     // 1. Model Class
-    public static class Notification {
-        private String title, content;
-        private boolean isRead;
-
-        public Notification(String title, String content, boolean isRead) {
-            this.title = title;
-            this.content = content;
-            this.isRead = isRead;
-        }
-
-        public String getTitle() { return title; }
-        public String getContent() { return content; }
-        public boolean isRead() { return isRead; }
-    }
+//    public static class Notification {
+//        private String title;
+//        private String content;
+//        private boolean isRead;
+//
+//        public Notification(String title, String content, boolean isRead) {
+//            this.title = title;
+//            this.content = content;
+//            this.isRead = isRead;
+//        }
+//
+//        public String getTitle() { return title; }
+//        public String getContent() { return content; }
+//        public boolean isRead() { return isRead; }
+//    }
 
     // 2. Adapter Class
     public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotiViewHolder> {

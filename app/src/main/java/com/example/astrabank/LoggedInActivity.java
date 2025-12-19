@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,11 +30,14 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.astrabank.api.ApiClient;
 import com.example.astrabank.api.ApiService;
 import com.example.astrabank.api.response.ApiResponse;
 import com.example.astrabank.models.Account;
+import com.example.astrabank.models.Notification;
 import com.example.astrabank.utils.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,6 +58,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoggedInActivity extends AppCompatActivity {
+    RecyclerView rvTransaction;
     private final String LOG_TAG = "LoggedInActivity";
     LinearLayout ll_middle, ll_products, ll_account_and_card;
     RelativeLayout rl_maps, rlNotifCount;
@@ -62,7 +68,8 @@ public class LoggedInActivity extends AppCompatActivity {
     TextView tv_balance_masked, tvName, tvHoTro;
     NavigationView navigationView, navMenuInner;
     View navHeader, navFooter;
-    AppCompatButton btSignOut;
+    AppCompatButton btSignOut, btSeeMore;
+
 
     // --- Biến mới cho Menu (Side View) ---
     private DrawerLayout drawerLayout;
@@ -102,6 +109,8 @@ public class LoggedInActivity extends AppCompatActivity {
         tvHoTro = findViewById(R.id.tv_ho_tro);
         rlNotifCount = findViewById(R.id.rl_notif_count);
         llScanQR = findViewById(R.id.ll_scanQR);
+        rvTransaction = findViewById(R.id.rv_transactions);
+        btSeeMore = findViewById(R.id.btn_see_more_transactions);
 
         // --- [MỚI] Ánh xạ các view mới thêm vào ---
         cardSpendingInsight = findViewById(R.id.card_spending_insight);
@@ -284,6 +293,67 @@ public class LoggedInActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        showTransactionHistory();
+
+        btSeeMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeScreen(NotificationsManagementActivity.class);
+            }
+        });
+    }
+
+    private void showTransactionHistory() {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<List<Notification>>> call = apiService.getUserHistories(LoginManager.getInstance().getUser().getUserID());
+
+        call.enqueue(new Callback<ApiResponse<List<Notification>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Notification>>> call, Response<ApiResponse<List<Notification>>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<List<Notification>> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        List<Notification> notifications = apiResponse.getResult();
+                        if (notifications != null) {
+                            if (notifications.size() > 4) {
+                                setUpRecyclerView(notifications.subList(0, 3));
+                            }
+                            else {
+                                setUpRecyclerView(notifications);
+                            }
+
+                        }
+                        else {
+                            Log.d(LOG_TAG, "No Notification");
+                            Toast.makeText(LoggedInActivity.this, "No Notification", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        Log.d(LOG_TAG, "Error from server");
+                        Toast.makeText(LoggedInActivity.this, "Error from server", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Log.d(LOG_TAG, "Connect to server error");
+                    Toast.makeText(LoggedInActivity.this, "Connect to server error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Notification>>> call, Throwable t) {
+                Log.d(LOG_TAG, "CHECKING ACCOUNT EXIST:Internet disconnect");
+                Toast.makeText(LoggedInActivity.this, "Internet disconnect", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setUpRecyclerView(List<Notification> notifications) {
+        NotificationAdapter adapter = new NotificationAdapter(notifications);
+//
+        rvTransaction.setLayoutManager(new LinearLayoutManager(LoggedInActivity.this));
+        rvTransaction.setAdapter(adapter);
     }
 
     private void updateSpendingChartData() {
@@ -390,6 +460,46 @@ public class LoggedInActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    public static class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>{
+        private List<Notification> notifications;
+
+        public NotificationAdapter(List<Notification> notifications) {
+            this.notifications = notifications;
+        }
+
+        @NonNull
+        @Override
+        public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_list_transaction, parent, false);
+            return new NotificationViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
+            Notification notification = notifications.get(position);
+            holder.tvAmount.setText(notification.getAmount());
+            holder.tvDescription.setText(notification.getContent());
+            holder.tvTitle.setText(notification.getTitle());
+        }
+
+        @Override
+        public int getItemCount() {
+            return notifications.size();
+        }
+
+        public class NotificationViewHolder extends RecyclerView.ViewHolder {
+            TextView tvTitle, tvDescription, tvAmount;
+            ImageView imageView;
+            public NotificationViewHolder(@NonNull View itemView) {
+                super(itemView);
+                this.tvTitle = itemView.findViewById(R.id.tv_transaction_title);
+                this.tvDescription = itemView.findViewById(R.id.tv_transaction_description);
+                this.tvAmount = itemView.findViewById(R.id.tv_transaction_amount);
+                this.imageView = itemView.findViewById(R.id.img_transaction_icon);
+            }
         }
     }
 }

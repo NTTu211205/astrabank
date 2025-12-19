@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/ll_notification_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="12dp">
 
@@ -47,7 +47,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2"
                 android:text="Hãy để Techcom Insurance đồng hành cùng bạn và gia đình với chương trình ưu đãi hoàn phí Bảo hiểm chăm sóc sức khỏe toàn diện..."
                 android:textColor="#555555"
                 android:textSize="14sp" />
