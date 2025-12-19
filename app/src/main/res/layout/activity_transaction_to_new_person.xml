@@ -60,9 +60,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_launcher_foreground"
-                android:background="@drawable/bg_search_rounded"
-                android:padding="8dp"/>
+                android:src="@drawable/ic_bank"/>
 
             <EditText
                 android:id="@+id/et_search_bank"

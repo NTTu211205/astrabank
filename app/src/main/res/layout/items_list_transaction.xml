@@ -15,6 +15,7 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_transaction_out"
         tools:src="@drawable/ic_transaction_out" />
     <TextView
         android:id="@+id/tv_transaction_amount"

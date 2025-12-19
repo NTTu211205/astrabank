@@ -3,6 +3,8 @@ package com.example.astrabank;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class SelectRecipientActivity extends AppCompatActivity {
 
     LinearLayout llANewReceiver;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,8 @@ public class SelectRecipientActivity extends AppCompatActivity {
         });
 
         llANewReceiver = findViewById(R.id.ll_add_new_recipient);
-
+        imgBack = findViewById(R.id.img_back);
+        imgBack.setOnClickListener(v -> finish());
         llANewReceiver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

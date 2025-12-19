@@ -44,12 +44,12 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder
         // Gán dữ liệu lên View
         holder.tvShortName.setText(bank.getBankSymbol());
         holder.tvFullName.setText(bank.getBankFullName());
-//        holder.ivLogo.setImageResource(bank.getLogoResId());
+        holder.ivLogo.setImageResource(bank.getLogoResId());
 
         // Bắt sự kiện Click vào item
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onBankClick(bank); // Truyền ngân hàng được chọn về Activity
+                listener.onBankClick(bank);
             }
         });
     }
@@ -63,6 +63,8 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder
     public static class BankViewHolder extends RecyclerView.ViewHolder {
         TextView tvShortName, tvFullName;
         ImageView ivLogo;
+
+
 
         public BankViewHolder(@NonNull View itemView) {
             super(itemView);

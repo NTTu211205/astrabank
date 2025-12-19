@@ -342,18 +342,14 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tab_layout_transactions"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:tabMode="fixed"
-                        app:tabGravity="fill"
-                        app:tabIndicatorHeight="0dp"
-                        app:tabBackground="@android:color/white"
-                        app:tabRippleColor="@null" >
-                        <com.google.android.material.tabs.TabItem android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Recent Activities" />
-                        <com.google.android.material.tabs.TabItem android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Balance History" />
-                    </com.google.android.material.tabs.TabLayout>
+                        android:text="Recent Activities"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginStart="10dp"
+                        android:textColor="#ff0000"/>
 
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="8dp" android:paddingHorizontal="8dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:layout_centerVertical="true" android:text="Today" android:textColor="@android:color/darker_gray" android:textSize="16sp"/>
