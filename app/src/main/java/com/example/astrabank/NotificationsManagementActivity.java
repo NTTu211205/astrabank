@@ -61,7 +61,6 @@ public class NotificationsManagementActivity extends AppCompatActivity {
         // 2. Ánh xạ View
         btnBack = findViewById(R.id.btn_back);
         tvTabInbox = findViewById(R.id.tv_tab_inbox);
-        tvTabRead = findViewById(R.id.tv_tab_read);
         recyclerView = findViewById(R.id.rcv_details_noti);
 
         // 3. Khởi tạo dữ liệu và RecyclerView
@@ -93,6 +92,7 @@ public class NotificationsManagementActivity extends AppCompatActivity {
 //
 //        // Cập nhật giao diện mặc định ban đầu
 //        updateTabsUI();
+        btnBack.setOnClickListener(v -> finish());
     }
 
     private void initDummyData() {

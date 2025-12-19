@@ -68,7 +68,7 @@ public class LoggedInActivity extends AppCompatActivity {
     TextView tv_balance_masked, tvName, tvHoTro;
     NavigationView navigationView, navMenuInner;
     View navHeader, navFooter;
-    AppCompatButton btSignOut, btSeeMore;
+    AppCompatButton btSignOut, btSeeMore, btnRewards, btnAutoEarning;
 
 
     // --- Biến mới cho Menu (Side View) ---
@@ -111,6 +111,8 @@ public class LoggedInActivity extends AppCompatActivity {
         llScanQR = findViewById(R.id.ll_scanQR);
         rvTransaction = findViewById(R.id.rv_transactions);
         btSeeMore = findViewById(R.id.btn_see_more_transactions);
+        btnRewards = findViewById(R.id.btn_bankRewards);
+        btnAutoEarning = findViewById(R.id.btn_autoEarning);
 
         // --- [MỚI] Ánh xạ các view mới thêm vào ---
         cardSpendingInsight = findViewById(R.id.card_spending_insight);
@@ -164,7 +166,21 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnRewards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoggedInActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnAutoEarning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoggedInActivity.this, AutoEarningActivity.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
 
+            }
+        });
         rlNotifCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,6 +204,7 @@ public class LoggedInActivity extends AppCompatActivity {
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
+
 
         btSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -498,7 +515,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 this.tvTitle = itemView.findViewById(R.id.tv_transaction_title);
                 this.tvDescription = itemView.findViewById(R.id.tv_transaction_description);
                 this.tvAmount = itemView.findViewById(R.id.tv_transaction_amount);
-                this.imageView = itemView.findViewById(R.id.img_transaction_icon);
             }
         }
     }

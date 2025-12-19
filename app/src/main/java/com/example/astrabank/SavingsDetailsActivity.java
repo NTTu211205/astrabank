@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.astrabank.models.Transaction;
-import com.example.astrabank.TESTACCOUNT.TransactionAdapter;
+import com.example.astrabank.adapters.TransactionAdapter;
 import com.example.astrabank.api.ApiClient;
 import com.example.astrabank.api.ApiService;
 import com.example.astrabank.api.response.ApiResponse;
@@ -79,20 +79,12 @@ public class SavingsDetailsActivity extends AppCompatActivity {
     }
 
     private void setupHeaderData() {
-        // In a real app, you would pass these via Intent or fetch from API
         findSavingAccount(LoginManager.getInstance().getUser().getUserID(), "SAVING");
     }
 
     private void setupRecyclerView(String accountNumber) {
         transactionList = new ArrayList<>();
 
-        // Mock Data: Deposit History
-//        transactionList.add(new Transaction("Monthly Deposit", "Dec 01, 2025", 1000.00));
-//        transactionList.add(new Transaction("Interest Payment", "Nov 30, 2025", 45.00));
-//        transactionList.add(new Transaction("Mobile Transfer", "Nov 15, 2025", 500.00));
-//        transactionList.add(new Transaction("Monthly Deposit", "Nov 01, 2025", 1000.00));
-//        transactionList.add(new Transaction("Cash Deposit", "Oct 20, 2025", 200.00));
-//        transactionList.add(new Transaction("Interest Payment", "Oct 31, 2025", 42.50));
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
@@ -105,7 +97,6 @@ public class SavingsDetailsActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<List<Transaction>> apiResponse = response.body();
 
-                    // Kiểm tra code xem có thành công không (Ví dụ 1000 là OK)
                     if (apiResponse.getResult() != null) {
                         List<Transaction> listGiaoDich = apiResponse.getResult();
 
@@ -126,7 +117,7 @@ public class SavingsDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<List<Transaction>>> call, Throwable t) {
-                Toast.makeText(SavingsDetailsActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SavingsDetailsActivity.this, "Connection Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -173,7 +164,7 @@ public class SavingsDetailsActivity extends AppCompatActivity {
                 }
                 else {
                     Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
-                    Toast.makeText(SavingsDetailsActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SavingsDetailsActivity.this, "Client not Response", Toast.LENGTH_SHORT).show();
                     changeScreen(SeeAllAccountActivity.class);
                     LoginManager.clearUser();
                 }
@@ -182,7 +173,7 @@ public class SavingsDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
                 Log.e(LOG_TAG, "Network failure: " + t.getMessage());
-                Toast.makeText(SavingsDetailsActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SavingsDetailsActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
                 changeScreen(SeeAllAccountActivity.class);
                 LoginManager.clearUser();
             }

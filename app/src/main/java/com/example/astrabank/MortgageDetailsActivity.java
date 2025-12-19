@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.astrabank.TESTACCOUNT.PaymentAdapter;
-import com.example.astrabank.TESTACCOUNT.PaymentRecord;
+import com.example.astrabank.adapters.PaymentAdapter;
+import com.example.astrabank.models.PaymentRecord;
 
 import java.util.ArrayList;
 import java.util.List;
