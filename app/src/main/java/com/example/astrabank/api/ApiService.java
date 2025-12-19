@@ -1,12 +1,15 @@
 package com.example.astrabank.api;
 
+import com.example.astrabank.api.request.ChangePINRequest;
 import com.example.astrabank.api.request.LoginPhoneRequest;
 import com.example.astrabank.api.request.SavingAccountRequest;
 import com.example.astrabank.api.request.TransactionRequest;
+import com.example.astrabank.api.request.UpdateUserRequest;
 import com.example.astrabank.api.response.AccountResponse;
 import com.example.astrabank.api.response.ApiResponse;
 import com.example.astrabank.models.Account;
 import com.example.astrabank.models.Bank;
+import com.example.astrabank.models.Notification;
 import com.example.astrabank.models.Transaction;
 import com.example.astrabank.models.User;
 
@@ -16,6 +19,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -27,6 +31,12 @@ public interface ApiService {
     Call<ApiResponse<Boolean>> validateTransaction(
             @Query("userId") String userId,
             @Query("transactionPIN") String transactionPIN);
+
+    @PUT("users/update-profile/{userId}")
+    Call<ApiResponse<User>> updateProfile(@Path("userId") String userId, @Body UpdateUserRequest updateUserRequest);
+
+    @PUT("users/change-pin")
+    Call<ApiResponse<Boolean>> changePin(@Body ChangePINRequest changePINRequest);
 
     @GET("accounts/my-account")
     Call<ApiResponse<Account>> getDefaultAccount(@Query("userId") String uid, @Query("accountType") String accountType);
@@ -55,6 +65,10 @@ public interface ApiService {
     @POST("transactions/sendTransaction")
     Call<ApiResponse<Transaction>> sendTransaction(@Body TransactionRequest transactionRequest);
 
+    @GET("transactions/{userId}")
+    Call<ApiResponse<List<Notification>>> getUserHistories(@Path("userId") String userId);
+
     @GET("banks/{bankSymbol}")
     Call<ApiResponse<Bank>> getBank(@Path("bankSymbol") String bankSymbol);
+
 }

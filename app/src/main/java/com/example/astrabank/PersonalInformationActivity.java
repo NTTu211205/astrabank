@@ -61,24 +61,18 @@ public class PersonalInformationActivity extends AppCompatActivity {
         User user = LoginManager.getInstance().getUser();
 
         if (user != null) {
-            // Set text vào các TextView
-            // Lưu ý: Đảm bảo class User của bạn có các getter tương ứng
             tvFullName.setText(user.getFullName());
             tvPhone.setText(user.getPhone());
 
             // Các trường dưới đây giả định model User của bạn đã được cập nhật thêm các trường này
-            // Nếu chưa có, bạn cần hiển thị dữ liệu mặc định hoặc cập nhật model User
-            /* tvDob.setText(user.getDateOfBirth());
-            tvCccd.setText(user.getNationalId());
+            tvDob.setText(user.getDateOfBirth());
+            tvCccd.setText(user.getNationalID());
             tvEmail.setText(user.getEmail());
             tvAddress.setText(user.getAddress());
             tvOccupation.setText(user.getOccupation());
-            tvCompany.setText(user.getCompany());
-            tvIncome.setText(user.getIncome());
-            */
+            tvCompany.setText(user.getCompanyName());
+            tvIncome.setText(user.getAverageSalary() + "");
 
-            // Ví dụ hiển thị dữ liệu demo nếu model chưa cập nhật:
-            // tvDob.setText("01/01/1995");
         }
     }
 
