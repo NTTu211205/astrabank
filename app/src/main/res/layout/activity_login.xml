@@ -80,16 +80,17 @@
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:textSize="16sp" />
+
     <TextView
         android:id="@+id/tv_login_by_email"
-        android:layout_width="185dp"
-        android:layout_height="21dp"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/et_phone_number"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="185dp"
+        android:layout_marginStart="190dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="26dp"
+        android:layout_marginEnd="40dp"
         android:text="Change to email login?"
         android:textStyle="italic" />
     <androidx.appcompat.widget.AppCompatButton
@@ -100,6 +101,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:background="@drawable/numpad_button_default"
-        android:text="Get Code" />
+        android:text="Login" />
 
 </RelativeLayout>
