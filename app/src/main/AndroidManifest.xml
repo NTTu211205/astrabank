@@ -20,9 +20,24 @@
         android:theme="@style/Theme.EndtermMOA"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".AdminAddMortgageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminMortgageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminAddCustomerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminCustomerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".ValidateLoginActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".LoginByEmailActivity"
             android:exported="false" />
