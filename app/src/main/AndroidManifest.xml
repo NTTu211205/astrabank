@@ -20,6 +20,15 @@
         android:theme="@style/Theme.EndtermMOA"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".LoginByEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InputPINActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateInputPINActivity"
+            android:exported="false" />
+        <activity
             android:name=".SecurityActivity"
             android:exported="false" />
         <activity
