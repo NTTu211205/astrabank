@@ -40,9 +40,10 @@
         android:layout_marginBottom="16dp">
 
         <TextView
+            android:id="@+id/tvRecommend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next Payment Due"
+            android:text="Now Payment Due"
             android:textSize="14sp"
             android:textColor="#757575"
             android:textAllCaps="true"/>
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:text="Pay Monthly Installment"
             android:textSize="16sp"
+            android:enabled="false"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:backgroundTint="#D32F2F"
@@ -85,6 +87,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llMortgageInfor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

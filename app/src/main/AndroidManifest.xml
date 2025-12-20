@@ -20,10 +20,11 @@
         android:theme="@style/Theme.EndtermMOA"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".LoginByEmailActivity"
-            android:exported="false" />
+            android:name=".ValidateLoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
-            android:name=".InputPINActivity"
+            android:name=".LoginByEmailActivity"
             android:exported="false" />
         <activity
             android:name=".CreateInputPINActivity"
@@ -126,9 +127,6 @@
             android:exported="false" />
         <activity
             android:name=".FaceAuthenticationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CreatePasswordActivity"
             android:exported="false" />
         <activity
             android:name=".SentOTPCodeActivity"

@@ -16,6 +16,7 @@ import android.widget.Toast; // Dùng để hiển thị thông báo tạm thờ
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -33,6 +34,7 @@ import java.util.List;
 public class OwnOTPActivity extends AppCompatActivity {
     private final String LOG_TAG = "OwnOTPActivity";
     private ImageButton btnBack;
+    private AppCompatButton btSignIn;
     private List<EditText> otpEditTexts;
     private String uid;
     private String name;
@@ -92,9 +94,6 @@ public class OwnOTPActivity extends AppCompatActivity {
             imm.showSoftInput(otpEditTexts.get(0), InputMethodManager.SHOW_IMPLICIT);
         }
 
-//        findViewById(R.id.tv_forgot_otp).setOnClickListener(v -> {
-//            Toast.makeText(OwnOTPActivity.this, "Bạn đã nhấn Quên mã mở khóa", Toast.LENGTH_SHORT).show();
-//        });
     }
 
     private void setupOtpListeners() {
@@ -224,29 +223,6 @@ public class OwnOTPActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "Hashing transaction OTP error");
             return;
         }
-
-//        UserController userController = new UserController(this);
-//        userController.createUser(userID, fullName, dateOfBirth,
-//                nationalID, email, phone,
-//                address, occupation, companyName,
-//                averageSalary, true, hashTransactionOTP,
-//                new CallBack<Boolean>() {
-//                    @Override
-//                    public void onResult(Boolean result) {
-//                        if (result) {
-//                            Log.d(LOG_TAG, "create user success");
-//                            changeScreen(LoadingPageActivity.class);
-//                        }
-//                        else {
-//                            Log.d(LOG_TAG, "create user error");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Exception e) {
-//                        Log.d(LOG_TAG, "create user error");
-//                    }
-//                });
     }
 
     private void saveAccountToDB(String uid, AccountType accountType) {
