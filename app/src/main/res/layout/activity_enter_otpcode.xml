@@ -14,9 +14,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="60dp"
         android:gravity="center_horizontal">
 
         <ImageView
@@ -62,81 +61,47 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvHint2"
-        android:layout_width="283dp"
-        android:layout_height="38dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:alpha="0.5"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="386dp"
-        android:layout_marginEnd="64dp"
+        android:id="@+id/tv_enter_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_below="@id/logo_block"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="40dp"
         android:fontFamily="@font/inknut_antiqua_black"
-        android:text="At Least 1 Uppercase Character"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/tvHint3"
-        android:layout_width="283dp"
-        android:layout_height="38dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:alpha="0.5"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="420dp"
-        android:layout_marginEnd="115dp"
-        android:fontFamily="@font/inknut_antiqua_black"
-        android:text="At least 1 Special Character"
+        android:text="Enter OTP Code sent to your phone"
         android:textSize="12sp" />
 
     <EditText
         android:id="@+id/et_phone_number"
-        android:layout_width="317dp"
-        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_below="@id/tv_enter_phone"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="40dp"
-        android:autofillHints="phone"
         android:background="@drawable/edittext_border"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:hint=" "
-        android:inputType="phone"
+        android:inputType="numberPassword"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:autofillHints="phone" />
 
-    <TextView
-        android:id="@+id/tvHint1"
-        android:layout_width="288dp"
-        android:layout_height="33dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:alpha="0.5"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="349dp"
-        android:layout_marginEnd="59dp"
-        android:fontFamily="@font/inknut_antiqua_black"
-        android:text="8-16 char length"
-        android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/tv_enter_phone"
-        android:layout_width="205dp"
-        android:layout_height="27dp"
-        android:layout_below="@+id/logo_block"
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogin"
+        android:layout_width="146dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_phone_number"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="157dp"
-        android:fontFamily="@font/inknut_antiqua_black"
-        android:text="Create Your Password"
-        android:textSize="12sp" />
+        android:layout_gravity="center"
+        android:layout_marginStart="126dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="123dp"
+        android:background="@drawable/numpad_button_default"
+        android:text="Login" />
 
 </RelativeLayout>

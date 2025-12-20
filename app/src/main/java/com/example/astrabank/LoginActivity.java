@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btLogin = findViewById(R.id.btnLogin);
         etPhoneNumber = findViewById(R.id.et_phone_number);
-
+        TextView btnLoginByEmail = findViewById(R.id.tv_login_by_email);
         mAuth = FirebaseAuth.getInstance();
         createCallBackFunction();
 
@@ -62,6 +63,13 @@ public class LoginActivity extends AppCompatActivity {
                 btLogin.setText("●   ●   ●");
                 btLogin.setEnabled(false);
                 sendOTP(phone);
+            }
+        });
+        btnLoginByEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, LoginByEmailActivity.class);
+                startActivity(intent);
             }
         });
     }

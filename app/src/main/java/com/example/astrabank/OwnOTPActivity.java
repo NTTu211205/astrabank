@@ -92,9 +92,9 @@ public class OwnOTPActivity extends AppCompatActivity {
             imm.showSoftInput(otpEditTexts.get(0), InputMethodManager.SHOW_IMPLICIT);
         }
 
-        findViewById(R.id.tv_forgot_otp).setOnClickListener(v -> {
-            Toast.makeText(OwnOTPActivity.this, "Bạn đã nhấn Quên mã mở khóa", Toast.LENGTH_SHORT).show();
-        });
+//        findViewById(R.id.tv_forgot_otp).setOnClickListener(v -> {
+//            Toast.makeText(OwnOTPActivity.this, "Bạn đã nhấn Quên mã mở khóa", Toast.LENGTH_SHORT).show();
+//        });
     }
 
     private void setupOtpListeners() {

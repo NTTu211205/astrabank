@@ -75,12 +75,23 @@
         android:layout_marginEnd="40dp"
         android:autofillHints="phone"
         android:background="@drawable/edittext_border"
-        android:hint="Phone number"
+        android:hint="Phone number or email"
         android:inputType="phone"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:textSize="20sp" />
-
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tv_login_by_email"
+        android:layout_width="185dp"
+        android:layout_height="21dp"
+        android:layout_below="@+id/et_phone_number"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="185dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="26dp"
+        android:text="Change to email login?"
+        android:textStyle="italic" />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
         android:layout_width="112dp"
