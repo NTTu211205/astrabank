@@ -517,9 +517,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 this.tvTitle = itemView.findViewById(R.id.tv_transaction_title);
                 this.tvDescription = itemView.findViewById(R.id.tv_transaction_description);
                 this.tvAmount = itemView.findViewById(R.id.tv_transaction_amount);
-
-                // --- [SỬA ĐỔI 2] Ánh xạ ID từ XML ---
-                // Dòng này bị thiếu trong code cũ của bạn
                 this.imageView = itemView.findViewById(R.id.img_transaction_icon);
             }
         }

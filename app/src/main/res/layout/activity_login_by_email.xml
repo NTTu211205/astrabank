@@ -66,7 +66,7 @@
         android:textSize="12sp" />
 
     <EditText
-        android:id="@+id/et_phone_number"
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_below="@id/tv_login"
@@ -75,8 +75,8 @@
         android:layout_marginEnd="40dp"
         android:autofillHints="phone"
         android:background="@drawable/edittext_border"
-        android:hint="email"
-        android:inputType="phone"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:textSize="16sp" />
@@ -85,10 +85,10 @@
         android:id="@+id/btnLogin"
         android:layout_width="112dp"
         android:layout_height="61dp"
-        android:layout_below="@+id/et_phone_number"
+        android:layout_below="@+id/etEmail"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:background="@drawable/numpad_button_default"
-        android:text="Get Code" />
+        android:text="SIGN IN" />
 
 </RelativeLayout>

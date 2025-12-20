@@ -48,6 +48,7 @@ public class SeeAllAccountActivity extends AppCompatActivity {
     private TextView tvMortgageNumber, tvPaymentAmount, tvPaymentFrequency;
 
     private String savingAccountNumber;
+    private String mortgageAccountNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +184,7 @@ public class SeeAllAccountActivity extends AppCompatActivity {
 
                     if (apiResponse != null) {
                         if (apiResponse.getResult() != null) {
-
+                            mortgageAccountNumber = apiResponse.getResult().getAccountNumber();
                         }
                         else {
                             rlMortgage.setVisibility(View.GONE);
@@ -331,6 +332,7 @@ public class SeeAllAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SeeAllAccountActivity.this, MortgageDetailsActivity.class);
+                intent.putExtra("accountNumber", mortgageAccountNumber);
                 startActivity(intent);
             }
         });

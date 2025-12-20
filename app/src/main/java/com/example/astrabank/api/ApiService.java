@@ -1,6 +1,7 @@
 package com.example.astrabank.api;
 
 import com.example.astrabank.api.request.ChangePINRequest;
+import com.example.astrabank.api.request.EmailLoginRequest;
 import com.example.astrabank.api.request.LoginPhoneRequest;
 import com.example.astrabank.api.request.SavingAccountRequest;
 import com.example.astrabank.api.request.TransactionRequest;
@@ -9,6 +10,8 @@ import com.example.astrabank.api.response.AccountResponse;
 import com.example.astrabank.api.response.ApiResponse;
 import com.example.astrabank.models.Account;
 import com.example.astrabank.models.Bank;
+import com.example.astrabank.models.Loan;
+import com.example.astrabank.models.LoanReceipt;
 import com.example.astrabank.models.Notification;
 import com.example.astrabank.models.Transaction;
 import com.example.astrabank.models.User;
@@ -38,8 +41,14 @@ public interface ApiService {
     @PUT("users/change-pin")
     Call<ApiResponse<Boolean>> changePin(@Body ChangePINRequest changePINRequest);
 
+    @GET("users/find-by-email/{email}")
+    Call<ApiResponse<User>> findUserByEmail(@Path("email") String email);
+
     @GET("accounts/my-account")
     Call<ApiResponse<Account>> getDefaultAccount(@Query("userId") String uid, @Query("accountType") String accountType);
+
+    @POST("users/login")
+    Call<ApiResponse<User>> login (@Body EmailLoginRequest emailLoginRequest);
 
     @GET("banks/all")
     Call<ApiResponse<List<Bank>>> getAllBank();
@@ -53,8 +62,17 @@ public interface ApiService {
     @GET("accounts/findAll/{userId}")
     Call<ApiResponse<List<Account>>> getAllMyAccount (@Path("userId") String userId);
 
+    @GET("accounts/find-mortgage/{accountNumber}")
+    Call<ApiResponse<Account>> findMortgageAccount(@Path("accountNumber") String accountNumber);
+
     @POST("accounts/create-saving-account")
     Call<ApiResponse<Account>> createSavingAccount(@Body SavingAccountRequest savingAccountRequest);
+
+    @GET("accounts/find-loan/{loanId}")
+    Call<ApiResponse<Loan>> findLoan(@Path("loanId") String loanId);
+
+    @GET("accounts/find-receipt/{loanId}")
+    Call<ApiResponse<List<LoanReceipt>>> findReceipt(@Path("loanId") String loanId);
 
     @POST("transactions/transfer")
     Call<ApiResponse<Transaction>> progressTransfer(@Body TransactionRequest transactionRequest);

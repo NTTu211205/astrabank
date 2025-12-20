@@ -33,6 +33,12 @@ public class Account {
     @SerializedName("interestRate")
     private Double interestRate;
 
+    @SerializedName("isLoan")
+    private Boolean isLoan;
+
+    @SerializedName("presentLoanId")
+    private String presentLoanId;
+
     public Account(String userId, String accountNumber, boolean accountStatus,
                    long balance, AccountType accountType) {
         this.userId = userId;
@@ -41,6 +47,34 @@ public class Account {
         this.balance = balance;
         this.accountType = accountType;
         this.createdAt = new Date();
+    }
+
+    public Account(String userId, String accountNumber, Boolean accountStatus, Long balance, AccountType accountType, Date createdAt, Double interestRate, Boolean isLoan, String presentLoanId) {
+        this.userId = userId;
+        this.accountNumber = accountNumber;
+        this.accountStatus = accountStatus;
+        this.balance = balance;
+        this.accountType = accountType;
+        this.createdAt = createdAt;
+        this.interestRate = interestRate;
+        this.isLoan = isLoan;
+        this.presentLoanId = presentLoanId;
+    }
+
+    public Boolean getLoan() {
+        return isLoan;
+    }
+
+    public void setLoan(Boolean loan) {
+        isLoan = loan;
+    }
+
+    public String getPresentLoanId() {
+        return presentLoanId;
+    }
+
+    public void setPresentLoanId(String presentLoanId) {
+        this.presentLoanId = presentLoanId;
     }
 
     public Boolean getAccountStatus() {

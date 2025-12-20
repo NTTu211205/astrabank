@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".OwnOTPActivity">
+    tools:context=".ValidateLoginActivity">
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -38,6 +38,17 @@
         android:text="Input verification code"
         android:textColor="@android:color/black"
         android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="24dp"
+        android:text="User name"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -104,5 +115,17 @@
             android:inputType="numberPassword"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/numpad_button_black"
+        android:text="SIGN IN"
+        android:textSize="16sp" />
 
 </LinearLayout>
