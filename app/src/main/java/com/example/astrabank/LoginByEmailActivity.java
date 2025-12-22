@@ -1,6 +1,8 @@
 package com.example.astrabank;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,8 +42,15 @@ public class LoginByEmailActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        SharedPreferences sharedPreferences = getSharedPreferences("AstraBankPrefs", Context.MODE_PRIVATE);
+        String emailRemember = sharedPreferences.getString("EMAIL", null);
+
         etEmail = findViewById(R.id.etEmail);
         btLogin = findViewById(R.id.btnLogin);
+
+        if (emailRemember != null) {
+            etEmail.setText(emailRemember);
+        }
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override

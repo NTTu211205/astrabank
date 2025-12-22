@@ -1,6 +1,8 @@
 package com.example.astrabank;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,11 +44,18 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("AstraBankPrefs", Context.MODE_PRIVATE);
+        String phone = sharedPreferences.getString("PHONE", null);
+
         btLogin = findViewById(R.id.btnLogin);
         etPhoneNumber = findViewById(R.id.et_phone_number);
         TextView btnLoginByEmail = findViewById(R.id.tv_login_by_email);
         mAuth = FirebaseAuth.getInstance();
         createCallBackFunction();
+
+        if (phone != null) {
+            etPhoneNumber.setText(phone);
+        }
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
