@@ -80,7 +80,6 @@ public class LoggedInActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ListenerRegistration balanceListener;
 
-    // --- [MỚI] Biến cho phần Insights (Chi tiêu & Số dư bình quân) ---
     private CardView cardSpendingInsight, cardAvgBalance;
     private TextView btnSeeSpending, btnSeeAvgBalance;
     private ProgressBar pbMonth10, pbMonth9;
@@ -310,7 +309,7 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-        if (cardAvgBalance != null) cardAvgBalance.setOnClickListener(avgBalanceListener);
+//        if (cardAvgBalance != null) cardAvgBalance.setOnClickListener(avgBalanceListener);
         if (btnSeeAvgBalance != null) btnSeeAvgBalance.setOnClickListener(avgBalanceListener);
 
         updateSpendingChartData();

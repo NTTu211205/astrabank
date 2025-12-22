@@ -62,6 +62,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/inknut_antiqua_black"
+        android:textColor="@color/black"
         android:text="Login"
         android:textSize="12sp" />
 
@@ -93,12 +94,14 @@
         android:layout_marginEnd="40dp"
         android:text="Change to email login?"
         android:textStyle="italic" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
         android:layout_width="112dp"
         android:layout_height="61dp"
         android:layout_below="@+id/et_phone_number"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
         android:layout_marginTop="40dp"
         android:background="@drawable/numpad_button_default"
         android:text="Login" />
