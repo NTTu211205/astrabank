@@ -2,7 +2,9 @@ package com.example.astrabank;
 
 import static androidx.camera.core.CameraXThreads.TAG;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,8 +121,16 @@ public class LoggedInActivity extends AppCompatActivity {
         cardAvgBalance = findViewById(R.id.card_avg_balance);
         btnSeeSpending = findViewById(R.id.btn_see_spending_details);
         btnSeeAvgBalance = findViewById(R.id.btn_see_balance_details);
-        pbMonth10 = findViewById(R.id.pb_month_10); // Thanh tiến trình tháng 10
-        pbMonth9 = findViewById(R.id.pb_month_9);   // Thanh tiến trình tháng 9
+        pbMonth10 = findViewById(R.id.pb_month_10);
+        pbMonth9 = findViewById(R.id.pb_month_9);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("AstraBankPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("EMAIL", LoginManager.getInstance().getUser().getEmail());
+        editor.putString("PHONE", LoginManager.getInstance().getUser().getPhone());
+
+        editor.apply();
 
         mAuth = FirebaseAuth.getInstance();
 
