@@ -221,18 +221,20 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rl_transaction_history"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_transaction_history"
-                    tools:itemCount="2"/>
+                    android:layout_height="250dp"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_transaction_history" />
 
                 <Button
                     android:id="@+id/btnViewMoreHistory"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="#B8B5B5"
                     android:text="View All History"
-                    android:textColor="#333" />
+                    android:textColor="#333"
+                    android:visibility="gone" />
 
-            </LinearLayout> </LinearLayout> </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout> </RelativeLayout>
 </ScrollView>

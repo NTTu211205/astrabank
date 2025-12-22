@@ -1,6 +1,7 @@
 package com.example.astrabank.api.request;
 
-public class UpdateUserRequest {
+public class AdminCreateCustomerRequest {
+    private String userID;
     private String fullName;
     private String dateOfBirth;
     private String nationalID;
@@ -10,11 +11,13 @@ public class UpdateUserRequest {
     private String occupation;
     private String companyName;
     private Double averageSalary;
+    private String transactionPIN;
+    private String createdBy;
     private String updatedBy;
+    private long deposit;
 
-    public UpdateUserRequest() {}
-
-    public UpdateUserRequest(String fullName, String dateOfBirth, String nationalID, String email, String phone, String address, String occupation, String companyName, Double averageSalary, String updatedBy) {
+    public AdminCreateCustomerRequest(String userID, String fullName, String dateOfBirth, String nationalID, String email, String phone, String address, String occupation, String companyName, Double averageSalary, String transactionPIN, String createdBy, String updatedBy, long deposit) {
+        this.userID = userID;
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
         this.nationalID = nationalID;
@@ -24,7 +27,18 @@ public class UpdateUserRequest {
         this.occupation = occupation;
         this.companyName = companyName;
         this.averageSalary = averageSalary;
+        this.transactionPIN = transactionPIN;
+        this.createdBy = createdBy;
         this.updatedBy = updatedBy;
+        this.deposit = deposit;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getFullName() {
@@ -99,11 +113,35 @@ public class UpdateUserRequest {
         this.averageSalary = averageSalary;
     }
 
+    public String getTransactionPIN() {
+        return transactionPIN;
+    }
+
+    public void setTransactionPIN(String transactionPIN) {
+        this.transactionPIN = transactionPIN;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     public String getUpdatedBy() {
         return updatedBy;
     }
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public long getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(long deposit) {
+        this.deposit = deposit;
     }
 }

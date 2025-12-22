@@ -309,7 +309,7 @@ public class LoggedInActivity extends AppCompatActivity {
         btSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeScreen(NotificationsManagementActivity.class);
+                changeScreenNotFinish(NotificationsManagementActivity.class);
             }
         });
     }
@@ -457,6 +457,11 @@ public class LoggedInActivity extends AppCompatActivity {
         Intent intent = new Intent(this, newScreen);
         startActivity(intent);
         finish();
+    }
+
+    private void changeScreenNotFinish(Class<?> newScreen) {
+        Intent intent = new Intent(this, newScreen);
+        startActivity(intent);
     }
 
     private void showTransferOptionsBottomSheet() {

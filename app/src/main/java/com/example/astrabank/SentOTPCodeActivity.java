@@ -37,6 +37,7 @@ public class SentOTPCodeActivity extends AppCompatActivity {
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String mVerificationId;
     private static final String TAG = "PhoneAuthActivity";
+    String signal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class SentOTPCodeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String phoneNumber = intent.getStringExtra("phone");
+        signal = intent.getStringExtra("admin");
         phoneNumber = "+84" + phoneNumber.substring(1, phoneNumber.length());
 
         mAuth = FirebaseAuth.getInstance();
@@ -96,6 +98,7 @@ public class SentOTPCodeActivity extends AppCompatActivity {
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
                 Log.w(TAG, "onVerificationFailed", e);
+                finish();
                 Toast.makeText(SentOTPCodeActivity.this, "Gửi mã thất bại: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
 
@@ -243,7 +246,12 @@ public class SentOTPCodeActivity extends AppCompatActivity {
                             Toast.makeText(this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
 
                             // Nhập thông tin người dùng
-                            changeScreen(InputPersonalInformationActivity.class, user.getUid());
+                            if (signal != null) {
+                                changeScreen(AdminAddCustomerActivity.class, user.getUid());
+                            }
+                            else {
+                                changeScreen(InputPersonalInformationActivity.class, user.getUid());
+                            }
                         }
 
                     } else {

@@ -8,7 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="80dp"> <LinearLayout
+        android:layout_marginBottom="80dp">
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -58,7 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Amount"
-                android:text="1250.00"
+                android:text="0"
+                android:enabled="false"
                 android:inputType="numberDecimal"
                 android:background="@android:color/transparent"
                 android:textSize="40sp"
@@ -80,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="Transaction Note"
                 android:textColor="#757575"
+                android:enabled="false"
                 android:textSize="14sp"
                 android:layout_marginBottom="8dp" />
 
@@ -87,7 +91,8 @@
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Description"
+                android:hint="THANH TOAN KHOAN VAY"
+                android:enabled="false"
                 android:inputType="textMultiLine"
                 android:background="@android:color/transparent"
                 android:textSize="16sp"
@@ -144,11 +149,6 @@
                     android:textStyle="bold"
                     android:textSize="16sp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/arrow_down_float"
-                    android:tint="#757575" />
             </LinearLayout>
 
             <RelativeLayout

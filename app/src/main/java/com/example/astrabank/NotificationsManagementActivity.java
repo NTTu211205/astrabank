@@ -44,6 +44,7 @@ public class NotificationsManagementActivity extends AppCompatActivity {
     private List<Notification> fullList; // Danh sách gốc
     private List<Notification> displayList; // Danh sách hiển thị sau khi lọc
     private boolean isInboxSelected = true;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,36 +63,16 @@ public class NotificationsManagementActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
         tvTabInbox = findViewById(R.id.tv_tab_inbox);
         recyclerView = findViewById(R.id.rcv_details_noti);
+        ivBack = findViewById(R.id.btn_back);
 
-        // 3. Khởi tạo dữ liệu và RecyclerView
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         initDummyData();
-//        displayList = new ArrayList<>();
-//        adapter = new NotificationAdapter(displayList);
-//
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(adapter);
-//
-//        // 4. Thiết lập sự kiện Click
-//        if (btnBack != null) {
-//            btnBack.setOnClickListener(v -> finish());
-//        }
-//
-//        if (tvTabInbox != null) {
-//            tvTabInbox.setOnClickListener(v -> {
-//                isInboxSelected = true;
-//                updateTabsUI();
-//            });
-//        }
-//
-//        if (tvTabRead != null) {
-//            tvTabRead.setOnClickListener(v -> {
-//                isInboxSelected = false;
-//                updateTabsUI();
-//            });
-//        }
-//
-//        // Cập nhật giao diện mặc định ban đầu
-//        updateTabsUI();
         btnBack.setOnClickListener(v -> finish());
     }
 

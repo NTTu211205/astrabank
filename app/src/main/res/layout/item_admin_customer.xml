@@ -16,8 +16,8 @@
         <TextView android:id="@+id/tv_cus_status" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Active" android:textColor="#4CAF50" android:textStyle="bold"/>
     </LinearLayout>
 
-    <TextView android:id="@+id/tv_cus_cif" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CIF: 8821001" android:textColor="#777" android:textSize="12sp"/>
-    <TextView android:id="@+id/tv_cus_bal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VND 120,000" android:textColor="#000" android:textStyle="bold" android:layout_marginTop="5dp"/>
+    <TextView android:id="@+id/tvUserId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CIF: 8821001" android:textColor="#777" android:textSize="12sp"/>
+    <TextView android:id="@+id/tvNationalId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CCCD" android:textColor="#000" android:textStyle="bold" android:layout_marginTop="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

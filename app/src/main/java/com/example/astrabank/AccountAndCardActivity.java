@@ -3,6 +3,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -12,18 +13,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.astrabank.adapters.TransactionHistoryAdapter;
+import com.example.astrabank.api.ApiClient;
+import com.example.astrabank.api.ApiService;
+import com.example.astrabank.api.response.ApiResponse;
+import com.example.astrabank.models.Transaction;
 import com.example.astrabank.utils.LoginManager;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AccountAndCardActivity extends AppCompatActivity {
+    private final String LOG_TAG = "AccountAndCardActivity";
 
     // Khai báo các biến View
     private ImageButton btnBack, btnFavorite, btnToggleEye, btnCopyAccount;
     private TextView tvUserName,tvNumCard, tvBalance, tvSetNickname, tvPhoneNumber, tvAccountNumber;
     private Button btnViewMoreHistory;
+
+    RecyclerView rvTransactionHistory;
 
     private boolean isHidden = false;
 
@@ -58,6 +74,8 @@ public class AccountAndCardActivity extends AppCompatActivity {
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
         tvAccountNumber = findViewById(R.id.tvAccountNumber);
 
+        rvTransactionHistory = findViewById(R.id.rl_transaction_history);
+
         String accountNumber = LoginManager.getInstance().getAccount().getAccountNumber();
         String fullName = LoginManager.getInstance().getUser().getFullName();
         tvNumCard.setText("..." + accountNumber.substring(accountNumber.length() - 4));
@@ -66,6 +84,8 @@ public class AccountAndCardActivity extends AppCompatActivity {
         tvUserName.setText(fullName);
         tvBalance.setText(formatMoney(LoginManager.getInstance().getAccount().getBalance()));
         tvPhoneNumber.setText(LoginManager.getInstance().getUser().getPhone());
+
+        callApiFindTransactionHistory(LoginManager.getInstance().getAccount().getAccountNumber());
     }
 
     private String formatMoney(long amount) {
@@ -75,7 +95,6 @@ public class AccountAndCardActivity extends AppCompatActivity {
         formatter.setDecimalFormatSymbols(symbols);
         return formatter.format(amount);
     }
-
 
     private void setupEvents() {
         // --- Xử lý nút Quay lại ---
@@ -107,6 +126,7 @@ public class AccountAndCardActivity extends AppCompatActivity {
             }
         });
     }
+
     private void toggleInformationVisibility() {
         isHidden = !isHidden;
         String accountNumber = LoginManager.getInstance().getAccount().getAccountNumber();
@@ -126,5 +146,43 @@ public class AccountAndCardActivity extends AppCompatActivity {
         clipboard.setPrimaryClip(clip);
 
         Toast.makeText(this, "Copied: " + textToCopy, Toast.LENGTH_SHORT).show();
+    }
+
+    private void callApiFindTransactionHistory(String accountNumber) {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<List<Transaction>>> call = apiService.getHistories(LoginManager.getInstance().getAccount().getAccountNumber());
+
+        call.enqueue(new Callback<ApiResponse<List<Transaction>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Transaction>>> call, Response<ApiResponse<List<Transaction>>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<List<Transaction>> apiResponse = response.body();
+
+                    if (apiResponse != null && apiResponse.getResult() != null) {
+                        TransactionHistoryAdapter transactionHistoryAdapter = new TransactionHistoryAdapter(
+                                apiResponse.getResult(),
+                                LoginManager.getInstance().getAccount().getAccountNumber(),
+                                AccountAndCardActivity.this);
+
+                        rvTransactionHistory.setLayoutManager(new LinearLayoutManager(AccountAndCardActivity.this));
+                        rvTransactionHistory.setAdapter(transactionHistoryAdapter);
+                    }
+                    else {
+                        Log.d(LOG_TAG, "Api response or result is null");
+                        Toast.makeText(AccountAndCardActivity.this, "Transaction histories not found", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Log.d(LOG_TAG, "Error from server");
+                    Toast.makeText(AccountAndCardActivity.this, "Transaction histories not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Transaction>>> call, Throwable t) {
+                Log.d(LOG_TAG, "Internet disconnected");
+                Toast.makeText(AccountAndCardActivity.this, "Internet disconnected", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
