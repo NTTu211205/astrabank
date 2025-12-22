@@ -52,7 +52,7 @@ public class MortgageDetailsActivity extends AppCompatActivity {
 
     // Header Views
     private TextView tvDueAmount, tvDueDate, tvRecommend;
-    private TextView tvPropertyAddress, tvOutstandingBalance, tvRate;
+    private TextView tvPropertyAddress, tvOutstandingBalance, tvRate, tvTerm;
     private Button btnMakePayment;
     private LinearLayout llMortgageInfor;
     private RecyclerView rvPaymentHistory;
@@ -152,6 +152,7 @@ public class MortgageDetailsActivity extends AppCompatActivity {
                             tvPropertyAddress.setText(loan.getAddress());
                             tvOutstandingBalance.setText("VND " + formatMoney(loan.getOriginalPrincipal()));
                             tvRate.setText("" + loan.getInterestRate());
+                            tvTerm.setText(loan.getTerm() + " Month");
                             callApiFindReceipt(loan.getLoanId());
                         }
                         else {
@@ -248,6 +249,7 @@ public class MortgageDetailsActivity extends AppCompatActivity {
         tvOutstandingBalance = findViewById(R.id.tv_outstanding_balance);
         btnMakePayment = findViewById(R.id.btn_make_payment);
         btnBack = findViewById(R.id.btnBack);
+        tvTerm = findViewById(R.id.tvTerm);
     }
 
     private String formatMoney(long amount) {

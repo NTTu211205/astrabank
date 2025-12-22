@@ -140,7 +140,7 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    Toast.makeText(TransactionToNewPersonActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransactionToNewPersonActivity.this, "Account not found", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "Error from server");
                     btContinue.setText("Continue");
                     btContinue.setEnabled(true);
@@ -190,7 +190,7 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    Toast.makeText(TransactionToNewPersonActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransactionToNewPersonActivity.this, "Account not found", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "Error from server");
                     btContinue.setText("Continue");
                     btContinue.setEnabled(true);

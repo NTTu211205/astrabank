@@ -21,15 +21,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.astrabank.api.ApiClient;
+import com.example.astrabank.api.ApiService;
+import com.example.astrabank.api.request.CheckingAccountRequest;
+import com.example.astrabank.api.request.CustomerRequest;
+import com.example.astrabank.api.response.ApiResponse;
 import com.example.astrabank.constant.AccountType;
 import com.example.astrabank.controller.AccountController;
 import com.example.astrabank.controller.UserController;
+import com.example.astrabank.models.User;
 import com.example.astrabank.utils.BCryptService;
 import com.example.astrabank.utils.CallBack;
 import com.example.astrabank.utils.LoginManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OwnOTPActivity extends AppCompatActivity {
     private final String LOG_TAG = "OwnOTPActivity";
@@ -173,7 +183,7 @@ public class OwnOTPActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("TẠO MÃ GIAO DỊCH");
-        builder.setMessage("Đây chính là mã giao dịch bạn dùng để chuyển tiên \n" +
+        builder.setMessage("Đây chính là mã giao dịch bạn dùng để chuyển tiền và đăng nhập vào ngân hàng của bạn \n" +
                 "Bạn có chắc đây là mã giao dịch của bạn không ??? \n"
                 + transactionOTP);
 
@@ -186,7 +196,6 @@ public class OwnOTPActivity extends AppCompatActivity {
                         email, phone, address,
                         occupation, companyName, averageSalary,
                         transactionOTP);
-                saveAccountToDB(uid, AccountType.CHECKING);
             }
         });
 
@@ -217,17 +226,61 @@ public class OwnOTPActivity extends AppCompatActivity {
                         String occupation, String companyName, Double averageSalary,
                         String transactionPIN) {
 
-        String hashTransactionOTP = BCryptService.hashPassword(transactionPIN);
-        if (hashTransactionOTP == null) {
-            Toast.makeText(this, "Tạo mã giao dịch lỗi", Toast.LENGTH_SHORT).show();
-            Log.d(LOG_TAG, "Hashing transaction OTP error");
-            return;
-        }
-    }
+        CustomerRequest customerRequest = new CustomerRequest(
+                userID,
+                fullName,
+                dateOfBirth,
+                nationalID,
+                email,
+                phone,
+                address,
+                occupation,
+                companyName,
+                averageSalary,
+                transactionPIN,
+                userID,
+                userID
+        );
 
-    private void saveAccountToDB(String uid, AccountType accountType) {
-        AccountController accountController = new AccountController(this);
-        accountController.createAccount(uid, accountType);
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<User>> call = apiService.singUp(customerRequest);
+
+        call.enqueue(new Callback<ApiResponse<User>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
+                if (response.isSuccessful()){
+                    ApiResponse<User> apiResponse = response.body();
+
+                    if (apiResponse != null) {
+                        User user = apiResponse.getResult();
+
+                        if (user != null ){
+                            LoginManager.getInstance().setUser(user);
+                            changeScreen(LoggedInActivity.class);
+                        }
+                        else {
+                            Toast.makeText(OwnOTPActivity.this, "User exist or error from server", Toast.LENGTH_SHORT).show();
+                            Log.d(LOG_TAG, "User exist or error from server");
+                        }
+                    }
+                    else {
+                        Toast.makeText(OwnOTPActivity.this, "User exist or error from server", Toast.LENGTH_SHORT).show();
+                        Log.d(LOG_TAG, "User exist or error from server");
+                    }
+                }
+                else {
+                    Toast.makeText(OwnOTPActivity.this, "User exist or error from server", Toast.LENGTH_SHORT).show();
+                    Log.d(LOG_TAG, "User exist or error from server");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+                Toast.makeText(OwnOTPActivity.this, "Internet disconnected", Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, "Internet disconnected");
+            }
+        });
 
     }
 

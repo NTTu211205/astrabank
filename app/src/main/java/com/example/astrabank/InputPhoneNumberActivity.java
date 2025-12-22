@@ -24,6 +24,8 @@ public class InputPhoneNumberActivity extends AppCompatActivity {
     ImageButton btBackSpace, btCheck;
     EditText etPhoneNumber;
 
+    String signal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,9 @@ public class InputPhoneNumberActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intent = getIntent();
+        signal = intent.getStringExtra("admin");
 
         bt0 = findViewById(R.id.btn0);
         bt1 = findViewById(R.id.btn1);
@@ -163,15 +168,11 @@ public class InputPhoneNumberActivity extends AppCompatActivity {
 
     private void changeScreen(Class<?> newScreen, String phoneNumber) {
         Intent intent = new Intent(this, newScreen);
+        intent.putExtra("admin", signal);
         intent.putExtra("phone", phoneNumber);
         startActivity(intent);
-        Log.d("Phone number: ", phoneNumber);
-        finish();
     }
 
-
-
-    // kiểm tra số điện thoại có được phép được đăng kí hay không
     private void checkPhone(String phoneNumber) {
         Log.d(LOG_TAG, "Check phone number exist");
         UserController userController = new UserController(this);
@@ -181,8 +182,6 @@ public class InputPhoneNumberActivity extends AppCompatActivity {
             public void onResult(Boolean result) {
                 if (!result) {
                     Log.d(LOG_TAG, "Phone number can register new user");
-//                    Toast.makeText(InputPhoneNumberActivity.this, "Số điện thoại được phép đăng kí", Toast.LENGTH_SHORT).show();
-
                     changeScreen(SentOTPCodeActivity.class, phoneNumber);
                 }
                 else {

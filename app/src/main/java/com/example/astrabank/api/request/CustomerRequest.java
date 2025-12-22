@@ -1,6 +1,7 @@
 package com.example.astrabank.api.request;
 
-public class UpdateUserRequest {
+public class CustomerRequest {
+    private String userID;
     private String fullName;
     private String dateOfBirth;
     private String nationalID;
@@ -10,11 +11,12 @@ public class UpdateUserRequest {
     private String occupation;
     private String companyName;
     private Double averageSalary;
+    private String transactionPIN;
+    private String createdBy;
     private String updatedBy;
 
-    public UpdateUserRequest() {}
-
-    public UpdateUserRequest(String fullName, String dateOfBirth, String nationalID, String email, String phone, String address, String occupation, String companyName, Double averageSalary, String updatedBy) {
+    public CustomerRequest(String userID, String fullName, String dateOfBirth, String nationalID, String email, String phone, String address, String occupation, String companyName, Double averageSalary, String transactionPIN, String createdBy, String updatedBy) {
+        this.userID = userID;
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
         this.nationalID = nationalID;
@@ -24,7 +26,17 @@ public class UpdateUserRequest {
         this.occupation = occupation;
         this.companyName = companyName;
         this.averageSalary = averageSalary;
+        this.transactionPIN = transactionPIN;
+        this.createdBy = createdBy;
         this.updatedBy = updatedBy;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getFullName() {
@@ -97,6 +109,22 @@ public class UpdateUserRequest {
 
     public void setAverageSalary(Double averageSalary) {
         this.averageSalary = averageSalary;
+    }
+
+    public String getTransactionPIN() {
+        return transactionPIN;
+    }
+
+    public void setTransactionPIN(String transactionPIN) {
+        this.transactionPIN = transactionPIN;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getUpdatedBy() {

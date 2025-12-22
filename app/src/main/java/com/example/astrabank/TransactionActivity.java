@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class TransactionActivity extends AppCompatActivity {
     Account selectedAccount;
     long amount;
     String content;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,14 @@ public class TransactionActivity extends AppCompatActivity {
         snAccountType = findViewById(R.id.sn_account_type);
         tvBalance = findViewById(R.id.tv_balance_amount);
         snAccountType = findViewById(R.id.sn_account_type);
+        ivBack = findViewById(R.id.iv_back);
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         setupSpinnerListener();
 

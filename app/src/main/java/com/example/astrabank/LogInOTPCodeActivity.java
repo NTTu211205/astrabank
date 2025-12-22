@@ -168,8 +168,20 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                         if (apiResponse.getResult() != null) {
                             User user = apiResponse.getResult();
 
-                            LoginManager.getInstance().setUser(user);
-                            changeScreen(LoggedInActivity.class);
+                            if (user != null) {
+                                LoginManager.getInstance().setUser(user);
+
+                                if (user.getRole().equals("OFFICER")) {
+                                    changeScreen(AdminDashboardActivity.class);
+                                }
+                                else {
+                                    changeScreen(LoggedInActivity.class);
+                                }
+                            }
+                            else {
+                                Toast.makeText(LogInOTPCodeActivity.this, "User not found, try again", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "user not found");
+                            }
                         }
                     }
                     else {

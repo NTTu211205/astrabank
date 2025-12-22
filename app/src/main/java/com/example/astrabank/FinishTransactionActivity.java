@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +25,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.astrabank.api.ApiClient;
 import com.example.astrabank.api.ApiService;
+import com.example.astrabank.api.request.ReceiptPaymentRequest;
 import com.example.astrabank.api.request.SavingAccountRequest;
 import com.example.astrabank.api.request.TransactionRequest;
 import com.example.astrabank.api.response.ApiResponse;
@@ -48,7 +50,13 @@ public class FinishTransactionActivity extends AppCompatActivity {
     private long amount;
     AppCompatButton tvConfirm;
     String savingAccountCreate = "";
+    String requestPayMortgageReceipt = "";
     Long savingAccountBalance;
+    String receiptId = "";
+    String accountNumber;
+    ImageButton btBack;
+
+    private String signal = "";
 
     private EditText[] otpEditTexts = new EditText[6];
     private final String LOG_TAG = "FinishTransactionActivity";
@@ -66,10 +74,20 @@ public class FinishTransactionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
+            requestPayMortgageReceipt = intent.getStringExtra("fromPayMortgageReceipt");
+            receiptId = intent.getStringExtra("receiptId");
+            accountNumber = intent.getStringExtra("accountNumber");
+
             savingAccountCreate = intent.getStringExtra("requestSavingAccount");
             savingAccountBalance = intent.getLongExtra("savingAccountBalance", 0);
-            if (savingAccountCreate == null) {
-                savingAccountCreate = "NO_REQUEST";
+            if (requestPayMortgageReceipt != null && !requestPayMortgageReceipt.isEmpty()) {
+                signal = requestPayMortgageReceipt;
+            }
+            else if (savingAccountCreate != null && !savingAccountCreate.isEmpty()){
+                signal = savingAccountCreate;
+            }
+            else {
+                signal = "NO_REQUEST";
             }
 
             desAccountNumber = intent.getStringExtra("desAccountNumber");
@@ -89,6 +107,14 @@ public class FinishTransactionActivity extends AppCompatActivity {
         otpEditTexts[4] = findViewById(R.id.et_otp_5);
         otpEditTexts[5] = findViewById(R.id.et_otp_6);
         tvConfirm = findViewById(R.id.tv_confirm);
+        btBack = findViewById(R.id.btn_back);
+
+        btBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         for (EditText editText : otpEditTexts) {
             editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -131,12 +157,20 @@ public class FinishTransactionActivity extends AppCompatActivity {
                         }
                         else if (check) {
                             Log.d(LOG_TAG, "CHECK_PIN:transaction pin is correct");
-                            // progress transaction
-                            if (savingAccountCreate.equals("create")) {
+                            if (signal.equals("create")) {
                                 // findAccount
+                                Log.d(LOG_TAG, "Create saving account");
                                 findSavingAccount();
                             }
+                            else if (signal.equals("payMortgageReceipt")) {
+                                // pay receipt
+                                Log.d(LOG_TAG, "Pay mortgage receipt");
+                                payReceipt(receiptId, accountNumber);
+
+                            }
                             else {
+                                //transaction
+                                Log.d(LOG_TAG, "Transaction");
                                 progressInBankTransaction();
                             }
                         }
@@ -172,6 +206,69 @@ public class FinishTransactionActivity extends AppCompatActivity {
         });
     }
 
+    private void payReceipt(String receiptId, String accountNumber) {
+        ReceiptPaymentRequest request = new ReceiptPaymentRequest(
+                receiptId,
+                accountNumber,
+                "ATB",
+                LoginManager.getInstance().getUser().getFullName()
+        );
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<ApiResponse<Transaction>> call = apiService.payReceipt(request);
+
+        call.enqueue(new Callback<ApiResponse<Transaction>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Transaction>> call, Response<ApiResponse<Transaction>> response) {
+                if (response.isSuccessful()) {
+                    ApiResponse<Transaction> apiResponse = response.body();
+
+                    if (apiResponse != null ){
+                        Transaction transaction = apiResponse.getResult();
+
+                        if (transaction != null){
+                            changeNextScreen(
+                                    TransactionSuccessActivity.class,
+                                    transaction.getAmount(),
+                                    transaction.getDestinationAcc(),
+                                    transaction.getReceiverName(),
+                                    transaction.getBankDesSymbol(),
+                                    transaction.getDescription(),
+                                    transaction.getCreatedAt(),
+                                    transaction.getTransactionId());
+                        }
+                        else {
+                            tvConfirm.setText("Confirm");
+                            tvConfirm.setEnabled(true);
+                            Log.d(LOG_TAG, "Payment Failed, Error from server");
+                            Toast.makeText(FinishTransactionActivity.this, "Payment Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        tvConfirm.setText("Confirm");
+                        tvConfirm.setEnabled(true);
+                        Log.d(LOG_TAG, "Error from server");
+                        Toast.makeText(FinishTransactionActivity.this, "Error from server", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    tvConfirm.setText("Confirm");
+                    tvConfirm.setEnabled(true);
+                    Log.d(LOG_TAG, "Payment Failed");
+                    Toast.makeText(FinishTransactionActivity.this, "Payment failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Transaction>> call, Throwable t) {
+                tvConfirm.setText("Confirm");
+                tvConfirm.setEnabled(true);
+                Log.d(LOG_TAG, "Internet disconnected");
+                Toast.makeText(FinishTransactionActivity.this, "Internet disconnected", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void findSavingAccount() {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<ApiResponse<Account>> call = apiService.getDefaultAccount(
@@ -189,6 +286,8 @@ public class FinishTransactionActivity extends AppCompatActivity {
                         Account account = apiResponse.getResult();
 
                         if (account != null) {
+                            tvConfirm.setText("Confirm");
+                            tvConfirm.setEnabled(true);
                             Log.d(LOG_TAG, "Account is exist");
                             Toast.makeText(FinishTransactionActivity.this, "Account is exist", Toast.LENGTH_SHORT).show();
                         }
@@ -197,11 +296,15 @@ public class FinishTransactionActivity extends AppCompatActivity {
                         }
                     }
                     else {
+                        tvConfirm.setText("Confirm");
+                        tvConfirm.setEnabled(true);
                         Log.d(LOG_TAG, "Error from server");
                         Toast.makeText(FinishTransactionActivity.this, "Error from server", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
+                    tvConfirm.setText("Confirm");
+                    tvConfirm.setEnabled(true);
                     Log.d(LOG_TAG, "Error in processing checking");
                     Toast.makeText(FinishTransactionActivity.this, "Error in processing checking", Toast.LENGTH_SHORT).show();
                 }
@@ -209,6 +312,8 @@ public class FinishTransactionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
+                tvConfirm.setText("Confirm");
+                tvConfirm.setEnabled(true);
                 Log.d(LOG_TAG, "CHECKING ACCOUNT EXIST:Internet disconnect");
                 Toast.makeText(FinishTransactionActivity.this, "Internet disconnect", Toast.LENGTH_SHORT).show();
             }
@@ -237,16 +342,22 @@ public class FinishTransactionActivity extends AppCompatActivity {
                             progressTransferInSavingAccount(account);
                         }
                         else {
+                            tvConfirm.setText("Confirm");
+                            tvConfirm.setEnabled(true);
                             Log.d(LOG_TAG, "Account is not created");
                             Toast.makeText(FinishTransactionActivity.this, "Account is not created", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else {
+                        tvConfirm.setText("Confirm");
+                        tvConfirm.setEnabled(true);
                         Log.d(LOG_TAG, "Error from server");
                         Toast.makeText(FinishTransactionActivity.this, "Error from server", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
+                    tvConfirm.setText("Confirm");
+                    tvConfirm.setEnabled(true);
                     Log.d(LOG_TAG, "Error in processing create");
                     Toast.makeText(FinishTransactionActivity.this, "Error in processing create", Toast.LENGTH_SHORT).show();
                 }
@@ -254,6 +365,8 @@ public class FinishTransactionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
+                tvConfirm.setText("Confirm");
+                tvConfirm.setEnabled(true);
                 Log.d(LOG_TAG, "Internet disconnect");
                 Toast.makeText(FinishTransactionActivity.this, "Internet disconnect", Toast.LENGTH_SHORT).show();
             }

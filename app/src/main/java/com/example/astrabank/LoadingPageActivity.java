@@ -26,7 +26,6 @@ public class LoadingPageActivity extends AppCompatActivity {
 
         // 2. Xử lý Animation Logo
         logoBlock.post(() -> {
-            // Lấy chiều cao thực tế của View cha (màn hình khả dụng)
             View parentView = (View) logoBlock.getParent();
             int parentHeight = parentView.getHeight();
 
@@ -65,6 +64,5 @@ public class LoadingPageActivity extends AppCompatActivity {
     private void changeScreen(Class<?> newScreen) {
         Intent intent = new Intent(this, newScreen);
         startActivity(intent);
-        finish();
     }
 }

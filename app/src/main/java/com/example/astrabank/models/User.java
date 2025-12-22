@@ -52,8 +52,9 @@ public class User {
     @SerializedName("updatedAt")
     private Date updatedAt;
 
-    @SerializedName("password")
-    private String password;
+    @SerializedName("role")
+    private String role;
+
 
     public User() {}
 
@@ -72,7 +73,6 @@ public class User {
         this.transactionPIN = transactionPIN;
         this.createdAt = new Date();
         this.updatedAt = new Date();
-        this.password = password;
     }
 
     public HashMap<String, Object> mapping() {
@@ -92,6 +92,24 @@ public class User {
         userData.put("updatedAt", FieldValue.serverTimestamp());
 
         return userData;
+    }
+
+    public User(String userID, String fullName, String dateOfBirth, String nationalID, String email, String phone, String address, String occupation, String companyName, Double averageSalary, Boolean status, String transactionPIN, Date createdAt, Date updatedAt, String role) {
+        this.userID = userID;
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.nationalID = nationalID;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.occupation = occupation;
+        this.companyName = companyName;
+        this.averageSalary = averageSalary;
+        this.status = status;
+        this.transactionPIN = transactionPIN;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.role = role;
     }
 
     public String getUserID() {
@@ -188,5 +206,29 @@ public class User {
 
     public void setTransactionPIN(String transactionPIN) {
         this.transactionPIN = transactionPIN;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

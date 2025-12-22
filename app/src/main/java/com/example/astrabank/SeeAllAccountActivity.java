@@ -185,6 +185,10 @@ public class SeeAllAccountActivity extends AppCompatActivity {
                     if (apiResponse != null) {
                         if (apiResponse.getResult() != null) {
                             mortgageAccountNumber = apiResponse.getResult().getAccountNumber();
+                            tvMortgageNumber.setText(apiResponse.getResult().getAccountNumber());
+                            tvPaymentAmount.setText(apiResponse.getResult().getInterestRate() + " %");
+                            rlMortgage.setVisibility(View.VISIBLE);
+                            btnSeeMortgageAcc.setVisibility(View.VISIBLE);
                         }
                         else {
                             rlMortgage.setVisibility(View.GONE);

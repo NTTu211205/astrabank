@@ -118,7 +118,13 @@ public class ValidateLoginActivity extends AppCompatActivity {
 
                         if (user != null) {
                             LoginManager.getInstance().setUser(user);
-                            changeScreen(LoggedInActivity.class);
+
+                            if (user.getRole().equals("CUSTOMER")) {
+                                changeScreen(LoggedInActivity.class);
+                            }
+                            else {
+                                changeScreen(AdminDashboardActivity.class);
+                            }
                         }
                         else {
                             Toast.makeText(ValidateLoginActivity.this, "Pin code is wrong, try again", Toast.LENGTH_SHORT).show();

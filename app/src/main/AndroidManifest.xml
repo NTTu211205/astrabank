@@ -20,6 +20,15 @@
         android:theme="@style/Theme.EndtermMOA"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".AdminCreateLoanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminLoanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminEditCustomerActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminAddMortgageActivity"
             android:exported="false" />
         <activity

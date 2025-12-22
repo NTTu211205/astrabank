@@ -17,7 +17,6 @@ public class Account {
     @SerializedName("accountNumber")
     private String accountNumber;
 
-    // JSON key viết hoa chữ A → bắt buộc dùng SerializedName
     @SerializedName("AccountStatus")
     private Boolean accountStatus;
 
@@ -25,7 +24,7 @@ public class Account {
     private Long balance;
 
     @SerializedName("accountType")
-    private AccountType accountType; // hoặc enum AccountType
+    private AccountType accountType;
 
     @SerializedName("createdAt")
     private Date createdAt;

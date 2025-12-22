@@ -193,7 +193,8 @@ public class EditPersonalInformationActivity extends AppCompatActivity {
                 address,
                 occupation,
                 company,
-                Double.parseDouble(incomeString)
+                Double.parseDouble(incomeString),
+                LoginManager.getInstance().getUser().getUserID()
         );
 
         callApiUpdate(updateUserRequest);
