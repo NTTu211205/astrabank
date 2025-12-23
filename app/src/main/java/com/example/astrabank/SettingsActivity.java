@@ -24,7 +24,6 @@ public class SettingsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
 
-        // Xử lý System Bars (Notch, Status bar)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -43,10 +42,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setupActions() {
-        // Nút quay lại
         btnBack.setOnClickListener(v -> finish());
 
-        // Sự kiện click cho từng mục (Hiện tại hiển thị Toast)
         rlPersonalInfo.setOnClickListener(v -> {
             Intent intent = new Intent(this, PersonalInformationActivity.class);
             startActivity(intent);

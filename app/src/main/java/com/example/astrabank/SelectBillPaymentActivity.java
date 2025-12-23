@@ -28,9 +28,7 @@ public class SelectBillPaymentActivity extends AppCompatActivity {
         setupServiceClick(R.id.tv_item_internet, "Internet");
         setupServiceClick(R.id.tv_mobile_top_up, "Mobile Top-up");
         setupServiceClick(R.id.tv_data, "Mobile Data");
-//        setupServiceClick(R.id.tv_bus_ticket, "Bus Tickets");
-//        setupServiceClick(R.id.tv_tuition, "Tuition");
-//        setupServiceClick(R.id.tv_airline_tickets, "Airline Tickets");
+
 
         findViewById(R.id.img_back).setOnClickListener(v -> finish());
     }

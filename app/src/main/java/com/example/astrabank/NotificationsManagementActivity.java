@@ -41,8 +41,8 @@ public class NotificationsManagementActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private NotificationAdapter adapter;
-    private List<Notification> fullList; // Danh sách gốc
-    private List<Notification> displayList; // Danh sách hiển thị sau khi lọc
+    private List<Notification> fullList;
+    private List<Notification> displayList;
     private boolean isInboxSelected = true;
     ImageView ivBack;
 
@@ -52,14 +52,12 @@ public class NotificationsManagementActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_notifications_management);
 
-        // Thiết lập Padding hệ thống
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // 2. Ánh xạ View
         btnBack = findViewById(R.id.btn_back);
         tvTabInbox = findViewById(R.id.tv_tab_inbox);
         recyclerView = findViewById(R.id.rcv_details_noti);

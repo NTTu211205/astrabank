@@ -18,7 +18,6 @@ public class AutoEarningActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        // Nhớ đổi tên layout thành file xml mới tạo ở trên
         setContentView(R.layout.activity_auto_earning);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
@@ -27,7 +26,6 @@ public class AutoEarningActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Nút Back
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
         Button btnUpdate = findViewById(R.id.btn_action);

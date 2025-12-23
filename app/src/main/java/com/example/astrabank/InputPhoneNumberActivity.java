@@ -162,7 +162,6 @@ public class InputPhoneNumberActivity extends AppCompatActivity {
             return;
         }
 
-        // kiem tra sdt co ton tai trong db khong
         checkPhone(phoneNumber);
     }
 
@@ -186,7 +185,7 @@ public class InputPhoneNumberActivity extends AppCompatActivity {
                 }
                 else {
                     Log.d(LOG_TAG, "Phone number can not register new user");
-                    Toast.makeText(InputPhoneNumberActivity.this, "Số điện thoại đã tồn tại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InputPhoneNumberActivity.this, "Phone number existed", Toast.LENGTH_SHORT).show();
                 }
             }
 

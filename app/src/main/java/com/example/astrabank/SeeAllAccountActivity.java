@@ -34,12 +34,10 @@ import retrofit2.Response;
 public class SeeAllAccountActivity extends AppCompatActivity {
     private final String LOG_TAG = "SeeAllAccountActivity";
 
-    // 1. Khai báo các biến View
     private ImageButton btnBack;
     private Button btnSeeCheckingAcc, btnSeeSavingAcc, btnSeeMortgageAcc;
 
 
-    // Layout cha của từng thẻ (để bắt sự kiện click vào cả thẻ)
     private RelativeLayout rlChecking, rlSavings, rlMortgage;
 
     // Các TextView hiển thị dữ liệu
@@ -65,26 +63,21 @@ public class SeeAllAccountActivity extends AppCompatActivity {
         setupEvents();
     }
 
-    // 2. Ánh xạ ID từ XML sang Java
     private void initViews() {
         btnBack = findViewById(R.id.btnBack);
 
-        // Layouts
         rlChecking = findViewById(R.id.rlCheckingAccount);
         rlSavings = findViewById(R.id.rlSavingsAccount);
         rlMortgage = findViewById(R.id.rlMortgageAccount);
 
-        // Checking Account Views
         tvCheckingNumber = findViewById(R.id.tvCheckingNumber);
         tvCheckingBalance = findViewById(R.id.tvCheckingBalance);
 
-        // Savings Account Views
         tvSavingsNumber = findViewById(R.id.tvSavingsNumber);
         tvSavingsBalance = findViewById(R.id.tvSavingsBalance);
         tvInterestRate = findViewById(R.id.tvInterestRate);
         tvMonthlyProfit = findViewById(R.id.tvMonthlyProfit);
 
-        // Mortgage Account Views
         tvMortgageNumber = findViewById(R.id.tvMortgageNumber);
         tvPaymentAmount = findViewById(R.id.tvPaymentAmount);
         tvPaymentFrequency = findViewById(R.id.tvPaymentFrequency);
@@ -97,34 +90,24 @@ public class SeeAllAccountActivity extends AppCompatActivity {
     private void setupData() {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
-        // --- Checking Account ---
         String checkAccountNumber = LoginManager.getInstance().getAccount().getAccountNumber();
         tvCheckingNumber.setText("****" + checkAccountNumber.substring(checkAccountNumber.length() - 5, checkAccountNumber.length()));
         findDefaultAccount(LoginManager.getInstance().getUser().getUserID(), "CHECKING");
 
-        // --- Savings Account ---
         findSavingAccount(LoginManager.getInstance().getUser().getUserID(), "SAVING");
-        tvMonthlyProfit.setText("+ " + currencyFormat.format(45.00)); // Lợi nhuận tháng
+        tvMonthlyProfit.setText("+ " + currencyFormat.format(45.00));
 
 
         findMortgageAccount(LoginManager.getInstance().getUser().getUserID(), "MORTGAGE");
-//        tvMortgageNumber.setText("Loan #9988-77");
 
         boolean payMonthly = true;
 
-//        if (payMonthly) {
-//            tvPaymentAmount.setText(currencyFormat.format(1250.00));
-//            tvPaymentFrequency.setText("Monthly");
-//        } else {
-//            tvPaymentAmount.setText(currencyFormat.format(625.00));
-//            tvPaymentFrequency.setText("Bi-weekly");
-//        }
     }
 
     private String formatMoney(long amount) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator('.'); // Bắt buộc dùng dấu chấm
+        symbols.setGroupingSeparator('.');
         formatter.setDecimalFormatSymbols(symbols);
         return formatter.format(amount);
     }
@@ -146,7 +129,7 @@ public class SeeAllAccountActivity extends AppCompatActivity {
                             savingAccountNumber = account.getAccountNumber();
                             tvSavingsNumber.setText("*****" + savingAccountNumber.substring(savingAccountNumber.length()-5, savingAccountNumber.length()));
                             tvSavingsBalance.setText(formatMoney(account.getBalance()));
-                            tvInterestRate.setText(String.valueOf(account.getInterestRate() * 100) + " %"); // Lãi suất
+                            tvInterestRate.setText(String.valueOf(account.getInterestRate() * 100) + " %");
                             long profit = (long) (account.getBalance() * account.getInterestRate() / 12);
                             tvMonthlyProfit.setText(formatMoney(profit));
                             rlSavings.setVisibility(View.VISIBLE);
@@ -160,14 +143,14 @@ public class SeeAllAccountActivity extends AppCompatActivity {
                 }
                 else {
                     Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
-                    Toast.makeText(SeeAllAccountActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SeeAllAccountActivity.this, "The server is unresponsive.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
                 Log.e(LOG_TAG, "Network failure: " + t.getMessage());
-                Toast.makeText(SeeAllAccountActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SeeAllAccountActivity.this, "Network connection error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -204,7 +187,7 @@ public class SeeAllAccountActivity extends AppCompatActivity {
                     rlMortgage.setVisibility(View.GONE);
                     btnSeeMortgageAcc.setVisibility(View.GONE);
                     Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
-                    Toast.makeText(SeeAllAccountActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SeeAllAccountActivity.this, "The server is unresponsive.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -213,7 +196,7 @@ public class SeeAllAccountActivity extends AppCompatActivity {
                 rlMortgage.setVisibility(View.GONE);
                 btnSeeMortgageAcc.setVisibility(View.GONE);
                 Log.e(LOG_TAG, "Network failure: " + t.getMessage());
-                Toast.makeText(SeeAllAccountActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SeeAllAccountActivity.this, "Network connection error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -236,14 +219,14 @@ public class SeeAllAccountActivity extends AppCompatActivity {
                     }
                     else {
                         Log.w(LOG_TAG, "API Success but body is null.");
-                        Toast.makeText(SeeAllAccountActivity.this, "Không tìm thấy tài khoản mặc định", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SeeAllAccountActivity.this, "Default account not found", Toast.LENGTH_SHORT).show();
                         changeScreen(LoggedInActivity.class);
                         LoginManager.clearUser();
                     }
                 }
                 else {
                     Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
-                    Toast.makeText(SeeAllAccountActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SeeAllAccountActivity.this, "The server is unresponsive.", Toast.LENGTH_SHORT).show();
                     changeScreen(LoadingPageActivity.class);
                     LoginManager.clearUser();
                 }
@@ -252,7 +235,7 @@ public class SeeAllAccountActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
                 Log.e(LOG_TAG, "Network failure: " + t.getMessage());
-                Toast.makeText(SeeAllAccountActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SeeAllAccountActivity.this, "Network connection error", Toast.LENGTH_SHORT).show();
                 changeScreen(LoadingPageActivity.class);
                 LoginManager.clearUser();
             }

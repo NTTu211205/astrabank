@@ -83,7 +83,6 @@ public class OwnOTPActivity extends AppCompatActivity {
         this.occupation = intent.getStringExtra("occupation");
         this.companyName = intent.getStringExtra("companyName");
 
-        // Đối với Double, luôn cung cấp giá trị mặc định
         this.averageSalary = intent.getDoubleExtra("averageSalary", 0.0);
 
         otpEditTexts = new ArrayList<>();
@@ -168,7 +167,7 @@ public class OwnOTPActivity extends AppCompatActivity {
         for (EditText editText : otpEditTexts) {
             editText.setText("");
         }
-        otpEditTexts.get(0).requestFocus(); // Đặt focus lại vào ô đầu tiên
+        otpEditTexts.get(0).requestFocus();
         showKeyboard();
     }
 
@@ -182,12 +181,12 @@ public class OwnOTPActivity extends AppCompatActivity {
     private void showEventNotificationDialog(String transactionOTP) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("TẠO MÃ GIAO DỊCH");
-        builder.setMessage("Đây chính là mã giao dịch bạn dùng để chuyển tiền và đăng nhập vào ngân hàng của bạn \n" +
-                "Bạn có chắc đây là mã giao dịch của bạn không ??? \n"
+        builder.setTitle("GENERATE TRANSACTION CODE");
+        builder.setMessage("This is the transaction code you use to transfer money and log into your bank. \n" +
+                "Are you sure this is your transaction code??? \n"
                 + transactionOTP);
 
-        builder.setPositiveButton("Tiếp tục", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 Log.d(LOG_TAG, "Select continue");
@@ -199,7 +198,7 @@ public class OwnOTPActivity extends AppCompatActivity {
             }
         });
 
-        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 Log.d(LOG_TAG, "Select cancel");
@@ -212,7 +211,7 @@ public class OwnOTPActivity extends AppCompatActivity {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                Log.d(LOG_TAG, "Dialog đã bị HỦY (Cancel) - Có thể do click ngoài hoặc nút Back.");
+                Log.d(LOG_TAG, "The dialog has been CANCELLED - This may have been due to an external click or the Back button.");
                 dialog.dismiss();
             }
         });

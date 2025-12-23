@@ -48,7 +48,6 @@ public class MortgagePaymentActivity extends AppCompatActivity {
         receiptId = intent.getStringExtra("receiptId");
 
         initViews();
-//        setupDefaultData();
         setupActions();
 
         callApiFindCheckingAccount();
@@ -58,7 +57,6 @@ public class MortgagePaymentActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // chuyen man hinh va goi thanh toan
                 changeNextScreen(FinishTransactionActivity.class);
             }
         });
@@ -113,7 +111,6 @@ public class MortgagePaymentActivity extends AppCompatActivity {
             }
         });
 
-        // Confirm Button Logic
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,13 +121,11 @@ public class MortgagePaymentActivity extends AppCompatActivity {
                     Toast.makeText(MortgagePaymentActivity.this, "Please enter amount", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                // Simulate Payment Success
                 Toast.makeText(MortgagePaymentActivity.this,
                         "Payment of VND" + amount + " Successful!\n" + content,
                         Toast.LENGTH_LONG).show();
 
-                finish(); // Go back to previous screen after payment
+                finish();
             }
         });
     }

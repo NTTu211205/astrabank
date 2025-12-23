@@ -117,7 +117,7 @@ public class TransactionActivity extends AppCompatActivity {
     private String formatMoney(long amount) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator('.'); // Bắt buộc dùng dấu chấm
+        symbols.setGroupingSeparator('.');
         formatter.setDecimalFormatSymbols(symbols);
         return formatter.format(amount);
     }
@@ -139,19 +139,19 @@ public class TransactionActivity extends AppCompatActivity {
                             fillSpinnerData(accounts);
                         }
                         else {
-                            Toast.makeText(TransactionActivity.this, "Không tìm được tài khoản phù hợp", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TransactionActivity.this, "No suitable account found.", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG, "Can not load account data");
                             changePreScreen(TransactionToNewPersonActivity.class);
                         }
                     }
                     else {
-                        Toast.makeText(TransactionActivity.this, "Không tìm được tài khoản phù hợp", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransactionActivity.this, "No suitable account found.", Toast.LENGTH_SHORT).show();
                         Log.d(LOG_TAG, "Can not load account data");
                         changePreScreen(TransactionToNewPersonActivity.class);
                     }
                 }
                 else {
-                    Toast.makeText(TransactionActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransactionActivity.this, "The server is unresponsive", Toast.LENGTH_SHORT).show();
                     Log.d(LOG_TAG, "Error from server");
                     changePreScreen(TransactionToNewPersonActivity.class);
                 }
@@ -159,7 +159,7 @@ public class TransactionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<List<Account>>> call, Throwable t) {
-                Toast.makeText(TransactionActivity.this, "Kiểm tra kết nối internet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TransactionActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "Internet disconnect");
                 changePreScreen(TransactionToNewPersonActivity.class);
             }

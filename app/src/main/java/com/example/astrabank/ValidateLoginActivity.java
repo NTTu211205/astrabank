@@ -194,7 +194,6 @@ public class ValidateLoginActivity extends AppCompatActivity {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    // Không cần làm gì ở đây
                 }
             });
 
@@ -225,7 +224,7 @@ public class ValidateLoginActivity extends AppCompatActivity {
         for (EditText editText : otpEditTexts) {
             editText.setText("");
         }
-        otpEditTexts.get(0).requestFocus(); // Đặt focus lại vào ô đầu tiên
+        otpEditTexts.get(0).requestFocus();
         showKeyboard();
     }
 

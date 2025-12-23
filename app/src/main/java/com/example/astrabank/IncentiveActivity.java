@@ -20,7 +20,6 @@ public class IncentiveActivity extends AppCompatActivity {
             return insets;
         });
 
-        // 3. Xử lý sự kiện nút back
         if (findViewById(R.id.btn_back) != null) {
             findViewById(R.id.btn_back).setOnClickListener(v -> finish());
         }

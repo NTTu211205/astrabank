@@ -45,7 +45,6 @@ public class TransactionSuccessActivity extends AppCompatActivity {
     private TextView tvBankLabel;
     private TextView tvBankName;
 
-    // Nút bấm
     private Button btnHoanThanh;
 
     @Override
@@ -76,14 +75,13 @@ public class TransactionSuccessActivity extends AppCompatActivity {
 
         btnHoanThanh = findViewById(R.id.btn_hoan_thanh);
 
-        // --- Xử lý sự kiện (Ví dụ) ---
         btnHoanThanh.setOnClickListener(v -> {
             changeScreen(LoggedInActivity.class);
         });
 
         long amount = intent.getLongExtra("amount", 0);
         String receiverName = intent.getStringExtra("receiverName");
-        String bankSymbol = intent.getStringExtra("desBankSymbol"); // Key là desBankSymbol
+        String bankSymbol = intent.getStringExtra("desBankSymbol");
         String content = intent.getStringExtra("content");
         String receiverAccountNumber = intent.getStringExtra("receiverAccountNumber");
         String date = intent.getStringExtra("date");
@@ -104,7 +102,7 @@ public class TransactionSuccessActivity extends AppCompatActivity {
     private String formatMoney(long amount) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator('.'); // Bắt buộc dùng dấu chấm
+        symbols.setGroupingSeparator('.');
         formatter.setDecimalFormatSymbols(symbols);
         return formatter.format(amount);
     }

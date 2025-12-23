@@ -49,7 +49,6 @@ public class BillListingActivity extends AppCompatActivity {
             Intent intent = new Intent(BillListingActivity.this, BillPaymentsActivity.class);
             intent.putExtra("SERVICE_NAME", serviceName);
             TextView tvDueAmount = findViewById(R.id.tv_due_amount);
-            // Lấy số tiền, loại bỏ ký tự $ và dấu phẩy để xử lý
             String amountString = tvDueAmount.getText().toString().replace("$", "").replace(",", "").trim();
             intent.putExtra("AMOUNT", amountString);
             startActivity(intent);

@@ -25,7 +25,6 @@ public class InvestmentActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Nút Back
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
 

@@ -133,7 +133,6 @@ public class InputPersonalInformationActivity extends AppCompatActivity {
         tlCompanyName.setError(null);
         tlIncome.setError(null);
         tlFullName.setErrorEnabled(false);
-        // ... Cần gọi setErrorEnabled(false) cho tất cả các TL khác
     }
 
     private boolean validateInputs() {
@@ -141,27 +140,18 @@ public class InputPersonalInformationActivity extends AppCompatActivity {
 
         boolean isValid = true;
 
-        // 1. Reset tất cả lỗi trước khi kiểm tra lại
         resetErrors();
 
-        // 2. Thực hiện kiểm tra chi tiết theo thứ tự (isValid &= ...)
-
-        // Kiểm tra Tên (Bắt buộc + Format)
         isValid &= checkAndShowError(etName, tlFullName, "Full Name", "^[\\p{L} .'-]+$");
 
-        // Kiểm tra Ngày sinh (Chỉ bắt buộc không trống)
         isValid &= checkAndShowError(etDateOfBirth, tlDob, "Date of Birth");
 
-        // Kiểm tra CCCD (Bắt buộc + 12 số)
         isValid &= checkAndShowError(etNationalID, tlNationalId, "National ID", "^\\d{12}$");
 
-        // Kiểm tra Email (Bắt buộc + Format)
         isValid &= checkAndShowError(etEmail, tlEmail, "Email Address", "^[A-Za-z0-9._%+-]+@gmail\\.com$");
 
-        // Kiểm tra Số điện thoại (Bắt buộc + 10 số)
         isValid &= checkAndShowError(etPhone, tlPhone, "Phone Number", "^\\d{10}$");
 
-        // Kiểm tra các trường chỉ bắt buộc không trống
         isValid &= checkAndShowError(etAddress, tlAddress, "Address");
         isValid &= checkAndShowError(etOccupation, tlOccupation, "Occupation");
         isValid &= checkAndShowError(etCompanyName, tlCompanyName, "Company Name");
@@ -184,11 +174,9 @@ public class InputPersonalInformationActivity extends AppCompatActivity {
             return false;
         }
 
-        // Nếu có pattern regex được cung cấp, kiểm tra định dạng
         if (regexPattern != null && !input.matches(regexPattern)) {
             String formatError;
 
-            // Tùy chỉnh thông báo lỗi định dạng
             switch (fieldName) {
                 case "Full Name":
                     formatError = "Name cannot contain numbers or special characters.";
@@ -211,7 +199,6 @@ public class InputPersonalInformationActivity extends AppCompatActivity {
             return false;
         }
 
-        // Dữ liệu hợp lệ: Xóa lỗi (đã gọi trong resetErrors(), nhưng gọi lại để an toàn)
         if (layout != null) {
             layout.setError(null);
             layout.setErrorEnabled(false);
@@ -243,28 +230,22 @@ public class InputPersonalInformationActivity extends AppCompatActivity {
     }
 
     private void showDatePickerDialog() {
-        // Lấy ngày tháng hiện tại
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Tạo DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
-                        // selectedMonth bắt đầu từ 0 (0 = tháng 1), nên ta cộng 1
                         String dateString = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
-
-                        // Hiển thị ngày đã chọn lên TextView
                         etDateOfBirth.setText(dateString);
                     }
                 },
                 year, month, day);
 
-        // Hiển thị dialog
         datePickerDialog.show();
     }
 }

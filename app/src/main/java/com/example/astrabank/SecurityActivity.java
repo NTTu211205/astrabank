@@ -60,10 +60,8 @@ public class SecurityActivity extends AppCompatActivity {
     }
 
     private void setupEvents() {
-        // Nút Back
         btnBack.setOnClickListener(v -> finish());
 
-        // Nút Update PIN
         btnUpdate.setOnClickListener(v -> handleUpdatePin());
     }
 

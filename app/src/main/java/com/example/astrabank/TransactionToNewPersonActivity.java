@@ -38,16 +38,12 @@ import retrofit2.Response;
 public class TransactionToNewPersonActivity extends AppCompatActivity {
     private final String LOG_TAG = "TransactionToNewPersonActivity";
 
-    // --- Khai báo Views ---
-    // Containers
     private LinearLayout layoutBankSelection;
     private LinearLayout layoutAccountInput;
     private LinearLayout headerSelectedBank; 
 
-    // Common
     private ImageView btnClose;
 
-    // List
     private RecyclerView rvBankList;
     private BankAdapter bankAdapter;
     private List<Bank> listBanks;
@@ -74,13 +70,10 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
             return insets;
         });
 
-        // 1. Ánh xạ View
         initViews();
 
-        // 2. Tạo dữ liệu giả
         createMockData();
 
-        // 4. Xử lý các sự kiện Click (Close, Reselect...)
         setupEvents();
 
         btContinue.setOnClickListener(new View.OnClickListener() {
@@ -121,19 +114,18 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
                         AccountResponse accountResponse = apiResponse.getResult();
 
                         if (accountResponse != null) {
-                            // chuyền màn hình, show account info
                             account = accountResponse;
                             changeNextScreen(TransactionActivity.class);
                         }
                         else {
-                            Toast.makeText(TransactionToNewPersonActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TransactionToNewPersonActivity.this, "Account not exist", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG, "Account not exist");
                             btContinue.setText("Continue");
                             btContinue.setEnabled(true);
                         }
                     }
                     else {
-                        Toast.makeText(TransactionToNewPersonActivity.this, "Không tải được dữ liệu", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransactionToNewPersonActivity.this, "Data failed to load.", Toast.LENGTH_SHORT).show();
                         Log.d(LOG_TAG, "Can not load data");
                         btContinue.setText("Continue");
                         btContinue.setEnabled(true);
@@ -149,7 +141,7 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<AccountResponse>> call, Throwable t) {
-                Toast.makeText(TransactionToNewPersonActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TransactionToNewPersonActivity.this, "Network connection error", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "Internet disconnect");
                 btContinue.setText("Continue");
                 btContinue.setEnabled(true);
@@ -176,14 +168,14 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
                             changeNextScreen(TransactionActivity.class);
                         }
                         else {
-                            Toast.makeText(TransactionToNewPersonActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TransactionToNewPersonActivity.this, "The account does not exist.", Toast.LENGTH_SHORT).show();
                             Log.d(LOG_TAG, "Account not exist");
                             btContinue.setText("Continue");
                             btContinue.setEnabled(true);
                         }
                     }
                     else {
-                        Toast.makeText(TransactionToNewPersonActivity.this, "Không tải được dữ liệu", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransactionToNewPersonActivity.this, "Data failed to load.", Toast.LENGTH_SHORT).show();
                         Log.d(LOG_TAG, "Can not load data");
                         btContinue.setText("Continue");
                         btContinue.setEnabled(true);
@@ -199,7 +191,7 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<AccountResponse>> call, Throwable t) {
-                Toast.makeText(TransactionToNewPersonActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TransactionToNewPersonActivity.this, "Network connection error", Toast.LENGTH_SHORT).show();
                 Log.d(LOG_TAG, "Internet disconnect");
                 btContinue.setText("Continue");
                 btContinue.setEnabled(true);
@@ -242,13 +234,13 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
                     }
                     else {
                         Log.w(LOG_TAG, "API Success but body is null.");
-                        Toast.makeText(TransactionToNewPersonActivity.this, "Không tìm thấy dữ liệu", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransactionToNewPersonActivity.this, "No data found", Toast.LENGTH_SHORT).show();
                         changePreScreen(LoggedInActivity.class);
                     }
                 }
                 else {
                     Log.e(LOG_TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
-                    Toast.makeText(TransactionToNewPersonActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransactionToNewPersonActivity.this, "The server is unresponsive.", Toast.LENGTH_SHORT).show();
                     changePreScreen(LoggedInActivity.class);
                 }
             }
@@ -256,7 +248,7 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponse<List<Bank>>> call, Throwable t) {
                 Log.e(LOG_TAG, "Network failure: " + t.getMessage());
-                Toast.makeText(TransactionToNewPersonActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TransactionToNewPersonActivity.this, "Network connection error", Toast.LENGTH_SHORT).show();
                 changePreScreen(LoggedInActivity.class);
             }
         });
@@ -302,7 +294,7 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
         rvBankList.setAdapter(bankAdapter);
     }
     private int getLogoDrawableBySymbol(String bankSymbol) {
-        if (bankSymbol == null) return R.drawable.ic_account; // Ảnh mặc định
+        if (bankSymbol == null) return R.drawable.ic_account;
 
         switch (bankSymbol.toUpperCase()) {
             case "ATB": return R.drawable.ic_logo;
@@ -311,22 +303,18 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
         }
     }
     private void setupEvents() {
-        // 1. Sự kiện nút Close (X)
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (layoutAccountInput.getVisibility() == View.VISIBLE) {
-                    // Nếu đang ở màn hình nhập -> Quay lại chọn Bank
                     switchView(false);
                     hideKeyboard();
                 } else {
-                    // Nếu đang ở màn hình chọn Bank -> Thoát Activity
                     finish();
                 }
             }
         });
 
-        // 2. Sự kiện bấm vào tên Ngân hàng để chọn lại (Reselect)
         headerSelectedBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -337,8 +325,6 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
         });
     }
 
-    // Hàm tiện ích để ẩn/hiện view
-    // isInputMode = true (Hiện nhập liệu), false (Hiện danh sách)
     private void switchView(boolean isInputMode) {
         if (isInputMode) {
             layoutBankSelection.setVisibility(View.GONE);
@@ -349,7 +335,6 @@ public class TransactionToNewPersonActivity extends AppCompatActivity {
         }
     }
 
-    // Hàm ẩn bàn phím ảo cho gọn
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {

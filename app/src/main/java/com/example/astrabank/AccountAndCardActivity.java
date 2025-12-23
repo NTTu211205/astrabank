@@ -97,7 +97,6 @@ public class AccountAndCardActivity extends AppCompatActivity {
     }
 
     private void setupEvents() {
-        // --- Xử lý nút Quay lại ---
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

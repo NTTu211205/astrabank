@@ -59,13 +59,10 @@ public class SavingsDetailsActivity extends AppCompatActivity {
             return insets;
         });
 
-        // 1. Initialize Views
         initViews();
 
-        // 2. Set Header Data (Mock data based on your image)
         setupHeaderData();
 
-        // 3. Setup RecyclerView for History
         btnBack.setOnClickListener(v -> finish());
     }
 
@@ -157,7 +154,7 @@ public class SavingsDetailsActivity extends AppCompatActivity {
                     }
                     else {
                         Log.w(LOG_TAG, "API Success but body is null.");
-                        Toast.makeText(SavingsDetailsActivity.this, "Không tìm thấy tài khoản mặc định", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SavingsDetailsActivity.this, "Default account not found", Toast.LENGTH_SHORT).show();
                         changeScreen(SeeAllAccountActivity.class);
                         LoginManager.clearUser();
                     }

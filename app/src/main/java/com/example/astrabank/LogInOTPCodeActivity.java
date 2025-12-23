@@ -64,7 +64,7 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         etOTP = findViewById(R.id.et_phone_number);
-        btnVerify = findViewById(R.id.btnLogin); // Nút Login đóng vai trò Verify
+        btnVerify = findViewById(R.id.btnLogin);
 
         mVerificationId = getIntent().getStringExtra("verificationId");
 
@@ -73,7 +73,7 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String code = etOTP.getText().toString().trim();
                 if (code.isEmpty() || code.length() < 6) {
-                    etOTP.setError("Vui lòng nhập đủ 6 số OTP");
+                    etOTP.setError("Please enter all 6 OTP codes.");
                     return;
                 }
                 if (mVerificationId != null) {
@@ -81,7 +81,7 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                     btnVerify.setText("●   ●   ●");
                     verifyOTP(code);
                 } else {
-                    Toast.makeText(LogInOTPCodeActivity.this, "Lỗi xác thực (Mất ID)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogInOTPCodeActivity.this, "Authentication error (Lost ID)", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -101,7 +101,6 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                         FirebaseUser user = task.getResult().getUser();
                         Log.d(TAG, "signInWithCredential:success");
 
-                        // Sau khi login Firebase thành công, lấy thông tin user từ Firestore
                         if (user != null) {
                             user.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                                 @Override
@@ -113,7 +112,7 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                                             signIn(uid);
                                         }
                                         else {
-                                            Toast.makeText(LogInOTPCodeActivity.this, "Không tìm thấy id của người dùng", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LogInOTPCodeActivity.this, "User ID not found", Toast.LENGTH_SHORT).show();
                                             Log.d(TAG, "uid not found");
                                             btnVerify.setEnabled(true);
                                             btnVerify.setText("LOGIN");
@@ -122,7 +121,7 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                                     else {
                                         btnVerify.setEnabled(true);
                                         btnVerify.setText("LOGIN");
-                                        Toast.makeText(LogInOTPCodeActivity.this, "Lỗi khi truy vẫn dữ liệu", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LogInOTPCodeActivity.this, "Error when retrieving data", Toast.LENGTH_SHORT).show();
                                         Log.e(TAG, "Error getting document", task.getException());
                                     }
                                 }
@@ -131,7 +130,7 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                         else {
                             btnVerify.setEnabled(true);
                             btnVerify.setText("LOGIN");
-                            Toast.makeText(this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
                             Log.w(TAG, "Document does not exist for UID: " + user.getUid());
                         }
                     } else {
@@ -139,7 +138,7 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                         btnVerify.setText("LOGIN");
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
                         if (task.getException() != null) {
-                            Toast.makeText(this, "Mã OTP không đúng hoặc hết hạn.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "The OTP code is incorrect or has expired.", Toast.LENGTH_LONG).show();
                         }
                     }
                 })
@@ -147,7 +146,7 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                     btnVerify.setEnabled(true);
                     btnVerify.setText("LOGIN");
                     Log.e(SIGN_IN_TAG, "Error", e);
-                    Toast.makeText(LogInOTPCodeActivity.this, "Lỗi hệ thống: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogInOTPCodeActivity.this, "System error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -188,15 +187,15 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                         btnVerify.setEnabled(true);
                         btnVerify.setText("LOGIN");
                         Log.w(TAG, "API Success but response body is null.");
-                        Toast.makeText(LogInOTPCodeActivity.this, "Đăng nhập không thành công do không \n" +
-                                " tìm thấy dữ liệu người dùng", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LogInOTPCodeActivity.this, "Login failed because... \n" +
+                                " User data found", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
                     btnVerify.setEnabled(true);
                     btnVerify.setText("LOGIN");
                     Log.e(TAG, "API Error. Code: " + response.code() + ", Msg: " + response.message());
-                    Toast.makeText(LogInOTPCodeActivity.this, "Máy chủ không phản hồi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogInOTPCodeActivity.this, "The server is not responding.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -205,14 +204,13 @@ public class LogInOTPCodeActivity extends AppCompatActivity {
                 btnVerify.setEnabled(true);
                 btnVerify.setText("LOGIN");
                 Log.e(TAG, "Network failure: " + t.getMessage());
-                Toast.makeText(LogInOTPCodeActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LogInOTPCodeActivity.this, "Network connection error", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void changeScreen(Class<?> newScreen) {
         Intent intent = new Intent(this, newScreen);
-        // Xóa back stack để user không back lại màn hình nhập OTP được
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

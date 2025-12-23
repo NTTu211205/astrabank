@@ -37,8 +37,7 @@ public class MyQRCodeActivity extends AppCompatActivity {
     }
 
     private void generateVietQRCode() {
-        // 1. Lấy dữ liệu tài khoản từ LoginManager
-        // Vì Account.java của bạn có hàm getAccountNumber() nên gọi được bình thường
+
         Account currentAccount = LoginManager.getInstance().getAccount();
 
         if (currentAccount == null) {
@@ -52,18 +51,15 @@ public class MyQRCodeActivity extends AppCompatActivity {
         tvName.setText(accountName);
         tvAccountNum.setText(accountNumber);
 
-        String bankId = "970407"; // Ví dụ: MBBank
+        String bankId = "970407";
 
-        // 4. Tạo Link API VietQR (Quick Link)
-        // Cấu trúc: https://img.vietqr.io/image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png
-        String template = "compact2"; // compact2 là mẫu QR gọn đẹp
+        String template = "compact2";
         String qrUrl = "https://img.vietqr.io/image/" + bankId + "-" + accountNumber + "-" + template + ".png";
 
-        // 5. Load ảnh từ mạng vào ImageView
         Glide.with(this)
                 .load(qrUrl)
-                .placeholder(android.R.drawable.stat_sys_download) // Hình chờ
-                .error(android.R.drawable.stat_notify_error)       // Hình lỗi
+                .placeholder(android.R.drawable.stat_sys_download)
+                .error(android.R.drawable.stat_notify_error)
                 .into(ivQrCode);
     }
 }

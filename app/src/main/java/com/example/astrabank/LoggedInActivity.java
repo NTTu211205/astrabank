@@ -73,7 +73,6 @@ public class LoggedInActivity extends AppCompatActivity {
     AppCompatButton btSignOut, btSeeMore, btnRewards, btnAutoEarning;
 
 
-    // --- Biến mới cho Menu (Side View) ---
     private DrawerLayout drawerLayout;
     private ImageButton ivMenuToggle;
     private FirebaseAuth mAuth;
@@ -94,7 +93,6 @@ public class LoggedInActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        // Ánh xạ cũ (Giữ nguyên)
         img_toggle_visibility = findViewById(R.id.img_toggle_visibility);
         iv_move_money = findViewById(R.id.iv_move_money);
         tv_balance_masked = findViewById(R.id.tv_balance_masked);
@@ -115,7 +113,6 @@ public class LoggedInActivity extends AppCompatActivity {
         btnRewards = findViewById(R.id.btn_bankRewards);
         btnAutoEarning = findViewById(R.id.btn_autoEarning);
 
-        // --- [MỚI] Ánh xạ các view mới thêm vào ---
         cardSpendingInsight = findViewById(R.id.card_spending_insight);
         cardAvgBalance = findViewById(R.id.card_avg_balance);
         btnSeeSpending = findViewById(R.id.btn_see_spending_details);
@@ -298,7 +295,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-        // Gán sự kiện click cho cả Card và nút Text
         if (cardSpendingInsight != null) cardSpendingInsight.setOnClickListener(spendingListener);
         if (btnSeeSpending != null) btnSeeSpending.setOnClickListener(spendingListener);
 
@@ -309,7 +305,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-//        if (cardAvgBalance != null) cardAvgBalance.setOnClickListener(avgBalanceListener);
         if (btnSeeAvgBalance != null) btnSeeAvgBalance.setOnClickListener(avgBalanceListener);
 
         updateSpendingChartData();
@@ -524,7 +519,7 @@ public class LoggedInActivity extends AppCompatActivity {
 
         public class NotificationViewHolder extends RecyclerView.ViewHolder {
             TextView tvTitle, tvDescription, tvAmount;
-            ImageView imageView; // Đã khai báo nhưng chưa dùng
+            ImageView imageView;
 
             public NotificationViewHolder(@NonNull View itemView) {
                 super(itemView);

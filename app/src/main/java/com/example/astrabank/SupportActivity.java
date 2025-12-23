@@ -35,7 +35,7 @@ public class SupportActivity extends AppCompatActivity {
             ClipData clip = ClipData.newPlainText(label, textView.getText().toString());
             clipboard.setPrimaryClip(clip);
 
-            Toast.makeText(this, "Đã sao chép " + label, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Copied " + label, Toast.LENGTH_SHORT).show();
         });
     }
 }

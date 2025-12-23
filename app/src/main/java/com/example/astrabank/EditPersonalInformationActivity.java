@@ -82,7 +82,6 @@ public class EditPersonalInformationActivity extends AppCompatActivity {
             }
         });
 
-        // --- Xử lý nút Submit ---
         btnSubmit.setOnClickListener(v -> {
             submitForm();
         });
@@ -96,7 +95,6 @@ public class EditPersonalInformationActivity extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
-                    // Format ngày tháng: dd/MM/yyyy
                     String dateString = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                     etDob.setText(dateString);
                 }, year, month, day);
@@ -139,47 +137,42 @@ public class EditPersonalInformationActivity extends AppCompatActivity {
         String incomeString = actvIncome.getText().toString().trim();
 
         if (TextUtils.isEmpty(fullName)) {
-            etFullName.setError("Vui lòng nhập họ và tên");
+            etFullName.setError("Full Name is required");
             etFullName.requestFocus();
             return;
         }
 
-        // Kiểm tra Ngày sinh
         if (TextUtils.isEmpty(dob)) {
-            etDob.setError("Vui lòng chọn ngày sinh");
+            etDob.setError("Date Of Birth is required");
             return;
         }
 
-        // Kiểm tra CCCD (Phải đủ 12 số)
         if (TextUtils.isEmpty(cccd) || cccd.length() != 12) {
-            etCccd.setError("CCCD/CMND phải bao gồm đúng 12 chữ số");
+            etCccd.setError("Verification ID is required (12 digits)");
             etCccd.requestFocus();
             return;
         }
 
-        // Kiểm tra Email (Phải đúng định dạng email@domain.com)
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Email không hợp lệ");
+            etEmail.setError("Email is invalid");
             etEmail.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(phone) || !phone.matches("0\\d{9}")) {
-            etPhoneNumber.setError("Số điện thoại không hợp lệ (cần 10 số)");
+            etPhoneNumber.setError("Phone number is invalid (10 num start with 0)");
             etPhoneNumber.requestFocus();
             return;
         }
 
-        // Kiểm tra Địa chỉ
         if (TextUtils.isEmpty(address)) {
-            etAddress.setError("Vui lòng nhập địa chỉ liên hệ");
+            etAddress.setError("Contact Address");
             etAddress.requestFocus();
             return;
         }
 
-        // Kiểm tra Nghề nghiệp (Bắt buộc chọn)
         if (TextUtils.isEmpty(occupation)) {
-            actvOccupation.setError("Vui lòng chọn nghề nghiệp");
+            actvOccupation.setError("Select Occupation");
             actvOccupation.requestFocus();
             return;
         }

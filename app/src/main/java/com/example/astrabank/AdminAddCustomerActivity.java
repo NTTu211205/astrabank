@@ -49,7 +49,6 @@ public class AdminAddCustomerActivity extends AppCompatActivity {
         }
 
         initViews();
-//        setupDropdown();
         setupEvents();
 
         etDob.setOnClickListener(new View.OnClickListener() {
@@ -61,22 +60,18 @@ public class AdminAddCustomerActivity extends AppCompatActivity {
     }
 
     private void showDatePickerDialog() {
-        // Lấy ngày tháng hiện tại
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Tạo DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
-                        // selectedMonth bắt đầu từ 0 (0 = tháng 1), nên ta cộng 1
                         String dateString = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
 
-                        // Hiển thị ngày đã chọn lên TextView
                         etDob.setText(dateString);
                     }
                 },
@@ -112,18 +107,15 @@ public class AdminAddCustomerActivity extends AppCompatActivity {
     }
 
     private void setupDropdown() {
-        // Cài đặt danh sách cho Dropdown Status
         String[] statusOptions = {"Active", "Locked", "Pending"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, statusOptions);
         spStatus.setAdapter(adapter);
     }
 
     private void setupEvents() {
-        // Nút Back & Cancel giống nhau: Đóng màn hình
         btnBack.setOnClickListener(v -> finish());
         btnCancel.setOnClickListener(v -> finish());
 
-        // Nút Create Account
         btnCreate.setOnClickListener(v -> {
             btnCreate.setText("●   ●   ●");
             btnCreate.setEnabled(false);

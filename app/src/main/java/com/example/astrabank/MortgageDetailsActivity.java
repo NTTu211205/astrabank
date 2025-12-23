@@ -50,7 +50,6 @@ public class MortgageDetailsActivity extends AppCompatActivity {
     private List<PaymentRecord> paymentList;
     ImageButton btnBack;
 
-    // Header Views
     private TextView tvDueAmount, tvDueDate, tvRecommend;
     private TextView tvPropertyAddress, tvOutstandingBalance, tvRate, tvTerm;
     private Button btnMakePayment;
@@ -212,7 +211,7 @@ public class MortgageDetailsActivity extends AppCompatActivity {
                             }
 
                             List<LoanReceipt> paidReceipts = receipts.stream()
-                                    .filter(receipt -> receipt.isPaid()) // Giữ lại cái nào isPay == true
+                                    .filter(receipt -> receipt.isPaid())
                                     .collect(Collectors.toList());
 
 

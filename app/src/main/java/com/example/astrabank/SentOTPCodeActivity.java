@@ -79,10 +79,10 @@ public class SentOTPCodeActivity extends AppCompatActivity {
     private void sendOTP(String phoneNumber) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(phoneNumber)       // Số điện thoại cần gửi
-                        .setTimeout(60L, TimeUnit.SECONDS) // Thời gian chờ
-                        .setActivity(this)                 // Activity hiện tại
-                        .setCallbacks(mCallbacks)          // "Tai nghe" đã tạo ở trên
+                        .setPhoneNumber(phoneNumber)
+                        .setTimeout(60L, TimeUnit.SECONDS)
+                        .setActivity(this)
+                        .setCallbacks(mCallbacks)
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
@@ -99,7 +99,7 @@ public class SentOTPCodeActivity extends AppCompatActivity {
             public void onVerificationFailed(@NonNull FirebaseException e) {
                 Log.w(TAG, "onVerificationFailed", e);
                 finish();
-                Toast.makeText(SentOTPCodeActivity.this, "Gửi mã thất bại: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(SentOTPCodeActivity.this, "Send failed code: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -107,7 +107,7 @@ public class SentOTPCodeActivity extends AppCompatActivity {
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent:" + verificationId);
                 mVerificationId = verificationId;
-                Toast.makeText(SentOTPCodeActivity.this, "Đã gửi mã, vui lòng kiểm tra tin nhắn.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SentOTPCodeActivity.this, "The code has been sent, please check your messages.", Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -212,7 +212,7 @@ public class SentOTPCodeActivity extends AppCompatActivity {
     private void handleCheck() {
         String code = etPhoneNumber.getText().toString().trim();
             if (code.length() != 6) {
-                etPhoneNumber.setError("Mã phải có 6 chữ số");
+                etPhoneNumber.setError("It must have 6 digits.");
                 return;
             }
 
@@ -243,9 +243,8 @@ public class SentOTPCodeActivity extends AppCompatActivity {
 //                            LoginManager.getInstance().setFirebaseUser(user);
 
                             Log.d(TAG, "signInWithCredential:success");
-                            Toast.makeText(this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Verification successful!", Toast.LENGTH_SHORT).show();
 
-                            // Nhập thông tin người dùng
                             if (signal != null) {
                                 changeScreen(AdminAddCustomerActivity.class, user.getUid());
                             }
@@ -256,7 +255,7 @@ public class SentOTPCodeActivity extends AppCompatActivity {
 
                     } else {
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
-                        Toast.makeText(this, "Xác thực thất bại: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Validation failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }

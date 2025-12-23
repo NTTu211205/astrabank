@@ -65,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
                     etPhoneNumber.setError("Vui lòng nhập số điện thoại");
                     return;
                 }
-                // Xử lý đầu số 0 -> +84
                 if (phone.startsWith("0")) {
                     phone = "+84" + phone.substring(1);
                 }
@@ -88,8 +87,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
                 Log.d(TAG, "onVerificationCompleted:" + credential);
-                // Trường hợp tự động xác thực (hiếm khi xảy ra nếu không dùng thư viện play services mới nhất hoặc sim vật lý trên máy)
-                // Tuy nhiên ta vẫn nên chuyển sang màn hình nhập OTP để xử lý thống nhất hoặc auto-sign in tại đây nếu muốn.
             }
 
             @Override
@@ -97,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                 btLogin.setText("GET CODE");
                 btLogin.setEnabled(true);
                 Log.w(TAG, "onVerificationFailed", e);
-                Toast.makeText(LoginActivity.this, "Gửi mã thất bại: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Sending OTP failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -106,11 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "onCodeSent:" + verificationId);
                 btLogin.setText("GET CODE");
                 btLogin.setEnabled(true);
-                // CHUYỂN MÀN HÌNH SAU KHI ĐÃ GỬI MÃ
                 Intent intent = new Intent(LoginActivity.this, LogInOTPCodeActivity.class);
                 intent.putExtra("verificationId", verificationId);
-                // Truyền sđt qua nếu cần hiển thị lại
-                // intent.putExtra("phoneNumber", etPhoneNumber.getText().toString());
                 startActivity(intent);
             }
         };

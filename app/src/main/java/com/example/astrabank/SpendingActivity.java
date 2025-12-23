@@ -14,13 +14,12 @@ public class SpendingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_showcase); // Sử dụng layout chung
+        setContentView(R.layout.activity_product_showcase);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        // Custom nội dung cho Spending
         ((TextView) findViewById(R.id.tv_page_title)).setText("Spending Products");
         ((TextView) findViewById(R.id.tv_product_name)).setText("Astra Platinum Card");
         ((Button) findViewById(R.id.btn_action)).setOnClickListener(v -> {

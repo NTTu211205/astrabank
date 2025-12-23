@@ -44,7 +44,6 @@ public class ScanQRActivity extends AppCompatActivity {
     private ExecutorService cameraExecutor;
     private boolean isProcessing = false;
 
-    // ================== PERMISSION LAUNCHER ==================
     private final ActivityResultLauncher<String> requestCameraPermissionLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.RequestPermission(),
@@ -83,7 +82,6 @@ public class ScanQRActivity extends AppCompatActivity {
         checkCameraPermission();
     }
 
-    // ================== CHECK PERMISSION ==================
     private void checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -93,7 +91,6 @@ public class ScanQRActivity extends AppCompatActivity {
         }
     }
 
-    // ================== DIALOG KHI TỪ CHỐI ==================
     private void showPermissionDeniedDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Camera permission required")
@@ -108,7 +105,6 @@ public class ScanQRActivity extends AppCompatActivity {
                 .show();
     }
 
-    // ================== CAMERA ==================
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture =
                 ProcessCameraProvider.getInstance(this);
@@ -139,8 +135,6 @@ public class ScanQRActivity extends AppCompatActivity {
             }
         }, ContextCompat.getMainExecutor(this));
     }
-
-    // ================== SCAN QR ==================
     @androidx.annotation.OptIn(markerClass = androidx.camera.core.ExperimentalGetImage.class)
     private void processImageProxy(ImageProxy imageProxy) {
         if (imageProxy.getImage() == null || isProcessing) {

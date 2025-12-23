@@ -37,8 +37,7 @@
                 android:layout_height="72dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="60dp"
-                android:src="@drawable/ic_success_circle"
-                android:contentDescription="Thành công" />
+                android:src="@drawable/ic_success_circle" />
 
             <ImageView
                 android:id="@+id/iv_bank_logo"
@@ -48,7 +47,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
                 android:contentDescription="Logo Ngân hàng"
-                android:src="@drawable/ic_logo_vietqr" />
+                android:src="@drawable/logo" />
 
             <TextView
                 android:id="@+id/tv_title_amount"
@@ -57,7 +56,7 @@
                 android:layout_below="@id/iv_bank_logo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
-                android:text="Chuyển thành công"
+                android:text="Success"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -87,7 +86,7 @@
                     android:id="@+id/tv_receiver_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Người nhận"
+                    android:text="Receiver"
                     android:textColor="#555555"
                     android:textSize="16sp" />
 
@@ -116,7 +115,7 @@
                     android:id="@+id/tv_bank_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ngân hàng nhận"
+                    android:text="Receiving Bank"
                     android:textColor="#555555"
                     android:textSize="16sp" />
 
@@ -135,7 +134,7 @@
                     android:id="@+id/tv_message_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lời nhắn"
+                    android:text="Messages"
                     android:textColor="#555555"
                     android:textSize="16sp" />
 
@@ -143,7 +142,7 @@
                     android:id="@+id/tv_message_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TRAN CAO PHONG chuyển"
+                    android:text="TRAN CAO PHONG chuyen"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -153,7 +152,7 @@
                     android:id="@+id/tv_date_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ngày chuyển"
+                    android:text="Date"
                     android:textColor="#555555"
                     android:textSize="16sp" />
 
@@ -161,7 +160,7 @@
                     android:id="@+id/tv_date_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9 Thg 11, 2025 lúc 18:28"
+                    android:text="9 Thg 11, 2025, 18:28"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -171,7 +170,7 @@
                     android:id="@+id/tv_transaction_id_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mã giao dịch"
+                    android:text="Transaction Code"
                     android:textColor="#555555"
                     android:textSize="16sp" />
 

@@ -29,11 +29,9 @@ public class InsuranceActivity extends AppCompatActivity {
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
 
-        // 1. Đổi tiêu đề trang
         TextView tvPageTitle = findViewById(R.id.tv_page_title);
         tvPageTitle.setText("Insurance");
 
-        // 2. Đổi hình ảnh banner
         ImageView ivBanner = findViewById(R.id.iv_product_banner);
         ivBanner.setImageResource(R.drawable.insurance);
 
