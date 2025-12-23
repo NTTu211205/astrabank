@@ -303,15 +303,15 @@ public class LoggedInActivity extends AppCompatActivity {
         if (cardSpendingInsight != null) cardSpendingInsight.setOnClickListener(spendingListener);
         if (btnSeeSpending != null) btnSeeSpending.setOnClickListener(spendingListener);
 
-        View.OnClickListener avgBalanceListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoggedInActivity.this, AverageBalanceActivity.class);
-                startActivity(intent);
-            }
-        };
-        if (cardAvgBalance != null) cardAvgBalance.setOnClickListener(avgBalanceListener);
-        if (btnSeeAvgBalance != null) btnSeeAvgBalance.setOnClickListener(avgBalanceListener);
+//        View.OnClickListener avgBalanceListener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(LoggedInActivity.this, AverageBalanceActivity.class);
+//                startActivity(intent);
+//            }
+//        };
+//        if (cardAvgBalance != null) cardAvgBalance.setOnClickListener(avgBalanceListener);
+//        if (btnSeeAvgBalance != null) btnSeeAvgBalance.setOnClickListener(avgBalanceListener);
 
         updateSpendingChartData();
         showTransactionHistory();

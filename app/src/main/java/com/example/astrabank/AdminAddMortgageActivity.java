@@ -51,6 +51,7 @@ public class AdminAddMortgageActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         ImageButton btnBack = findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +83,8 @@ public class AdminAddMortgageActivity extends AppCompatActivity {
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btSave.setText("●   ●   ●");
+                btSave.setEnabled(false);
                 String userId = user.getUserID();
                 long limit = Long.parseLong(etLimit.getText().toString());
                 double interestRate = Double.parseDouble(etInterestRate.getText().toString());
@@ -137,15 +140,21 @@ public class AdminAddMortgageActivity extends AppCompatActivity {
 
                     if (apiResponse != null && apiResponse.getResult() != null) {
                         Intent intent = new Intent(AdminAddMortgageActivity.this, AdminMortgageActivity.class);
+                        btSave.setText("Create Mortgage Account");
+                        btSave.setEnabled(true);
                         startActivity(intent);
                         finish();
                     }
                     else {
+                        btSave.setText("Create Mortgage Account");
+                        btSave.setEnabled(true);
                         Log.d(LOG_TAG, "Create failed");
                         Toast.makeText(AdminAddMortgageActivity.this, "Created failed, try again", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
+                    btSave.setText("Create Mortgage Account");
+                    btSave.setEnabled(true);
                     Log.d(LOG_TAG, "Create failed");
                     Toast.makeText(AdminAddMortgageActivity.this, "Created failed, try again", Toast.LENGTH_SHORT).show();
                 }
@@ -153,6 +162,8 @@ public class AdminAddMortgageActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<Account>> call, Throwable t) {
+                btSave.setText("Create Mortgage Account");
+                btSave.setEnabled(true);
                 Log.d(LOG_TAG, "Internet disconnected");
                 Toast.makeText(AdminAddMortgageActivity.this, "Internet disconnected", Toast.LENGTH_SHORT).show();
             }
